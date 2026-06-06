@@ -1,0 +1,21 @@
+@use '../../../styles/abstracts/variables' as var;
+@use '../../../styles/abstracts/mixins' as mixins;
+
+header {
+    margin-top: 32px;
+    width: 100%;
+    @include mixins.setup-display-flex(row, space-between, center);
+}
+
+.header-logo {
+    width: 119px;
+    height: 46px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('/assets/icons/poll-app-icon-orange.svg');
+
+    &--purple {
+        background-image: url('/assets/icons/poll-app-icon-purple.svg');
+    }
+}

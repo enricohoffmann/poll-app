@@ -1,6 +1,43 @@
+@use '../../../styles/abstracts/variables' as var;
+@use '../../../styles/abstracts/mixins' as mixins;
+@use '../../../styles.scss';
 
-
-.home-section {
+.home-wrapper {
     height: 100vh;
     height: 100dvh;
+    background-color: var.$primary-pruple;
+    @include mixins.setup-display-flex(column, flex-start, center);
 }
+
+.home-section {
+    max-width: var.$max-content-width;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-top-grid {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 32px;
+}
+
+.home-top-column-left {
+    @include mixins.setup-display-flex(column, flex-start, flex-start, 24px);
+
+    &__headline {
+        @include mixins.setup-font("Nerko-One", 100px, 400, var.$primary-orange, 89%);
+    }
+
+    &__description {
+        @include mixins.setup-font("Mulish", 24px, 600, rgba(255,255,255,1));
+    }
+}
+
+.home-top-column-right {
+    height: 420px;
+    width: 420px;
+    background-color: aliceblue;
+}
+

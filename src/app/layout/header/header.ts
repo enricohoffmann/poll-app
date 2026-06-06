@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { HeaderVariant } from '../../shared/utils/types';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {}
+export class Header {
+  isPurple = input(false);
+  isButtonAvailable = input(false);
+}

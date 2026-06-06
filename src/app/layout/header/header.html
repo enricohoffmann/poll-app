@@ -1,1 +1,7 @@
-<p>header works!</p>
+<header>
+    <div class='header-logo' [class.header-logo--purple]="isPurple()"></div>
+    @if(isButtonAvailable()){
+        <button type="button">Create survey</button>
+    }
+    
+</header>
