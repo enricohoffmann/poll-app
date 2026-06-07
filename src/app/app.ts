@@ -10,7 +10,4 @@ import { SurveyService } from './services/survey-service';
 })
 export class App {
   protected readonly title = signal('poll-app');
-
-  s = new SurveyService();
-
 }

@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, OnInit, signal } from '@angular/core';
 import { createClient, RealtimeChannel } from '@supabase/supabase-js';
 import { ENVIRONMENT } from '../../environments/environment';
 import { Category } from '../interfaces/category-interface';
@@ -9,7 +9,7 @@ import { QuestionWithAnswers } from '../interfaces/question-with-answers-interfa
 @Injectable({
   providedIn: 'root',
 })
-export class SurveyService {
+export class SurveyService implements OnInit {
 
   private supabaseClient = createClient(ENVIRONMENT.supabaseUrl, ENVIRONMENT.supabaseKey);
 
@@ -24,13 +24,13 @@ export class SurveyService {
       //console.log(s);
     });
 
-    this.getSurveyWithCategory().then(swc => {
-      this.surveyList.set(swc);
-    });
-
     this.getQuestionsWithAnswersBySurveyId(1).then(qwa => {
       //console.log(qwa);
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   async getCategories():Promise<Category[]> {
@@ -43,10 +43,10 @@ export class SurveyService {
     return (response.data ?? []) as Survey[];
   }
 
-  async getSurveyWithCategory(): Promise<SurveyWithCategory[]>{
+  async getSurveyWithCategory(): Promise<void>{
     const response = await this.supabaseClient.from('surveys')
       .select(`*,category:categories(id, name)`);
-    return (response.data ?? []) as SurveyWithCategory[];    
+    this.surveyList.set(response.data ?? [] as SurveyWithCategory[]);    
   }
 
   async getQuestionsWithAnswersBySurveyId(surveyId: number): Promise<QuestionWithAnswers[]>{

@@ -11,12 +11,32 @@
                     Collect opinions, engage your audience, 
                     and turn feedback into action.
                 </p>
-                <app-button>New survey</app-button>
+                <app-button
+                    [buttonVariant]="'primaryBtn'"
+                    [hasIcon]="true"
+                    [buttonIconVariant]="'add'"
+                    class="mt-32"
+                >New survey</app-button>
             </div>
             <div class="home-top-column-right">
                 Placeholder
             </div>
         </article>
+
+        <section class="home-surveys-section mt-48">
+            <h2 class="home-surveys-section home-surveys-section__headline">Your surveys</h2>
+            <p class="home-surveys-section home-surveys-section__notice mt-32">Ending soon surveys</p>
+
+            <aside>
+                @for (survey of surveyService.surveyList(); track survey.id) {
+                    <app-card-highlights></app-card-highlights>
+                }
+                 
+            </aside>
+
+        </section>
+
+        
 
 
 

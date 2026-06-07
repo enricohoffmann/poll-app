@@ -41,3 +41,19 @@
     background-color: aliceblue;
 }
 
+.home-surveys-section {
+    @include mixins.setup-display-flex(column, flex-start, center);
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__headline {
+        @include mixins.setup-font("Nerko-One", 72px, 400, var.$primary-orange);
+    }
+
+    &__notice {
+        align-items: flex-start;
+        @include mixins.setup-font("Mulish", 32px, 500, rgba(255,255,255,1));
+    }
+}
+

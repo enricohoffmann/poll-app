@@ -1,6 +1,6 @@
 import { Component, input, signal, computed } from '@angular/core';
 import { ButtonVariant } from '../../utils/types';
-import { NgClass } from "../../../../../node_modules/@angular/common/types/_common_module-chunk";
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-button',
@@ -17,9 +17,16 @@ export class Button {
     filterBtn: 'btn--filter'
   };
 
-  buttonVariant = input<ButtonVariant>('primaryBtn');
+  private readonly BUTTON_ICON_CLASSES: Record<'add'|'check', string> = {
+    add: 'btn-icon--add',
+    check: 'btn-icon--check'
+  }
 
+  buttonVariant = input<ButtonVariant>('primaryBtn');
   buttonClass = computed(() => this.BUTTON_CLASSES[this.buttonVariant()]);
+  hasIcon = input(false);
+  buttonIconVariant = input<'add' | 'check'>('add');
+  buttonIconClass = computed(() => this.BUTTON_ICON_CLASSES[this.buttonIconVariant()]);
 
   ngOnInit(){}
 

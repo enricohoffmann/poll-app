@@ -4,5 +4,7 @@
     <span>
         <ng-content></ng-content>
     </span>
-    <div></div>
+    @if(hasIcon()){
+        <div class="btn-icon" [ngClass]="buttonIconClass()"></div>
+    }
 </button>
