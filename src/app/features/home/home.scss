@@ -7,6 +7,7 @@
     height: 100dvh;
     background-color: var.$primary-pruple;
     @include mixins.setup-display-flex(column, flex-start, center);
+    overflow-x: auto;
 }
 
 .home-section {
@@ -57,3 +58,18 @@
     }
 }
 
+.highlight-cards {
+    @include mixins.setup-display-flex(row, center, center, 42px);
+}
+
+
+.home-survey-list-section {
+
+    &__header {
+        @include mixins.setup-display-flex(row, space-between, center);
+    }
+}
+
+.home-survey-filter-buttons {
+    @include mixins.setup-display-flex(row, flex-start, center, 28px);
+}

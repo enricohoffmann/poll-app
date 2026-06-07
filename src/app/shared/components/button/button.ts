@@ -27,9 +27,14 @@ export class Button {
   hasIcon = input(false);
   buttonIconVariant = input<'add' | 'check'>('add');
   buttonIconClass = computed(() => this.BUTTON_ICON_CLASSES[this.buttonIconVariant()]);
+  isActivated = signal(false);
 
   ngOnInit(){}
 
-
+  onButtonClick(){
+    if(this.buttonVariant() === 'filterBtn'){
+      this.isActivated.set(!this.isActivated());
+    }
+  }
 
 }

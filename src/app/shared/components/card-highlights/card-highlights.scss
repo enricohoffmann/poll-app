@@ -1,0 +1,31 @@
+@use '../../../../styles/abstracts/variables' as var;
+@use '../../../..//styles/abstracts/mixins' as mixins;
+@use '../../../../styles.scss';
+
+
+.card-highlights {
+    box-sizing: border-box;
+    height: 310px;
+    width: 320px;
+    background-color: var.$background-color-card-default;
+    border-radius: 0 80px 0 0;
+    padding: 40px 32px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    cursor: pointer;
+    row-gap: 16px;
+
+    &__category {
+        grid-row: 1;
+        @include mixins.setup-font("Mulish", 14px, 600, var.$primary-pruple);
+    }
+
+    &__title {
+        grid-row: 2;
+        @include mixins.setup-font("Mulish", 26px, 700, var.$primary-pruple);
+    }
+
+    &:hover {
+        background-color: var.$light-pruple;
+    }
+}

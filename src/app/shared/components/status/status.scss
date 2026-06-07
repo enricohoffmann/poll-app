@@ -1,0 +1,25 @@
+@use '../../../../styles/abstracts/variables' as var;
+@use '../../../..//styles/abstracts/mixins' as mixins;
+@use '../../../../styles.scss';
+
+.status-field {
+    box-sizing: border-box;
+    border-radius: 0 14px 0 0;
+    padding: 3px 12px 3px 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &__content {
+        @include mixins.setup-font("Mulish", 16px, 600, var.$dark-purple);
+    }
+
+    &--default {
+        background-color: var.$third-orange;
+    }
+
+    &--active {
+        background-color: var.$primary-orange;
+    }
+}
+

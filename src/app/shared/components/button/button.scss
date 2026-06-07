@@ -28,6 +28,22 @@
             }
         }
     }
+
+    &--filter {
+        border-radius: 20px;
+        padding: 3px 10px;
+        height: auto;
+        @include mixins.setup-font("Nokora", 16px, 400, var.$primary-pruple);
+        background-color: var.$third-orange;
+
+        &:hover:not(.btn--activated) {
+            background-color: var.$secondary-orange;
+        }
+
+        &.btn--activated {
+            background-color: var.$primary-orange;
+        }
+    }
 }
 
 .btn-icon {

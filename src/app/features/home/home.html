@@ -27,12 +27,25 @@
             <h2 class="home-surveys-section home-surveys-section__headline">Your surveys</h2>
             <p class="home-surveys-section home-surveys-section__notice mt-32">Ending soon surveys</p>
 
-            <aside>
+            <aside class="highlight-cards mt-48">
                 @for (survey of surveyService.surveyList(); track survey.id) {
-                    <app-card-highlights></app-card-highlights>
+                    <app-card-highlights
+                        [surveyWithCategory]="survey"
+                    ></app-card-highlights>
                 }
-                 
             </aside>
+
+        </section>
+
+        <section class="home-survey-list-section mt-48">
+            <header class="home-survey-list-section__header">
+                <div class="home-survey-filter-buttons">
+                    <app-button [buttonVariant]="'filterBtn'">Active survey</app-button>
+                    <app-button [buttonVariant]="'filterBtn'">Past survey</app-button>
+                </div>
+                <!-- sort by... -->
+            </header>
+            <aside class="home-survey-list-section__list"></aside>
 
         </section>
 

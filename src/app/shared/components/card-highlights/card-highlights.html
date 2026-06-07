@@ -1,9 +1,16 @@
-<section class="card-highlights">
+@if(surveyWithCategory(); as survey){
+    <section class="card-highlights" 
+        (mouseenter)="onMouseEnter()" 
+        (mouseleave)="onMouseLeave()">
 
-    <p class="card-highlights card-highlights__category">Card</p>
+        <p class="card-highlights__category">
+            {{survey.category.name}}</p>
 
-    <h1 card-highlights card-highlights__title></h1>
+        <h1 class="card-highlights__title">
+            {{survey.title}}</h1>
+
+        <app-status [isActive]="isHover()">Ends in 1 Day</app-status>
 
 
-
-</section>
+    </section>
+}
