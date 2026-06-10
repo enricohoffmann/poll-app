@@ -1,12 +1,12 @@
 @if(surveyWithCategory(); as survey){
-    <section class="card-highlights" 
+    <section [ngClass]="['card', cardVariant() == 'highlights' ? 'card--highlights' : 'card--listview']"
         (mouseenter)="onMouseEnter()" 
         (mouseleave)="onMouseLeave()">
 
-        <p class="card-highlights__category">
+        <p class="card-category">
             {{survey.category.name}}</p>
 
-        <h1 class="card-highlights__title">
+        <h1 class="card-title">
             {{survey.title}}</h1>
 
         <app-status [isActive]="isHover()">Ends in 1 Day</app-status>

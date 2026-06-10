@@ -9,6 +9,7 @@
     border: none;
     outline: none;
     cursor: pointer;
+    transition: background-color 125ms ease-out;
 
     &__content {
         @include mixins.setup-font("Mulish", 16px, 600, var.$dark-purple);

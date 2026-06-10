@@ -6,17 +6,13 @@
             <div class="home-top-column-left">
                 <h1 class="home-top-column-left home-top-column-left__headline">Collect Feedback,<br>Unlock Ideas</h1>
                 <p class="home-top-column-left home-top-column-left__description">
-                    Create and share surveys in minutes – 
-                    from team events to workplace culture. 
-                    Collect opinions, engage your audience, 
+                    Create and share surveys in minutes –
+                    from team events to workplace culture.
+                    Collect opinions, engage your audience,
                     and turn feedback into action.
                 </p>
-                <app-button
-                    [buttonVariant]="'primaryBtn'"
-                    [hasIcon]="true"
-                    [buttonIconVariant]="'add'"
-                    class="mt-32"
-                >New survey</app-button>
+                <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
+                    class="mt-32">New survey</app-button>
             </div>
             <div class="home-top-column-right">
                 Placeholder
@@ -29,9 +25,7 @@
 
             <aside class="highlight-cards mt-48">
                 @for (survey of surveyService.surveyList(); track survey.id) {
-                    <app-card-highlights
-                        [surveyWithCategory]="survey"
-                    ></app-card-highlights>
+                <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>
 
@@ -45,11 +39,17 @@
                 </div>
                 <!-- sort by... -->
             </header>
-            <aside class="home-survey-list-section__list"></aside>
+            <aside class="home-survey-list-section__list">
+                @for (survey of surveyService.surveyList(); track survey.id){
+                    <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
+                }
+
+
+            </aside>
 
         </section>
 
-        
+
 
 
 

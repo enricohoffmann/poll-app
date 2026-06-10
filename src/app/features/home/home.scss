@@ -68,6 +68,13 @@
     &__header {
         @include mixins.setup-display-flex(row, space-between, center);
     }
+
+    &__list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 16px;
+        margin-top: 32px;
+    }
 }
 
 .home-survey-filter-buttons {
