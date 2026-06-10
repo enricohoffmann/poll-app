@@ -35,9 +35,29 @@
     }
 
     &--listview {
-        width: clamp(1.5rem, .7407vw + 1.3611rem, 2.25rem);
+        width: clamp(300px, calc(257px + 13.438vw), 515px);
         height: 147px;
-        
+        background-color: var.$background-color-card-secondary-default;
+        border-radius: 5px 50px 5px 5px;
+        padding: 12px 20px;
+        transition: 
+            background-color 300ms ease-out, 
+            opacity 300ms ease-out, 
+            box-shadow 300ms ease-out;
+
+        .card-category {
+            @include mixins.setup-font("Mulish", 16px, 500, var.$secondary-orange);
+        }
+
+        .card-title {
+            @include mixins.setup-font("Mulish", 24px, 700, rgba(255,255,255,1));
+        }
+
+        &:hover {
+            background-color: var.$background-color-card-secondary-hover;
+            box-shadow: 4px 4px 12px 0px var.$dark-purple;
+        }
+
     }
 
 

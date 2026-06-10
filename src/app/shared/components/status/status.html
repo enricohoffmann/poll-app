@@ -1,5 +1,5 @@
 <button type="button" class="status-field" [ngClass]=
-    "{'status-field--active': isActive(), 'status-field--default': !isActive()}">
+    "{'status-field--active': isActive() && canHover(), 'status-field--default': !isActive()}">
     <span class="status-field__content">
         <ng-content></ng-content>
     </span>

@@ -6,10 +6,10 @@
         <p class="card-category">
             {{survey.category.name}}</p>
 
-        <h1 class="card-title">
-            {{survey.title}}</h1>
+        <h5 class="card-title">
+            {{survey.title}}</h5>
 
-        <app-status [isActive]="isHover()">Ends in 1 Day</app-status>
+        <app-status [isActive]="isHover()" [canHover]="cardVariant() == 'highlights'">Ends in 1 Day</app-status>
 
 
     </section>

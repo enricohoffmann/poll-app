@@ -12,7 +12,7 @@
 
 .home-section {
     max-width: var.$max-content-width;
-    width: 80%;
+    width: clamp(300px, calc(104px + 61.25vw), 1280px);
     margin-left: auto;
     margin-right: auto;
 }
@@ -44,7 +44,7 @@
 
 .home-surveys-section {
     @include mixins.setup-display-flex(column, flex-start, center);
-    width: 95%;
+    width: clamp(300px, calc(151.6px + 46.375vw), 1042px);
     margin-left: auto;
     margin-right: auto;
 
@@ -64,6 +64,9 @@
 
 
 .home-survey-list-section {
+    width: clamp(300px, calc(151.6px + 46.375vw), 1042px);
+    margin-left: auto;
+    margin-right: auto;
 
     &__header {
         @include mixins.setup-display-flex(row, space-between, center);
@@ -73,6 +76,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 16px;
+        row-gap: 16px;
         margin-top: 32px;
     }
 }

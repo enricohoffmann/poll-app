@@ -9,5 +9,6 @@ import { NgClass } from '@angular/common';
 })
 export class Status {
   isActive = input(false);
+  canHover = input(true);
   
 }
