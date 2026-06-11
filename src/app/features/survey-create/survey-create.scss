@@ -1,0 +1,45 @@
+@use '../../../styles/abstracts/variables' as var;
+@use '../../../styles/abstracts/mixins' as mixins;
+@use '../../../styles.scss';
+
+.create-wrapper {
+    height: 100vh;
+    height: 100dvh;
+    background-color: var.$background-color-bright;
+    @include mixins.setup-display-flex(column, center, center);
+    overflow-x: auto;
+}
+
+.create-section {
+    box-sizing: border-box;
+    width: clamp(300px, calc(138.889px + 53.704vw), 1170px);
+    min-height: 842px;
+    background-color: var.$primary-pruple;
+    border-radius: 5px 100px 5px 5px;
+    padding: 40px 54px;
+}
+
+.create-section-header {
+    @include mixins.setup-display-flex(row, space-between, center);
+
+    &__title {
+        @include mixins.setup-font("Nerko-One", 56px, 400, var.$fourth-orange);
+    }
+}
+
+.create-form {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    row-gap: 32px;
+    width: clamp(300px, calc(160.741px + 46.42vw), 1052px);
+    min-height: 549px;
+    margin-top: 32px;
+
+    &__fields {
+        border-radius: 5px 80px 5px 5px;
+        padding: 40px 32px;
+        grid-row: 1;
+        background-color: var.$create-form-bg;
+    }
+}
