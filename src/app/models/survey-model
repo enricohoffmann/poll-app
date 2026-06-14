@@ -1,0 +1,21 @@
+import { Survey } from '../interfaces/survey-interface';
+
+export class SurveyModel implements Survey {
+    id: number;
+    title: string;
+    description: string;
+    expires_at: string;
+    category_id: number;
+    is_published: boolean;
+    created_at: string;
+
+    constructor(surveyData: Partial<Survey> = {}){
+        this.id = surveyData.id ?? 0;
+        this.title = surveyData.title ?? '';
+        this.description = surveyData.description ?? '';
+        this.expires_at = surveyData.created_at ?? '';
+        this.category_id = surveyData.category_id ?? 0;
+        this.is_published = surveyData.is_published ?? false;
+        this.created_at = surveyData.created_at ?? '';
+    }
+}

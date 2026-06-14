@@ -8,12 +8,26 @@
             <app-button>Cancel</app-button>
         </header>
 
-        <form class="create-form">
-            <aside class="create-form__fields">
+        <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
 
-            </aside>
+            <div class="create-form__fields">
+                <fieldset class="create-form__fields__fieldset--survey-info">
+                    <app-input-field 
+                    [inputFieldVariant]="'labelTop'" 
+                    [inputControl]="surveyForm.controls.title"
+                    [label]="'Survey name'"
+                    [fieldId]="'survey-title'"
+                    [placeHolder]="'TEST'"
+                    ></app-input-field>
+
+
+                </fieldset>
+            </div>
+
+            <button type="submit">submit</button>
+
         </form>
-        
+
 
     </section>
 

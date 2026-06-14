@@ -41,5 +41,10 @@
         padding: 40px 32px;
         grid-row: 1;
         background-color: var.$create-form-bg;
+
+        &__fieldset--survey-info {
+            outline: unset;
+            border: unset;
+        }
     }
 }

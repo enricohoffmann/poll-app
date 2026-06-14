@@ -1,0 +1,27 @@
+
+<article class="input-field">
+    <label class="input-field__label" [for]="fieldId()">{{label()}}</label>
+
+    <div>
+        <input 
+            class="input-field__input"
+            type="text" 
+            [id]="fieldId()" 
+            [name]="fieldId()" 
+            [formControl]="inputControl()" 
+            [placeholder]="placeHolder()" 
+            [title]="label()" 
+            autocomplete="off">
+
+        @if(hasTrash()){
+            <button type="button">
+                Trash
+            </button>
+        }
+
+
+    </div>
+
+    
+</article>
+
