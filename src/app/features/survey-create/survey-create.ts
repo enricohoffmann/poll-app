@@ -25,7 +25,9 @@ export class SurveyCreate {
   }; 
 
   surveyForm = new FormGroup({
-    title: new FormControl(this.survey.title, {nonNullable: true, validators: [Validators.required, Validators.minLength(4)]})
+    title: new FormControl(this.survey.title, {nonNullable: true, validators: [Validators.required, Validators.minLength(4)]}),
+    description: new FormControl(this.survey.description, {nonNullable: true}),
+    expires_at: new FormControl(this.survey.expires_at, {nonNullable: true})
   });
 
   onSubmit(): void {

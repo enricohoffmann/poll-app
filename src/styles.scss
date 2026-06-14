@@ -1,49 +1,6 @@
-html {
-    overflow: hidden;
-}
+@use 'base/reset';
+@use 'base/spacing';
+@use 'base/fonts';
 
-* {
-    padding: 0;
-    margin: 0;
-}
 
-.mt-32 {
-    margin-top: 32px;
-}
 
-.mt-48 {
-    margin-top: 48px;
-}
-
-.mb-32 {
-    margin-bottom: 32px;
-}
-
-.mb-48 {
-    margin-bottom: 48px;
-}
-
-.mb-72 {
-    margin-bottom: 72px;
-}
-
-@font-face {
-    font-family: "Nerko-One";
-    src: url('/assets/fonts/nerko-one-regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "Mulish";
-    src: url('/assets/fonts/Mulish-VariableFont_wght.ttf') format('truetype');
-    font-style: normal;
-    font-optical-sizing: auto;
-}
-
-@font-face {
-    font-family: "Nokora";
-    src: url('/assets/fonts/Nokora-VariableFont_wght.ttf') format('truetype');
-    font-style: normal;
-    font-optical-sizing: auto;
-}

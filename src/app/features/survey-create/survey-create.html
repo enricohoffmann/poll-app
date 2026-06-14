@@ -12,16 +12,29 @@
 
             <div class="create-form__fields">
                 <fieldset class="create-form__fields__fieldset--survey-info">
-                    <app-input-field 
-                    [inputFieldVariant]="'labelTop'" 
-                    [inputControl]="surveyForm.controls.title"
-                    [label]="'Survey name'"
-                    [fieldId]="'survey-title'"
-                    [placeHolder]="'TEST'"
+                    <app-input-field [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.title"
+                        [label]="'Survey name'" [fieldId]="'survey-title'" [placeHolder]="''"
+                        [hasTrash]="true"></app-input-field>
+
+                    <app-input-field [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
+                        [label]="'Describing text'" [isOptional]="true"
                     ></app-input-field>
 
+                    <div class="create-form__fields__fieldset--survey-info--date-and-category">
+                        <app-input-field [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.expires_at" 
+                        [label]="'Set end date'" [isOptional]="true"
+                        ></app-input-field>
+                    </div>
+                </fieldset>
+
+                <article class="create-form__fields__fieldset--question-container">
+
+                </article>
+
+                <fieldset class="">
 
                 </fieldset>
+
             </div>
 
             <button type="submit">submit</button>

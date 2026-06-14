@@ -1,27 +1,35 @@
-
 <article class="input-field">
-    <label class="input-field__label" [for]="fieldId()">{{label()}}</label>
+    <label class="input-field__label" [for]="fieldId()">
+        <span>{{label()}}</span>
+        @if(isOptional()){
+            <span class="input-field__label--optional">(optional)</span>
+        }
+        
+    </label>
 
-    <div>
-        <input 
-            class="input-field__input"
-            type="text" 
-            [id]="fieldId()" 
-            [name]="fieldId()" 
-            [formControl]="inputControl()" 
-            [placeholder]="placeHolder()" 
-            [title]="label()" 
-            autocomplete="off">
+    <div class="input-field__input-container">
 
-        @if(hasTrash()){
-            <button type="button">
-                Trash
-            </button>
+        @if(inputFieldVariant() !== 'textArea'){
+        <input class="input-field__input" type="text" [id]="fieldId()" [name]="fieldId()" [formControl]="inputControl()"
+            [placeholder]="placeHolder()" [title]="label()" autocomplete="off" (focus)="onInputEnter()"
+            (blur)="onInputLeave()" [class.input-field__input--writing]="isWriting()">
+        } @else {
+        <textarea class="input-field__text-area" rows="4" [id]="fieldId()" [name]="fieldId()" [formControl]="inputControl()"
+            [placeholder]="placeHolder()" [title]="label()" autocomplete="off" (focus)="onInputEnter()"
+            (blur)="onInputLeave()" [class.input-field__input--writing]="isWriting()">
+
+            </textarea>
         }
 
-
+        <div class="input-field__button-container">
+            @if(hasTrash()){
+            <button type="button" class="input-field__trash-button" (click)="onDeleteContent()">
+                <div class="button-icon-container">
+                    <div class="button-icon-container__icon button-icon-container__icon--default"></div>
+                    <div class="button-icon-container__icon button-icon-container__icon--hover"></div>
+                </div>
+            </button>
+            }
+        </div>
     </div>
-
-    
 </article>
-

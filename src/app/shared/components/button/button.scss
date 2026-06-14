@@ -1,6 +1,5 @@
-@use '../../../../styles/abstracts/variables' as var;
-@use '../../../..//styles/abstracts/mixins' as mixins;
-@use '../../../../styles.scss';
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
 
 .btn {
     height: 48px;
@@ -33,7 +32,7 @@
         border-radius: 20px;
         padding: 3px 10px;
         height: auto;
-        @include mixins.setup-font("Nokora", 16px, 400, var.$primary-pruple);
+        @include mixins.setup-font("Nokora", 16px, 400, var.$primary-purple);
         background-color: var.$third-orange;
 
         &:hover:not(.btn--activated) {

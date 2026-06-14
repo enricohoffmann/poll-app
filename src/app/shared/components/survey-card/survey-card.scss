@@ -20,12 +20,12 @@
 
         .card-category {
             grid-row: 1;
-            @include mixins.setup-font("Mulish", 14px, 600, var.$primary-pruple);
+            @include mixins.setup-font("Mulish", 14px, 600, var.$primary-purple);
         }
 
         .card-title {
             grid-row: 2;
-            @include mixins.setup-font("Mulish", 26px, 700, var.$primary-pruple);
+            @include mixins.setup-font("Mulish", 26px, 700, var.$primary-purple);
         }
 
         &:hover {

@@ -1,6 +1,5 @@
-@use '../../../styles/abstracts/variables' as var;
-@use '../../../styles/abstracts/mixins' as mixins;
-@use '../../../styles.scss';
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
 
 .create-wrapper {
     height: 100vh;
@@ -14,7 +13,7 @@
     box-sizing: border-box;
     width: clamp(300px, calc(138.889px + 53.704vw), 1170px);
     min-height: 842px;
-    background-color: var.$primary-pruple;
+    background-color: var.$primary-purple;
     border-radius: 5px 100px 5px 5px;
     padding: 40px 54px;
 }
@@ -37,14 +36,27 @@
     margin-top: 32px;
 
     &__fields {
+        box-sizing: border-box;
+        width: 100%;
         border-radius: 5px 80px 5px 5px;
         padding: 40px 32px;
         grid-row: 1;
         background-color: var.$create-form-bg;
 
         &__fieldset--survey-info {
+            box-sizing: border-box;
             outline: unset;
             border: unset;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 32px;
+            row-gap: 16px;
+
+            &--date-and-category {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                column-gap: 12px;
+            }
         }
     }
 }

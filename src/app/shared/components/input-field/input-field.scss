@@ -1,20 +1,119 @@
-@use '../../../../styles/abstracts/variables' as var;
-@use '../../../..//styles/abstracts/mixins' as mixins;
-@use '../../../../styles.scss';
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
 
 .input-field {
     display: grid;
     grid-template-rows: auto;
-    row-gap: 2px;
+    row-gap: 6px;
 
     &__label {
         grid-row: 1;
         @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
+
+        &--optional {
+            font-weight: 400;
+            padding-left: 10px;
+        }
     }
 
-    &__input {
-        box-sizing: border-box;
-        
+    &__input-container {
+        display: grid;
+        height: 37px;
+        grid-template-columns: 1fr 37px;
+        column-gap: 10px;
     }
+
+    &__text-area,
+    &__input {
+        grid-column: 1;
+        box-sizing: border-box;
+        border-radius: 5px 20px 5px 5px;
+        padding: 7px 13px;
+        outline: unset;
+        border: unset;
+        cursor: pointer;
+        @include mixins.setup-font("Mulish", 16px, 400, var.$primary-purple);
+        transition: background-color 125ms ease-out, font-size 125ms ease-out;
+
+        &--writing {
+            background-color: var.$third-orange;
+            @include mixins.setup-font("Mulish", 18px, 500, var.$primary-purple);
+        }
+    }
+
+    &__text-area {
+        resize: vertical;
+        min-height: 37px;
+        max-height: 120px;
+        overflow-y: auto;
+        padding: 10px 13px 8px 13px;
+    }
+
+    &__button-container {
+        @include mixins.setup-display-flex(row, center, center);
+        grid-column: 2;
+    }
+
+    &__text-area + &__button-container {
+        @include mixins.setup-display-flex(row, center, flex-start);
+    }
+
+
+    &__trash-button {
+        position: relative;
+        box-sizing: border-box;
+        height: 37px;
+        aspect-ratio: 1 / 1;
+        outline: unset;
+        border: unset;
+        border-radius: 3px;
+        cursor: pointer;
+        @include mixins.setup-display-flex(row, center, center);
+        background-color: transparent;
+        transition: background-color 125ms ease-out;
+
+        &:hover {
+            background-color: rgba(255, 183, 112, 0.6);
+
+            .button-icon-container__icon--default {
+                opacity: 0;
+            }
+
+            .button-icon-container__icon--hover {
+                opacity: 1;
+            }
+        }
+    }
+
+
+}
+
+.button-icon-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 26px;
+    aspect-ratio: 1 / 1;
+
+    &__icon {
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        transition: opacity 125ms ease-out;
+
+        &--default {
+            background-image: url('/assets/icons/delete-default.svg');
+            opacity: 1;
+        }
+
+        &--hover {
+            background-image: url('/assets/icons/delete-hover.svg');
+            opacity: 0;
+        }
+    }
+
+
 
 }

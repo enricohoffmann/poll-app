@@ -1,6 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { InputFieldVariant } from '../../utils/types';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-input-field',
@@ -14,12 +14,21 @@ export class InputField {
   inputControl = input.required<FormControl<string>>();
   label = input<string>("");
   fieldId = input<string>("");
-  title = input<string>("");
   placeHolder = input<string>("");
   hasTrash = input<boolean>(true);
+  isWriting = signal(false);
+  isOptional = input<boolean>(false);
 
-  ngOnInit(){
-    
+  onInputEnter(): void{
+    this.isWriting.set(true);
+  }
+
+  onInputLeave(): void{
+    this.isWriting.set(false);
+  }
+
+  onDeleteContent(): void{
+    this.inputControl().setValue('');
   }
 
 }
