@@ -29,6 +29,11 @@
 
                 <article class="create-form__fields__fieldset--question-container">
 
+                    @for(question of questions.controls; track $index){
+                        <app-input-field [inputFieldVariant]="'noLabel'" 
+                            [inputControl]="getQuestionTextControl(question)"></app-input-field>
+                    }
+
                 </article>
 
                 

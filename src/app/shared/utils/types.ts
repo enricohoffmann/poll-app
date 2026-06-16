@@ -4,4 +4,4 @@ export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'fil
 
 export type SurveyCardVariant = 'highlights' | 'listview';
 
-export type InputFieldVariant = 'labelTop' | 'labelLeft' | 'textArea';
+export type InputFieldVariant = 'labelTop' | 'labelLeft' | 'textArea' | 'noLabel';
