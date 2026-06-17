@@ -64,7 +64,7 @@ export class SurveyCreate {
   private createAnswerGroup(): FormGroup {
     const answer: Answer = { id: 0, question_id: 0, text: '', sort_order: 1 };
     const answerFormGroup: FormGroup = new FormGroup({
-      answer: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4)] })
+      text: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4)] })
     });
     return answerFormGroup;
   }

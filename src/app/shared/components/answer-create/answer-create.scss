@@ -1,0 +1,16 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.answer-container {
+    @include mixins.setup-display-flex(row, stretch, center);
+    margin-bottom: 10px;
+
+    &__input {
+        flex: 1;
+    }
+
+    &__identifier {
+        @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
+        margin-right: 8px;
+    }
+}

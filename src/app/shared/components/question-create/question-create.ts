@@ -2,10 +2,11 @@ import { Component, input } from '@angular/core';
 import { Button } from "../button/button";
 import { InputField } from "../input-field/input-field";
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import { AnswerCreate } from '../answer-create/answer-create';
 
 @Component({
   selector: 'app-question-create',
-  imports: [Button, InputField],
+  imports: [Button, InputField, AnswerCreate],
   templateUrl: './question-create.html',
   styleUrl: './question-create.scss',
 })
