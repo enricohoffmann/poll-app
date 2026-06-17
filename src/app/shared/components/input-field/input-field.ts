@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, signal, output } from '@angular/core';
 import { InputFieldVariant } from '../../utils/types';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Button } from "../button/button";
@@ -19,6 +19,7 @@ export class InputField {
   hasTrash = input<boolean>(true);
   isWriting = signal(false);
   isOptional = input<boolean>(false);
+  readonly removeItem = output();
 
   onInputEnter(): void{
     this.isWriting.set(true);
@@ -30,6 +31,7 @@ export class InputField {
 
   onDeleteContent(): void{
     this.inputControl().setValue('');
+    this.removeItem.emit();
   }
 
 }

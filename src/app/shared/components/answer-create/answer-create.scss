@@ -11,6 +11,6 @@
 
     &__identifier {
         @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
-        margin-right: 8px;
+        width: 28px;
     }
 }

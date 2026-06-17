@@ -1,4 +1,8 @@
 <article class="answer-container">
-    <span class="answer-container__identifier">A.</span>
-    <app-input-field class="answer-container__input" [inputFieldVariant]="'noLabel'" [hasTrash]="true" [inputControl]="getAnswer()"></app-input-field>
+    <span class="answer-container__identifier">{{getIdentifier()}}.</span>
+    <app-input-field class="answer-container__input" 
+        [inputFieldVariant]="'noLabel'" 
+        [hasTrash]="true" [inputControl]="getAnswer()"
+        (removeItem)="onRemoveAnswer()"
+        ></app-input-field>
 </article>

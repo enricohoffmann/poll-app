@@ -1,6 +1,6 @@
 <figure class="question-field-section">
     <figcaption class="question-field-section__header">
-        <p class="question-field-section__text">1. Question</p>
+        <p class="question-field-section__text">{{questionIndex() + 1}}. Question</p>
         <app-button [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"></app-button>
     </figcaption>
     <app-input-field class="question-field-section__question" [inputFieldVariant]="'noLabel'"
@@ -13,8 +13,15 @@
         </div>
     </div>
     @for(answer of answers.controls; track $index){
-        <app-answer-create [answerFormGroup]="answer"></app-answer-create>
+        <app-answer-create 
+            [answerFormGroup]="answer" 
+            [answerIndex]="$index"
+            (removeAnswer)="onRemoveAnswer($event)"
+            ></app-answer-create>
     }
 
+    @if(answerCount() < 6){
+        <app-button (click)='onAddAnswer()'>Add answer</app-button>
+    }
 
 </figure>

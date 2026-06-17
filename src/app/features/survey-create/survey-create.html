@@ -27,11 +27,18 @@
                     </div>
                 </fieldset>
 
-                <article class="create-form__fields__fieldset--question-container mt-32">
+                <article class="create-form__fields__fieldset--survey-info mt-32">
 
                     @for(question of questions.controls; track $index){
-                        <app-question-create [questionFormGroup]="question"></app-question-create>
+                        <app-question-create 
+                            [questionFormGroup]="question" 
+                            (addAnswerEvent)="addAnswer($event)"
+                            (removeAnswerEvent)="removeAnswer($event)"
+                            [questionIndex]="$index"
+                            ></app-question-create>
                     }
+
+                    <app-button (click)="addQuestion()">Add next question</app-button>
 
                 </article>
 

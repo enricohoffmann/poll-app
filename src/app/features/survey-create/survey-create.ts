@@ -42,13 +42,16 @@ export class SurveyCreate {
   }
 
   ngOnInit(): void {
+    this.addQuestion();
+  }
+
+  private createNewQuestion(): FormGroup {
     const questionGroup: FormGroup = this.createQuestionGroup();
     const answers = questionGroup.controls['answers'] as FormArray;
 
     answers.push(this.createAnswerGroup());
     answers.push(this.createAnswerGroup());
-    this.surveyForm.controls.questions.push(questionGroup);
-
+    return questionGroup;
   }
 
   private createQuestionGroup(): FormGroup {
@@ -73,12 +76,25 @@ export class SurveyCreate {
     return this.surveyForm.controls.questions as FormArray;
   }
 
-  getAnswer(questionIndex: number): FormArray {
-    return this.surveyForm.controls.questions.at(questionIndex).controls['answers'] as FormArray;
+  getAnswers(questionIndex: number): FormArray {
+    const question = this.questions.at(questionIndex);
+    if(!question) {return new FormArray<FormGroup>([]);}
+    return question.controls['answers'] as FormArray;
   }
 
-  getQuestionTextControl(question: FormGroup): FormControl<string> {
-    return question.controls['text'] as FormControl<string>;
+  addAnswer(questionIndex: number): void{
+    const answers = this.getAnswers(questionIndex);
+    answers.push(this.createAnswerGroup());
   }
 
+  removeAnswer({questionIndex, answerIndex}: {questionIndex: number, answerIndex: number}): void {
+    const answers = this.getAnswers(questionIndex);
+    if(answers.length > 2){
+      answers.removeAt(answerIndex);
+    }
+  }
+
+  addQuestion(): void {
+    this.surveyForm.controls.questions.push(this.createNewQuestion());
+  }
 }
