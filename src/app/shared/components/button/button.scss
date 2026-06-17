@@ -43,6 +43,32 @@
             background-color: var.$primary-orange;
         }
     }
+
+    &--trash {
+        position: relative;
+        box-sizing: border-box;
+        height: 37px;
+        aspect-ratio: 1 / 1;
+        outline: unset;
+        border: unset;
+        border-radius: 3px;
+        cursor: pointer;
+        @include mixins.setup-display-flex(row, center, center);
+        background-color: transparent;
+        transition: background-color 125ms ease-out;
+
+        &:hover {
+            background-color: rgba(255, 183, 112, 0.6);
+
+            .btn-icon-container__icon--default {
+                opacity: 0;
+            }
+
+            .btn-icon-container__icon--hover {
+                opacity: 1;
+            }
+        }
+    }
 }
 
 .btn-icon {
@@ -67,5 +93,31 @@
 
     &--check {
         background-image: url('/assets/icons/check.svg');
+    }
+}
+
+.btn-icon-container {
+    position: relative;
+    box-sizing: border-box;
+    width: 26px;
+    aspect-ratio: 1 / 1;
+
+    &__icon {
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        transition: opacity 125ms ease-out;
+
+        &--default {
+            background-image: url('/assets/icons/delete-default.svg');
+            opacity: 1;
+        }
+
+        &--hover {
+            background-image: url('/assets/icons/delete-hover.svg');
+            opacity: 0;
+        }
     }
 }

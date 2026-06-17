@@ -7,7 +7,7 @@
         
     </label>
 
-    <div class="input-field__input-container">
+    <div class="input-field__input-container" [class.input-field__input-container--one-column]="!hasTrash()">
 
         @if(inputFieldVariant() !== 'textArea'){
         <input class="input-field__input" type="text" [id]="fieldId()" [name]="fieldId()" [formControl]="inputControl()"
@@ -21,15 +21,12 @@
             </textarea>
         }
 
-        <div class="input-field__button-container">
-            @if(hasTrash()){
-            <button type="button" class="input-field__trash-button" (click)="onDeleteContent()">
-                <div class="button-icon-container">
-                    <div class="button-icon-container__icon button-icon-container__icon--default"></div>
-                    <div class="button-icon-container__icon button-icon-container__icon--hover"></div>
-                </div>
-            </button>
-            }
-        </div>
+        @if(hasTrash()){
+            <div class="input-field__button-container">
+                <app-button [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true" (click)="onDeleteContent()"></app-button>
+            </div>
+        }
+
+        
     </div>
 </article>

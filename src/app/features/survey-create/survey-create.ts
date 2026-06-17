@@ -6,11 +6,12 @@ import { FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray } fr
 import { Survey } from '../../interfaces/survey-interface';
 import { Question } from '../../interfaces/question-interface';
 import { Answer } from '../../interfaces/answer-interface';
+import { QuestionCreate } from '../../shared/components/question-create/question-create';
 
 
 @Component({
   selector: 'app-survey-create',
-  imports: [Status, Button, InputField, ReactiveFormsModule],
+  imports: [Status, Button, InputField, ReactiveFormsModule, QuestionCreate],
   templateUrl: './survey-create.html',
   styleUrl: './survey-create.scss',
 })
@@ -72,8 +73,8 @@ export class SurveyCreate {
     return this.surveyForm.controls.questions as FormArray;
   }
 
-  getAnswersByFormArrayIndex(formArrayIndex: number): FormArray {
-    return this.surveyForm.controls.questions.at(formArrayIndex).controls['answers'] as FormArray;
+  getAnswer(questionIndex: number): FormArray {
+    return this.surveyForm.controls.questions.at(questionIndex).controls['answers'] as FormArray;
   }
 
   getQuestionTextControl(question: FormGroup): FormControl<string> {

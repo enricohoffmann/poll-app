@@ -27,11 +27,10 @@
                     </div>
                 </fieldset>
 
-                <article class="create-form__fields__fieldset--question-container">
+                <article class="create-form__fields__fieldset--question-container mt-32">
 
                     @for(question of questions.controls; track $index){
-                        <app-input-field [inputFieldVariant]="'noLabel'" 
-                            [inputControl]="getQuestionTextControl(question)"></app-input-field>
+                        <app-question-create [questionFormGroup]="question"></app-question-create>
                     }
 
                 </article>

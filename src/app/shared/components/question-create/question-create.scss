@@ -1,0 +1,28 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.question-field-section {
+
+    &__header {
+        @include mixins.setup-display-flex(row, space-between, center);
+        margin-bottom: 8px
+    }
+
+    &__answers {
+        margin-top: 24px;
+        @include mixins.setup-display-flex(row, space-between, center);
+    }
+
+    &__multiple-select-container {
+        @include mixins.setup-display-flex(row, flex-end, center, 8px);
+    }
+
+    &__text {
+        @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
+
+        &--md {
+            @include mixins.setup-font("Mulish", 12px, 400, rgba(255,255,255,1));
+        }
+    }
+
+}

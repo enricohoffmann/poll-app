@@ -22,6 +22,11 @@
         height: 37px;
         grid-template-columns: 1fr 37px;
         column-gap: 10px;
+
+        &--one-column {
+            grid-template-columns: 1fr;
+            column-gap: 0;
+        }
     }
 
     &__text-area,
@@ -55,65 +60,7 @@
         grid-column: 2;
     }
 
-    &__text-area + &__button-container {
+    &__text-area+&__button-container {
         @include mixins.setup-display-flex(row, center, flex-start);
     }
-
-
-    &__trash-button {
-        position: relative;
-        box-sizing: border-box;
-        height: 37px;
-        aspect-ratio: 1 / 1;
-        outline: unset;
-        border: unset;
-        border-radius: 3px;
-        cursor: pointer;
-        @include mixins.setup-display-flex(row, center, center);
-        background-color: transparent;
-        transition: background-color 125ms ease-out;
-
-        &:hover {
-            background-color: rgba(255, 183, 112, 0.6);
-
-            .button-icon-container__icon--default {
-                opacity: 0;
-            }
-
-            .button-icon-container__icon--hover {
-                opacity: 1;
-            }
-        }
-    }
-
-
-}
-
-.button-icon-container {
-    position: relative;
-    box-sizing: border-box;
-    width: 26px;
-    aspect-ratio: 1 / 1;
-
-    &__icon {
-        position: absolute;
-        inset: 0;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-        transition: opacity 125ms ease-out;
-
-        &--default {
-            background-image: url('/assets/icons/delete-default.svg');
-            opacity: 1;
-        }
-
-        &--hover {
-            background-image: url('/assets/icons/delete-hover.svg');
-            opacity: 0;
-        }
-    }
-
-
-
 }

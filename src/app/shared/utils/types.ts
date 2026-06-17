@@ -1,6 +1,6 @@
 export type HeaderVariant = 'whiteHeader' | 'prupleHeader';
 
-export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn';
+export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn' | 'trashBtn';
 
 export type SurveyCardVariant = 'highlights' | 'listview';
 

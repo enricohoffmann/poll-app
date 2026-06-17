@@ -14,7 +14,8 @@ export class Button {
     primaryBtn: 'btn--primary',
     secondaryBtn: 'btn--secondary',
     tertiaryBtn: 'btn--tertiary',
-    filterBtn: 'btn--filter'
+    filterBtn: 'btn--filter',
+    trashBtn: 'btn--trash'
   };
 
   private readonly BUTTON_ICON_CLASSES: Record<'add'|'check', string> = {
@@ -25,6 +26,7 @@ export class Button {
   buttonVariant = input<ButtonVariant>('primaryBtn');
   buttonClass = computed(() => this.BUTTON_CLASSES[this.buttonVariant()]);
   hasIcon = input(false);
+  hasTrashIcon = input(false);
   buttonIconVariant = input<'add' | 'check'>('add');
   buttonIconClass = computed(() => this.BUTTON_ICON_CLASSES[this.buttonIconVariant()]);
   isActivated = signal(false);

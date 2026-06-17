@@ -1,10 +1,11 @@
 import { Component, input, signal } from '@angular/core';
 import { InputFieldVariant } from '../../utils/types';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { Button } from "../button/button";
 
 @Component({
   selector: 'app-input-field',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Button],
   templateUrl: './input-field.html',
   styleUrl: './input-field.scss',
 })
