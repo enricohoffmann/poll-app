@@ -16,6 +16,7 @@ export class QuestionCreate {
   answerCount = signal<number>(0);
   readonly addAnswerEvent = output<number>();
   readonly removeAnswerEvent = output<{ questionIndex: number; answerIndex: number }>(); 
+  readonly removeQuestionEvent = output<number>();
 
   ngOnInit():void {
     this.updateAnswerCount();
@@ -42,6 +43,10 @@ export class QuestionCreate {
 
   onRemoveAnswer(answerIndex: number): void{
     this.removeAnswerEvent.emit({questionIndex: this.questionIndex(), answerIndex: answerIndex});
+  }
+
+  onRemoveQuestion(): void {
+    this.removeQuestionEvent.emit(this.questionIndex());
   }
 
 }

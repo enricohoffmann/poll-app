@@ -1,7 +1,7 @@
 <figure class="question-field-section">
     <figcaption class="question-field-section__header">
         <p class="question-field-section__text">{{questionIndex() + 1}}. Question</p>
-        <app-button [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"></app-button>
+        <app-button [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true" (click)="onRemoveQuestion()"></app-button>
     </figcaption>
     <app-input-field class="question-field-section__question" [inputFieldVariant]="'noLabel'"
         [inputControl]="getQuestion()" [hasTrash]="false"></app-input-field>

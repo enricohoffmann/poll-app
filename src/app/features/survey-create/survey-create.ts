@@ -97,4 +97,11 @@ export class SurveyCreate {
   addQuestion(): void {
     this.surveyForm.controls.questions.push(this.createNewQuestion());
   }
+
+  removeQuestion(questionIndex: number): void {
+    const questions = this.questions;
+    if(questions.length > 1) {
+      questions.removeAt(questionIndex);
+    }
+  }
 }
