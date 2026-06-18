@@ -7,6 +7,8 @@ import { Survey } from '../../interfaces/survey-interface';
 import { Question } from '../../interfaces/question-interface';
 import { Answer } from '../../interfaces/answer-interface';
 import { QuestionCreate } from '../../shared/components/question-create/question-create';
+import { SurveyModel } from '../../models/survey-model';
+import { SurveyService } from '../../services/survey-service';
 
 
 @Component({
@@ -34,10 +36,13 @@ export class SurveyCreate {
     questions: new FormArray<FormGroup>([])
   });
 
+  private surveyService = new SurveyService();
+
   onSubmit(): void {
     if (this.surveyForm.valid) {
-      console.log(this.surveyForm.value);
-
+      this.surveyService.handleAddSurvey(this.surveyForm);
+      //console.log(this.surveyForm.value);
+      
     }
   }
 
@@ -78,18 +83,18 @@ export class SurveyCreate {
 
   getAnswers(questionIndex: number): FormArray {
     const question = this.questions.at(questionIndex);
-    if(!question) {return new FormArray<FormGroup>([]);}
+    if (!question) { return new FormArray<FormGroup>([]); }
     return question.controls['answers'] as FormArray;
   }
 
-  addAnswer(questionIndex: number): void{
+  addAnswer(questionIndex: number): void {
     const answers = this.getAnswers(questionIndex);
     answers.push(this.createAnswerGroup());
   }
 
-  removeAnswer({questionIndex, answerIndex}: {questionIndex: number, answerIndex: number}): void {
+  removeAnswer({ questionIndex, answerIndex }: { questionIndex: number, answerIndex: number }): void {
     const answers = this.getAnswers(questionIndex);
-    if(answers.length > 2){
+    if (answers.length > 2) {
       answers.removeAt(answerIndex);
     }
   }
@@ -100,7 +105,7 @@ export class SurveyCreate {
 
   removeQuestion(questionIndex: number): void {
     const questions = this.questions;
-    if(questions.length > 1) {
+    if (questions.length > 1) {
       questions.removeAt(questionIndex);
     }
   }
