@@ -38,10 +38,10 @@ export class SurveyCreate {
 
   private surveyService = new SurveyService();
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.surveyForm.valid) {
-      this.surveyService.handleAddSurvey(this.surveyForm);
-      //console.log(this.surveyForm.value);
+      const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
+      console.log(surveyAddResult);
       
     }
   }

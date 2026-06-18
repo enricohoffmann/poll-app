@@ -1,5 +1,5 @@
 import { Injectable, OnInit, signal } from '@angular/core';
-import { AuthWeakPasswordError, createClient, RealtimeChannel } from '@supabase/supabase-js';
+import { AuthWeakPasswordError, createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 import { ENVIRONMENT } from '../../environments/environment';
 import { Category } from '../interfaces/category-interface';
 import { Survey } from '../interfaces/survey-interface';
@@ -15,11 +15,13 @@ import { AnswerModel } from '../models/answer-model';
 })
 export class SurveyService implements OnInit {
 
-  private supabaseClient = createClient(ENVIRONMENT.supabaseUrl, ENVIRONMENT.supabaseKey);
+  private supabaseClient: SupabaseClient;
 
   surveyList = signal<SurveyWithCategory[]>([]);
 
   constructor() {
+    this.supabaseClient = createClient(ENVIRONMENT.supabaseUrl, ENVIRONMENT.supabaseKey);
+
     this.getCategories().then(c => {
       //console.log(c);
     });
@@ -34,7 +36,7 @@ export class SurveyService implements OnInit {
   }
 
   ngOnInit(): void {
-
+    
   }
 
   async getCategories(): Promise<Category[]> {
@@ -64,14 +66,12 @@ export class SurveyService implements OnInit {
 
   }
 
-  async handleAddSurvey(surveyForm: FormGroup) {
-    //1. SurveyModel erstellen und in DB speichern
+  async handleAddSurvey(surveyForm: FormGroup):Promise<boolean> {
     const survey = new SurveyModel(surveyForm.value);
     survey.category_id = 1;
     const responseSurveyId = await this.createSurvey(survey);
-    //2. wenn die Survey ID > 0 ist Questions erstellen
-    if(responseSurveyId === 0){return;}
-    await this.handleQuestions(surveyForm.value['questions'], responseSurveyId);
+    if(responseSurveyId === 0){return false;}
+    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId);
     
   }
 
@@ -82,14 +82,17 @@ export class SurveyService implements OnInit {
     return response.data?.[0]?.id ?? 0;
   }
 
-  async handleQuestions(questionsDataRaw: [], surveyId: number){
+  async handleQuestions(questionsDataRaw: [], surveyId: number): Promise<boolean>{
     for (let questionIndex = 0; questionIndex < questionsDataRaw.length; questionIndex++) {
       const question = new QuestionModel(questionsDataRaw[questionIndex], surveyId);
       question.sort_order = questionIndex;
       const questionIdRespons: number = await this.createQuestion(question);
-      if(questionIdRespons === 0) {break;}
-      await this.handleAnswers(questionsDataRaw[questionIndex]['answers'], questionIdRespons);
+      if(questionIdRespons === 0) {return false;}
+      const answerResult:boolean = 
+        await this.handleAnswers(questionsDataRaw[questionIndex]['answers'], questionIdRespons);
+      if(!answerResult){return false;}
     }
+    return true;
   }
 
   async createQuestion(question: QuestionModel): Promise<number> {
@@ -99,13 +102,14 @@ export class SurveyService implements OnInit {
     return response.data?.[0]?.id ?? 0;
   }
 
-  async handleAnswers(answersDataRaw: [], questionId: number) {
+  async handleAnswers(answersDataRaw: [], questionId: number): Promise<boolean> {
     for(let answerIndex = 0; answerIndex < answersDataRaw.length; answerIndex++){
       const answer = new AnswerModel(answersDataRaw[answerIndex], questionId);
       answer.sort_order = answerIndex;
       const answerIdResponse:number = await this.createAnswer(answer);
-      if(answerIdResponse === 0) {break;}
+      if(answerIdResponse === 0) {return false;}
     }
+    return true;
   }
 
   async createAnswer(answer: AnswerModel): Promise<number> {
