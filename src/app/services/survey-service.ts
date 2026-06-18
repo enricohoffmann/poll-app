@@ -63,7 +63,6 @@ export class SurveyService implements OnInit {
       .order('sort_order', { ascending: true, referencedTable: 'answers' });
     if (response.error) { return []; }
     return (response.data ?? []) as QuestionWithAnswers[];
-
   }
 
   async handleAddSurvey(surveyForm: FormGroup):Promise<boolean> {

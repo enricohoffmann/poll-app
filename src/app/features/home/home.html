@@ -25,7 +25,7 @@
 
             <aside class="highlight-cards mt-48">
                 @for (survey of surveyService.surveyList(); track survey.id) {
-                <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
+                    <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>
 
