@@ -9,7 +9,11 @@
         <h5 class="card-title">
             {{survey.title}}</h5>
 
-        <app-status [isActive]="isHover()" [canHover]="cardVariant() == 'highlights'">Ends in 1 Day</app-status>
+        <app-status 
+            [isActive]="isHover()" 
+            [canHover]="cardVariant() == 'highlights'">
+            {{survey.difference_in_days | expiryViewChange}}
+        </app-status>
 
 
     </section>

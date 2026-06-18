@@ -24,7 +24,7 @@
             <p class="home-surveys-section home-surveys-section__notice mt-32">Ending soon surveys</p>
 
             <aside class="highlight-cards mt-48">
-                @for (survey of surveyService.surveyList(); track survey.id) {
+                @for (survey of surveyService.surveyHighlights(); track survey.id) {
                     <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>

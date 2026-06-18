@@ -17,6 +17,9 @@ export class Home implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.surveyService.getSurveyWithCategory();
+    await this.surveyService.getSurveyHighlights();
+    console.log(this.surveyService.surveyHighlights());
+    
   }
 
   onNewSurvey(): void{
