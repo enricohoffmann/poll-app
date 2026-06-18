@@ -26,6 +26,10 @@
         .card-title {
             grid-row: 2;
             @include mixins.setup-font("Mulish", 26px, 700, var.$primary-purple);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         &:hover {
@@ -35,14 +39,14 @@
     }
 
     &--listview {
-        width: clamp(300px, calc(257px + 13.438vw), 515px);
+        width: clamp(300px, calc(257px + 13.438vw), 496px);
         height: 147px;
         background-color: var.$background-color-card-secondary-default;
         border-radius: 5px 50px 5px 5px;
         padding: 12px 20px;
-        transition: 
-            background-color 300ms ease-out, 
-            opacity 300ms ease-out, 
+        transition:
+            background-color 300ms ease-out,
+            opacity 300ms ease-out,
             box-shadow 300ms ease-out;
 
         .card-category {
@@ -50,7 +54,11 @@
         }
 
         .card-title {
-            @include mixins.setup-font("Mulish", 24px, 700, rgba(255,255,255,1));
+            @include mixins.setup-font("Mulish", 24px, 700, rgba(255, 255, 255, 1));
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         &:hover {

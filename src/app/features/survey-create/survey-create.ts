@@ -30,8 +30,8 @@ export class SurveyCreate {
   };
 
   surveyForm = new FormGroup({
-    title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4)] }),
-    description: new FormControl(this.survey.description, { nonNullable: true }),
+    title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]}),
+    description: new FormControl(this.survey.description, { nonNullable: true, validators: [Validators.maxLength(300)]}),
     expires_at: new FormControl(this.survey.expires_at, { nonNullable: true }),
     questions: new FormArray<FormGroup>([])
   });
@@ -62,7 +62,7 @@ export class SurveyCreate {
   private createQuestionGroup(): FormGroup {
     const question: Question = { id: 0, survey_id: this.survey.id, text: '', allow_multiple_answers: false, sort_order: 1 };
     const questionFormGroup: FormGroup = new FormGroup({
-      text: new FormControl(question.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4)] }),
+      text: new FormControl(question.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)]}),
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, { nonNullable: true }),
       answers: new FormArray<FormGroup>([])
     });
@@ -72,7 +72,7 @@ export class SurveyCreate {
   private createAnswerGroup(): FormGroup {
     const answer: Answer = { id: 0, question_id: 0, text: '', sort_order: 1 };
     const answerFormGroup: FormGroup = new FormGroup({
-      text: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4)] })
+      text: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]})
     });
     return answerFormGroup;
   }

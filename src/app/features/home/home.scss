@@ -31,7 +31,7 @@
     }
 
     &__description {
-        @include mixins.setup-font("Mulish", 24px, 600, rgba(255,255,255,1));
+        @include mixins.setup-font("Mulish", 24px, 600, rgba(255, 255, 255, 1));
     }
 }
 
@@ -53,7 +53,7 @@
 
     &__notice {
         align-items: flex-start;
-        @include mixins.setup-font("Mulish", 32px, 500, rgba(255,255,255,1));
+        @include mixins.setup-font("Mulish", 32px, 500, rgba(255, 255, 255, 1));
     }
 }
 
@@ -72,11 +72,28 @@
     }
 
     &__list {
+        box-sizing: border-box;
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 16px;
         row-gap: 16px;
         margin-top: 32px;
+        max-height: 480px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-inline-end: 12px;
+
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var.$primary-orange;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
     }
 }
 
