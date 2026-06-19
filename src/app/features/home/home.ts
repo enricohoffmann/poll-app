@@ -4,6 +4,7 @@ import { Button } from '../../shared/components/button/button';
 import { SurveyService } from '../../services/survey-service';
 import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { Router } from '@angular/router';
+import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +19,7 @@ export class Home implements OnInit {
   showPastSurveys = signal(false);
 
   surveysList = computed(() => {
-    if(this.showActiveSurveys() && this.showPastSurveys()){return this.surveyService.surveyList();}
-    else {return this.surveyService.surveyList();}
+    return this.surveyService.surveyList().filter(survey => this.isSurveyVisible(survey));
   });
 
 
@@ -49,5 +49,12 @@ export class Home implements OnInit {
 
   onFilterPastSurveys(): void {
     this.showPastSurveys.set(!this.showPastSurveys());
+  }
+
+  private isSurveyVisible(survey: SurveyWithCategory): boolean {
+    if(this.showActiveSurveys() && this.showPastSurveys()) {return true;}
+    if(this.showActiveSurveys()) {return survey.difference_in_days >= 0;}
+    if(this.showPastSurveys()) {return survey.difference_in_days < 0;}
+    return false;
   }
 }

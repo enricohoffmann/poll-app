@@ -1,5 +1,5 @@
-import { Injectable, OnInit, signal } from '@angular/core';
-import { AuthWeakPasswordError, createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
+import { Injectable, OnInit, signal, computed } from '@angular/core';
+import { createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 import { ENVIRONMENT } from '../../environments/environment';
 import { Category } from '../interfaces/category-interface';
 import { Survey } from '../interfaces/survey-interface';
