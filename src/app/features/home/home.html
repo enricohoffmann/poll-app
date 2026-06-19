@@ -34,13 +34,13 @@
         <section class="home-survey-list-section mt-48 mb-72">
             <header class="home-survey-list-section__header">
                 <div class="home-survey-filter-buttons">
-                    <app-button [buttonVariant]="'filterBtn'">Active survey</app-button>
-                    <app-button [buttonVariant]="'filterBtn'">Past survey</app-button>
+                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()" (click)="onFilterActiveSurveys()">Active survey</app-button>
+                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()" (click)="onFilterPastSurveys()">Past survey</app-button>
                 </div>
                 <!-- sort by... -->
             </header>
             <aside class="home-survey-list-section__list">
-                @for (survey of surveyService.surveyList(); track survey.id){
+                @for (survey of surveysList(); track survey.id){
                     <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>

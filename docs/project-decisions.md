@@ -24,3 +24,9 @@ Keine Authentifizierung laut Projektvorgabe.
 - Description: optional, max. 300 Zeichen
 - Question: 4–120 Zeichen
 - Answer: 1–80 Zeichen
+
+## Filter auf Home
+
+- "Past" und "Active" können nicht gleichzeitig deaktiviert werden,
+  es wird dann der "Active" - Filter gesetzt.
+  Beim Start ist der "Active" - Filter vorbelegt.

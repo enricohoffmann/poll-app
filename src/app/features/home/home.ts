@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, effect, computed } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { Button } from '../../shared/components/button/button';
 import { SurveyService } from '../../services/survey-service';
@@ -14,16 +14,40 @@ import { Router } from '@angular/router';
 export class Home implements OnInit {
   surveyService = inject(SurveyService);
   router = inject(Router);
+  showActiveSurveys = signal(true);
+  showPastSurveys = signal(false);
+
+  surveysList = computed(() => {
+    if(this.showActiveSurveys() && this.showPastSurveys()){return this.surveyService.surveyList();}
+    else {return this.surveyService.surveyList();}
+  });
+
+
+  constructor() {
+    effect(() => {
+      if(!this.showActiveSurveys() && !this.showPastSurveys()){
+        this.showActiveSurveys.set(true);
+      }
+    });
+  }
+
 
   async ngOnInit(): Promise<void> {
     await this.surveyService.getSurveyWithCategory();
     await this.surveyService.getSurveyHighlights();
-    console.log(this.surveyService.surveyHighlights());
-    
+
   }
 
-  onNewSurvey(): void{
+  onNewSurvey(): void {
     this.router.navigate(['create']);
   }
-  
+
+  onFilterActiveSurveys(): void {
+    this.showActiveSurveys.set(!this.showActiveSurveys());
+
+  }
+
+  onFilterPastSurveys(): void {
+    this.showPastSurveys.set(!this.showPastSurveys());
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -7,7 +7,6 @@ import { Survey } from '../../interfaces/survey-interface';
 import { Question } from '../../interfaces/question-interface';
 import { Answer } from '../../interfaces/answer-interface';
 import { QuestionCreate } from '../../shared/components/question-create/question-create';
-import { SurveyModel } from '../../models/survey-model';
 import { SurveyService } from '../../services/survey-service';
 
 
@@ -36,7 +35,7 @@ export class SurveyCreate {
     questions: new FormArray<FormGroup>([])
   });
 
-  private surveyService = new SurveyService();
+  private surveyService = inject(SurveyService);
 
   async onSubmit(): Promise<void> {
     if (this.surveyForm.valid) {
