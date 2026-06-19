@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SurveyService } from '../../../services/survey-service';
 
 @Component({
   selector: 'app-drop-down-menu',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   templateUrl: './drop-down-menu.html',
   styleUrl: './drop-down-menu.scss',
 })
-export class DropDownMenu {}
+export class DropDownMenu {
+  surveyService = inject(SurveyService);
+
+  ngOnInit(): void {
+    this.surveyService.getCategories();
+  }
+}

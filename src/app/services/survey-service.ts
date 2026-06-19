@@ -19,6 +19,7 @@ export class SurveyService implements OnInit {
 
   surveyList = signal<SurveyWithCategory[]>([]);
   surveyHighlights = signal<SurveyWithCategory[]>([]);
+  categoriesList = signal<Category[]>([]);
 
   constructor() {
     this.supabaseClient = createClient(ENVIRONMENT.supabaseUrl, ENVIRONMENT.supabaseKey);
@@ -40,9 +41,14 @@ export class SurveyService implements OnInit {
     
   }
 
-  async getCategories(): Promise<Category[]> {
+  async startRetrieval(): Promise<void> {
+    await this.getSurveyHighlights();
+    await this.getSurveyWithCategory();
+  }
+
+  async getCategories(): Promise<void> {
     const response = await this.supabaseClient.from('categories').select('*');
-    return (response.data ?? []) as Category[];
+    this.categoriesList.set(response.data ?? [] as Category[]);
   }
 
   async getSurveys(): Promise<Survey[]> {

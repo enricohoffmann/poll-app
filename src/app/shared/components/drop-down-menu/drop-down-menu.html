@@ -1,1 +1,15 @@
-<p>drop-down-menu works!</p>
+<button type="button" class="drop-down">
+    <span class="drop-down__content">Sort by categories</span>
+    <div class="drop-down__icons">
+        <div class="drop-down__icon drop-down__icon--up"></div>
+        <div class="drop-down__icon drop-down__icon--down-white"></div>
+        <div class="drop-down__icon drop-down__icon--down-orange"></div>
+    </div>
+</button>
+<ul>
+    @for (category of surveyService.categoriesList(); track $index) {
+    <li>
+        {{category.name}}
+    </li>
+    }
+</ul>

@@ -72,6 +72,7 @@
     }
 
     &__list {
+        min-height: 0;
         box-sizing: border-box;
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -82,6 +83,7 @@
         overflow-y: auto;
         overflow-x: hidden;
         padding-inline-end: 12px;
+        transition: height 125ms ease-out;
 
         &::-webkit-scrollbar {
             width: 12px;

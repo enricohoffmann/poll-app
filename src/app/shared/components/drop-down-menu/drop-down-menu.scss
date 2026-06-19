@@ -1,2 +1,61 @@
 @use 'abstracts/variables' as var;
 @use 'abstracts/mixins' as mixins;
+
+.drop-down {
+    @include mixins.setup-display-flex(row, center, center, 12px);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: unset;
+    outline: unset;
+    background-color: transparent;
+    transition: background-color 125ms ease-out;
+    cursor: pointer;
+
+    &__content {
+        @include mixins.setup-font("Mulish", 18px, 700, rgba(255,255,255,1));
+    }
+
+    &__icons {
+        position: relative;
+        box-sizing: border-box;
+        width: 24px;
+        aspect-ratio: 1 / 1;
+    }
+
+    &__icon {
+        position: absolute;
+        inset: 0;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        transition: opacity 125ms ease-out;
+
+        &--up {
+            background-image: url('/assets/icons/arrow-drop-down-up-orange.svg');
+            opacity: 0;
+        }
+
+        &--down-white {
+            background-image: url('/assets/icons/arrow-drop-down-white.svg');
+            opacity: 1;
+        }
+
+        &--down-orange {
+            background-image: url('/assets/icons/arrow-drop-down-orange.svg');
+            opacity: 0;
+        }
+    }
+
+    &:hover {
+        background-color: rgba(217, 217, 217, 0.12);
+
+        .drop-down__icon--down-white {
+            opacity: 0;
+        }
+
+        .drop-down__icon--down-orange {
+            opacity: 1;
+        }
+
+    }
+}
