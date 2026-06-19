@@ -37,7 +37,7 @@
                     <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()" (click)="onFilterActiveSurveys()">Active survey</app-button>
                     <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()" (click)="onFilterPastSurveys()">Past survey</app-button>
                 </div>
-                <!-- sort by... -->
+                <app-drop-down-menu></app-drop-down-menu>
             </header>
             <aside class="home-survey-list-section__list">
                 @for (survey of surveysList(); track survey.id){

@@ -5,10 +5,11 @@ import { SurveyService } from '../../services/survey-service';
 import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { Router } from '@angular/router';
 import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
+import { DropDownMenu } from '../../shared/components/drop-down-menu/drop-down-menu';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Button, SurveyCard],
+  imports: [Header, Button, SurveyCard, DropDownMenu],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
