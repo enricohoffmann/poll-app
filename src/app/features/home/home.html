@@ -11,8 +11,8 @@
                     Collect opinions, engage your audience,
                     and turn feedback into action.
                 </p>
-                <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
-                    class="mt-32" (click)="onNewSurvey()">New survey</app-button>
+                <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'" class="mt-32"
+                    (click)="onNewSurvey()">New survey</app-button>
             </div>
             <div class="home-top-column-right">
                 Placeholder
@@ -25,7 +25,7 @@
 
             <aside class="highlight-cards mt-48">
                 @for (survey of surveyService.surveyHighlights(); track survey.id) {
-                    <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
+                <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>
 
@@ -34,15 +34,18 @@
         <section class="home-survey-list-section mt-48 mb-72">
             <header class="home-survey-list-section__header">
                 <div class="home-survey-filter-buttons">
-                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()" (click)="onFilterActiveSurveys()">Active survey</app-button>
-                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()" (click)="onFilterPastSurveys()">Past survey</app-button>
+                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()"
+                        (click)="onFilterActiveSurveys()">Active survey</app-button>
+                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()"
+                        (click)="onFilterPastSurveys()">Past survey</app-button>
                 </div>
                 <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)"></app-drop-down-menu>
-                <p>{{currentCategory()?.name}}</p>
+
+                <span class="home-survey-list-section__header__sorting-category">{{currentCategory()?.name}}</span>
             </header>
             <aside class="home-survey-list-section__list">
-                @for (survey of surveysList(); track survey.id){
-                    <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
+                @for (survey of surveySortedList(); track survey.id){
+                <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
                 }
             </aside>
 

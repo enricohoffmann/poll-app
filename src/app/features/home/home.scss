@@ -68,7 +68,16 @@
     margin-right: auto;
 
     &__header {
-        @include mixins.setup-display-flex(row, space-between, center);
+        display: grid;
+        grid-template-columns: 1fr auto;
+       
+        &__sorting-category {
+            @include mixins.setup-display-flex(row, flex-start, center);
+            height: 26px;
+            grid-column: 2;
+            padding-left: 14px;
+            @include mixins.setup-font("Mulish", 14px, 400, var.$primary-orange);
+        }
     }
 
     &__list {
@@ -78,7 +87,7 @@
         grid-template-columns: 1fr 1fr;
         column-gap: 16px;
         row-gap: 16px;
-        margin-top: 32px;
+        margin-top: 10px;
         max-height: 480px;
         overflow-y: auto;
         overflow-x: hidden;

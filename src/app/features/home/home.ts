@@ -21,14 +21,21 @@ export class Home implements OnInit {
   showPastSurveys = signal(false);
   currentCategory = signal<Category | null>(null);
 
-  surveysList = computed(() => {
+  private surveyFilteredList = computed(() => {
     return this.surveyService.surveyList().filter(survey => this.isSurveyVisible(survey));
+  });
+
+  surveySortedList = computed(() => {
+    const category = this.currentCategory();
+    const surveys = [...this.surveyFilteredList()];
+    if (!category) { return surveys; }
+    return this.sortingSurveyList(category, surveys);
   });
 
 
   constructor() {
     effect(() => {
-      if(!this.showActiveSurveys() && !this.showPastSurveys()){
+      if (!this.showActiveSurveys() && !this.showPastSurveys()) {
         this.showActiveSurveys.set(true);
       }
     });
@@ -53,13 +60,24 @@ export class Home implements OnInit {
   }
 
   private isSurveyVisible(survey: SurveyWithCategory): boolean {
-    if(this.showActiveSurveys() && this.showPastSurveys()) {return true;}
-    if(this.showActiveSurveys()) {return survey.difference_in_days >= 0;}
-    if(this.showPastSurveys()) {return survey.difference_in_days < 0;}
+    if (this.showActiveSurveys() && this.showPastSurveys()) { return true; }
+    if (this.showActiveSurveys()) { return survey.difference_in_days >= 0; }
+    if (this.showPastSurveys()) { return survey.difference_in_days < 0; }
     return false;
   }
 
   onSortByCategory(category: Category): void {
-    this.currentCategory.set(category);    
+    this.currentCategory.set(category);
+  }
+
+  private sortingSurveyList(category: Category, unsortedSurveyList: SurveyWithCategory[]): SurveyWithCategory[] {
+    return unsortedSurveyList.sort((a, b) => {
+      const aMatches = a.category_id === category.id;
+      const bMatches = b.category_id === category.id;
+
+      if (aMatches && !bMatches) { return -1; }
+      if (!aMatches && bMatches) { return 1; }
+      return 0;
+    });
   }
 }
