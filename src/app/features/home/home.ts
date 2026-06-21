@@ -7,10 +7,11 @@ import { Router } from '@angular/router';
 import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
 import { DropDownMenu } from '../../shared/components/drop-down-menu/drop-down-menu';
 import { Category } from '../../interfaces/category-interface';
+import { HeroIllustration } from '../../shared/components/hero-illustration/hero-illustration';
 
 @Component({
   selector: 'app-home',
-  imports: [Header, Button, SurveyCard, DropDownMenu],
+  imports: [Header, Button, SurveyCard, DropDownMenu, HeroIllustration],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
