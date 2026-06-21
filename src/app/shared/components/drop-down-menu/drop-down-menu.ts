@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, output } from '@angular/core';
 import { SurveyService } from '../../../services/survey-service';
+import { Category } from '../../../interfaces/category-interface';
 
 @Component({
   selector: 'app-drop-down-menu',
@@ -9,8 +10,22 @@ import { SurveyService } from '../../../services/survey-service';
 })
 export class DropDownMenu {
   surveyService = inject(SurveyService);
+  isMenuOpen = signal(false);
+  sendCategorySelection = output<Category>();
 
   ngOnInit(): void {
     this.surveyService.getCategories();
+  }
+
+  onButtonClick(): void {
+    this.isMenuOpen.set(!this.isMenuOpen());
+  }
+
+  onCategoryClick(categoryIndex: number): void {
+    this.isMenuOpen.set(false);
+    const currentCategory = this.surveyService.getCategoryByIndex(categoryIndex);
+    if(currentCategory){
+      this.sendCategorySelection.emit(currentCategory);
+    }
   }
 }

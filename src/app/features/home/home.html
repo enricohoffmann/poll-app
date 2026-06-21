@@ -37,7 +37,8 @@
                     <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()" (click)="onFilterActiveSurveys()">Active survey</app-button>
                     <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()" (click)="onFilterPastSurveys()">Past survey</app-button>
                 </div>
-                <app-drop-down-menu></app-drop-down-menu>
+                <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)"></app-drop-down-menu>
+                <p>{{currentCategory()?.name}}</p>
             </header>
             <aside class="home-survey-list-section__list">
                 @for (survey of surveysList(); track survey.id){

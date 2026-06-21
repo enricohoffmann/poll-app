@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, effect, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, effect, computed, input } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { Button } from '../../shared/components/button/button';
 import { SurveyService } from '../../services/survey-service';
@@ -6,6 +6,7 @@ import { SurveyCard } from '../../shared/components/survey-card/survey-card';
 import { Router } from '@angular/router';
 import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
 import { DropDownMenu } from '../../shared/components/drop-down-menu/drop-down-menu';
+import { Category } from '../../interfaces/category-interface';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class Home implements OnInit {
   router = inject(Router);
   showActiveSurveys = signal(true);
   showPastSurveys = signal(false);
+  currentCategory = signal<Category | null>(null);
 
   surveysList = computed(() => {
     return this.surveyService.surveyList().filter(survey => this.isSurveyVisible(survey));
@@ -55,5 +57,9 @@ export class Home implements OnInit {
     if(this.showActiveSurveys()) {return survey.difference_in_days >= 0;}
     if(this.showPastSurveys()) {return survey.difference_in_days < 0;}
     return false;
+  }
+
+  onSortByCategory(category: Category): void {
+    this.currentCategory.set(category);    
   }
 }

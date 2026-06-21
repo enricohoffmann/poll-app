@@ -1,6 +1,11 @@
 @use 'abstracts/variables' as var;
 @use 'abstracts/mixins' as mixins;
 
+.drop-down-container {
+    position: relative;
+    width: 220px;
+}
+
 .drop-down {
     @include mixins.setup-display-flex(row, center, center, 12px);
     padding: 4px 10px;
@@ -10,9 +15,10 @@
     background-color: transparent;
     transition: background-color 125ms ease-out;
     cursor: pointer;
+    width: 100%;
 
     &__content {
-        @include mixins.setup-font("Mulish", 18px, 700, rgba(255,255,255,1));
+        @include mixins.setup-font("Mulish", 18px, 700, rgba(255, 255, 255, 1));
     }
 
     &__icons {
@@ -46,7 +52,23 @@
         }
     }
 
-    &:hover {
+    &--active {
+        background-color: rgba(217, 217, 217, 0.12);
+
+        .drop-down__icon--down-white {
+            opacity: 0;
+        }
+
+        .drop-down__icon--down-orange {
+            opacity: 0;
+        }
+
+        .drop-down__icon--up {
+            opacity: 1;
+        }
+    }
+
+    &:hover:not(.drop-down--active) {
         background-color: rgba(217, 217, 217, 0.12);
 
         .drop-down__icon--down-white {
@@ -56,6 +78,42 @@
         .drop-down__icon--down-orange {
             opacity: 1;
         }
-
     }
+}
+
+.drop-down-list {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    top: 36px;
+    left: 0;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 6px;
+    padding: 10px 10px;
+    @include mixins.setup-display-flex(column, center, flex-start, 6px);
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 125ms ease-in, opacity 150ms ease-in;
+    pointer-events: none;
+
+    &__item {
+        list-style-type: none;
+        @include mixins.setup-font("Mulish", 14px, 400, var.$primary-purple);
+        border-radius: 6px;
+        padding: 4px;
+        transition: background-color 125ms ease-in;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var.$light-pruple;
+        }
+    }
+
+}
+
+.list-open {
+    max-height: 300px;
+    opacity: 1;
+    pointer-events: auto;
 }

@@ -131,4 +131,9 @@ export class SurveyService implements OnInit {
     return response.data?.[0]?.id ?? 0;
   }
 
+  getCategoryByIndex(categoryIndex: number): (Category | null){
+    const category = this.categoriesList()[categoryIndex];
+    return category;
+  }
+
 }
