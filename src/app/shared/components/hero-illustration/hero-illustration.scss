@@ -7,6 +7,7 @@
     width: 360px;
     height: 420px;
 
+
     &__background-image {
         position: absolute;
         height: 364px;
@@ -23,6 +24,7 @@
         z-index: 11;
         @include mixins.setup-image('/assets/icons/speech-bubble.svg');
         transform: translateX(75px) translateY(96px);
+        transition: transform 200ms ease 100ms;
     }
 
     &__question-mark {
@@ -31,16 +33,18 @@
         width: 68px;
         z-index: 12;
         @include mixins.setup-image('/assets/icons/question-mark.svg');
-        transform: translateX(275px) translateY(4px) rotate(16deg);
+        transform: translateX(260px) translateY(13px) rotate(16deg);
+        transition: transform 200ms ease 30ms;
     }
 
     &__star {
         position: absolute;
         height: 62px;
         width: 62px;
-        z-index: 13;
+        z-index: 14;
         @include mixins.setup-image('/assets/icons/star.svg');
         transform: translateX(46px) translateY(294px);
+        transition: transform 250ms ease 80ms;
     }
 
     &__checkmark {
@@ -50,6 +54,7 @@
         z-index: 9;
         @include mixins.setup-image('/assets/icons/check-mark.svg');
         transform: translateX(238px) translateY(237px);
+        transition: transform 250ms ease 120ms;
     }
 
     &__purple-circle {
@@ -57,9 +62,10 @@
         width: 20px;
         height: 20px;
         border-radius: 9999px;
-        z-index: 14;
+        z-index: 13;
         background-color: rgba(71, 56, 91, 0.8);
         transform: translateX(87px) translateY(268px);
+        transition: transform 300ms ease 220ms;
     }
 
     &__orange-circle-sm {
@@ -70,6 +76,7 @@
         z-index: 15;
         background-color: var.$primary-orange;
         transform: translateX(316px) translateY(59px);
+        transition: transform 300ms ease;
     }
 
     &__orange-circle-md {
@@ -81,6 +88,7 @@
         background-color: var.$secondary-orange;
         transform: translateX(255px) translateY(191px);
         filter: brightness(1.10);
+        transition: transform 300ms ease 250ms;
     }
 
     &__purple-rectangle {
@@ -91,6 +99,43 @@
         background-color: rgba(71, 56, 91, 0.8);
         z-index: 7;
         transform: translateX(108px) translateY(171px) rotate(-12deg);
+        transition: transform 300ms ease 125ms;
     }
 
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hero-illustration:hover {
+        .hero-illustration__speech-bubble {
+            transform: translateX(65px) translateY(96px) scale(1.5);
+        }
+
+        .hero-illustration__question-mark {
+            transform: translateX(260px) translateY(13px) rotate(0deg);
+        }
+
+        .hero-illustration__star {
+            transform: translateX(30px) translateY(294px);
+        }
+
+        .hero-illustration__checkmark {
+            transform: translateX(280px) translateY(237px);
+        }
+
+        .hero-illustration__purple-rectangle {
+            transform: translateX(85px) translateY(171px) rotate(-12deg);
+        }
+
+        .hero-illustration__purple-circle {
+            transform: translateX(10px) translateY(330px);
+        }
+
+        .hero-illustration__orange-circle-sm {
+            transform: translateX(330px) translateY(70px);
+        }
+
+        .hero-illustration__orange-circle-md {
+            transform: translateX(280px) translateY(230px);
+        }
+    }
 }
