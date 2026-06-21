@@ -61,6 +61,15 @@
     @include mixins.setup-display-flex(row, center, center, 42px);
 }
 
+.empty-state {
+    @include mixins.setup-font("Mulish", 40px, 600, rgba(255, 255, 255, 1));
+}
+
+.empty-state-sm {
+    @include mixins.setup-font("Mulish", 20px, 600, rgba(255, 255, 255, 1));
+    height: 80px;
+}
+
 
 .home-survey-list-section {
     width: clamp(300px, calc(151.6px + 46.375vw), 1042px);

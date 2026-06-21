@@ -81,4 +81,12 @@ export class Home implements OnInit {
       return 0;
     });
   }
+
+
+  showEmptyState(): string {
+    if(this.showActiveSurveys() && !this.showPastSurveys()) {return 'No active surveys right now.';}
+    if(!this.showActiveSurveys() && this.showPastSurveys()) {return 'No past surveys right now.';}
+    return 'No surveys right now.';
+  }
+
 }
