@@ -27,11 +27,11 @@
     @include mixins.setup-display-flex(column, flex-start, flex-start, 24px);
 
     &__headline {
-        @include mixins.setup-font("Nerko-One", 100px, 400, var.$primary-orange, 89%);
+        @include mixins.setup-font("Nerko-One", clamp(3.5rem, 2.95rem + 2.75vw, 6.25rem), 400, var.$primary-orange, 89%);
     }
 
     &__description {
-        @include mixins.setup-font("Mulish", 24px, 600, rgba(255, 255, 255, 1));
+        @include mixins.setup-font("Mulish", clamp(1.125rem, 1.05rem + 0.375vw, 1.5rem), 600, rgba(255, 255, 255, 1));
     }
 }
 
