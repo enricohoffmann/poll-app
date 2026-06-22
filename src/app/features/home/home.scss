@@ -11,7 +11,7 @@
 
 .home-section {
     max-width: var.$max-content-width;
-    width: clamp(300px, calc(104px + 61.25vw), 1280px);
+    width: min(1120px, 92vw);
     margin-left: auto;
     margin-right: auto;
 }
@@ -36,9 +36,8 @@
 }
 
 .home-top-column-right {
-    height: 420px;
-    width: 420px;
     position: relative;
+    justify-content: flex-end;
 }
 
 .home-surveys-section {
@@ -119,4 +118,16 @@
 
 .home-survey-filter-buttons {
     @include mixins.setup-display-flex(row, flex-start, center, 28px);
+}
+
+@media(max-width: 999px) {
+    .home-top-grid {
+        grid-template-columns: 1fr;
+        row-gap: 32px;
+    }
+
+    .home-top-column-right {
+        @include mixins.setup-display-flex(row, center, center);
+    }
+    
 }
