@@ -3,18 +3,17 @@
         <app-header></app-header>
 
         <article class="home-top-grid">
-            <div class="home-top-column-left">
-                <h1 class="home-top-column-left home-top-column-left__headline">Collect Feedback,<br>Unlock Ideas</h1>
-                <p class="home-top-column-left home-top-column-left__description">
-                    Create and share surveys in minutes –
-                    from team events to workplace culture.
-                    Collect opinions, engage your audience,
-                    and turn feedback into action.
-                </p>
-                <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'" class="mt-32"
-                    (click)="onNewSurvey()">New survey</app-button>
-            </div>
-            <aside class="home-top-column-right">
+            <h1 class="home-top-grid__headline">Collect Feedback,<br>Unlock Ideas</h1>
+            <p class="home-top-grid__description">
+                Create and share surveys in minutes –
+                from team events to workplace culture.
+                Collect opinions, engage your audience,
+                and turn feedback into action.
+            </p>
+            <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'" class="home-top-grid__button"
+                (click)="onNewSurvey()">New survey</app-button>
+
+            <aside class="home-top-grid__illustration">
                 <app-hero-illustration></app-hero-illustration>
             </aside>
         </article>
@@ -27,7 +26,7 @@
                 @for (survey of surveyService.surveyHighlights(); track survey.id) {
                 <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
                 }@empty {
-                    <p class="empty-state">No ending soon surveys right now.</p>
+                <p class="empty-state">No ending soon surveys right now.</p>
                 }
             </aside>
 
@@ -49,7 +48,7 @@
                 @for (survey of surveySortedList(); track survey.id){
                 <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
                 } @empty {
-                    <p class="empty-state-sm">{{showEmptyState()}}</p>
+                <p class="empty-state-sm">{{showEmptyState()}}</p>
                 }
             </aside>
 
