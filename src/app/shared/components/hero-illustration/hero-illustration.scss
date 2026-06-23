@@ -113,36 +113,36 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .hero-illustration:hover {
-        .hero-illustration__speech-bubble {
+    .hero-illustration--animated:hover {
+        .hero-illustration--animated__speech-bubble {
             transform: translateX(65px) translateY(96px) scale(1.5);
         }
 
-        .hero-illustration__question-mark {
+        .hero-illustration--animated__question-mark {
             transform: translateX(260px) translateY(13px) rotate(0deg);
         }
 
-        .hero-illustration__star {
+        .hero-illustration--animated__star {
             transform: translateX(30px) translateY(294px);
         }
 
-        .hero-illustration__checkmark {
+        .hero-illustration--animated__checkmark {
             transform: translateX(280px) translateY(237px);
         }
 
-        .hero-illustration__purple-rectangle {
+        .hero-illustration--animated__purple-rectangle {
             transform: translateX(85px) translateY(171px) rotate(-12deg);
         }
 
-        .hero-illustration__purple-circle {
+        .hero-illustration--animated__purple-circle {
             transform: translateX(10px) translateY(330px);
         }
 
-        .hero-illustration__orange-circle-sm {
+        .hero-illustration--animated__orange-circle-sm {
             transform: translateX(330px) translateY(70px);
         }
 
-        .hero-illustration__orange-circle-md {
+        .hero-illustration--animated__orange-circle-md {
             transform: translateX(280px) translateY(230px);
         }
     }
