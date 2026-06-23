@@ -7,99 +7,107 @@
     width: 360px;
     height: 420px;
 
+    &--animated {
 
-    &__background-image {
-        position: absolute;
-        height: 364px;
-        width: 372px;
-        z-index: 10;
-        transform: translateX(-5px) translateY(10px);
-        @include mixins.setup-image('/assets/img/interaktive-blank.png');
+
+
+        &__background-image {
+            position: absolute;
+            height: 364px;
+            width: 372px;
+            z-index: 10;
+            transform: translateX(-5px) translateY(10px);
+            @include mixins.setup-image('/assets/img/interaktive-blank.png');
+        }
+
+        &__speech-bubble {
+            position: absolute;
+            width: 78px;
+            height: 80px;
+            z-index: 11;
+            @include mixins.setup-image('/assets/icons/speech-bubble.svg');
+            transform: translateX(75px) translateY(96px);
+            transition: transform 200ms ease 100ms;
+        }
+
+        &__question-mark {
+            position: absolute;
+            height: 68px;
+            width: 68px;
+            z-index: 12;
+            @include mixins.setup-image('/assets/icons/question-mark.svg');
+            transform: translateX(260px) translateY(13px) rotate(16deg);
+            transition: transform 200ms ease 30ms;
+        }
+
+        &__star {
+            position: absolute;
+            height: 62px;
+            width: 62px;
+            z-index: 14;
+            @include mixins.setup-image('/assets/icons/star.svg');
+            transform: translateX(46px) translateY(294px);
+            transition: transform 250ms ease 80ms;
+        }
+
+        &__checkmark {
+            position: absolute;
+            height: 66px;
+            width: 66px;
+            z-index: 9;
+            @include mixins.setup-image('/assets/icons/check-mark.svg');
+            transform: translateX(238px) translateY(237px);
+            transition: transform 250ms ease 120ms;
+        }
+
+        &__purple-circle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px;
+            z-index: 13;
+            background-color: rgba(71, 56, 91, 0.8);
+            transform: translateX(87px) translateY(268px);
+            transition: transform 300ms ease 220ms;
+        }
+
+        &__orange-circle-sm {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 9999px;
+            z-index: 15;
+            background-color: var.$primary-orange;
+            transform: translateX(316px) translateY(59px);
+            transition: transform 300ms ease;
+        }
+
+        &__orange-circle-md {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            border-radius: 9999px;
+            z-index: 8;
+            background-color: var.$secondary-orange;
+            transform: translateX(255px) translateY(191px);
+            filter: brightness(1.10);
+            transition: transform 300ms ease 250ms;
+        }
+
+        &__purple-rectangle {
+            position: absolute;
+            width: 20px;
+            aspect-ratio: 1 / 1;
+            border-radius: 4px;
+            background-color: rgba(71, 56, 91, 0.8);
+            z-index: 7;
+            transform: translateX(108px) translateY(171px) rotate(-12deg);
+            transition: transform 300ms ease 125ms;
+        }
     }
 
-    &__speech-bubble {
-        position: absolute;
-        width: 78px;
-        height: 80px;
-        z-index: 11;
-        @include mixins.setup-image('/assets/icons/speech-bubble.svg');
-        transform: translateX(75px) translateY(96px);
-        transition: transform 200ms ease 100ms;
-    }
-
-    &__question-mark {
-        position: absolute;
-        height: 68px;
-        width: 68px;
-        z-index: 12;
-        @include mixins.setup-image('/assets/icons/question-mark.svg');
-        transform: translateX(260px) translateY(13px) rotate(16deg);
-        transition: transform 200ms ease 30ms;
-    }
-
-    &__star {
-        position: absolute;
-        height: 62px;
-        width: 62px;
-        z-index: 14;
-        @include mixins.setup-image('/assets/icons/star.svg');
-        transform: translateX(46px) translateY(294px);
-        transition: transform 250ms ease 80ms;
-    }
-
-    &__checkmark {
-        position: absolute;
-        height: 66px;
-        width: 66px;
-        z-index: 9;
-        @include mixins.setup-image('/assets/icons/check-mark.svg');
-        transform: translateX(238px) translateY(237px);
-        transition: transform 250ms ease 120ms;
-    }
-
-    &__purple-circle {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 9999px;
-        z-index: 13;
-        background-color: rgba(71, 56, 91, 0.8);
-        transform: translateX(87px) translateY(268px);
-        transition: transform 300ms ease 220ms;
-    }
-
-    &__orange-circle-sm {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        border-radius: 9999px;
-        z-index: 15;
-        background-color: var.$primary-orange;
-        transform: translateX(316px) translateY(59px);
-        transition: transform 300ms ease;
-    }
-
-    &__orange-circle-md {
-        position: absolute;
-        width: 34px;
-        height: 34px;
-        border-radius: 9999px;
-        z-index: 8;
-        background-color: var.$secondary-orange;
-        transform: translateX(255px) translateY(191px);
-        filter: brightness(1.10);
-        transition: transform 300ms ease 250ms;
-    }
-
-    &__purple-rectangle {
-        position: absolute;
-        width: 20px;
-        aspect-ratio: 1 / 1;
-        border-radius: 4px;
-        background-color: rgba(71, 56, 91, 0.8);
-        z-index: 7;
-        transform: translateX(108px) translateY(171px) rotate(-12deg);
-        transition: transform 300ms ease 125ms;
+    &--static {
+        @include mixins.setup-image('/assets/img/static-illustration.png');
     }
 
 }
@@ -138,4 +146,23 @@
             transform: translateX(280px) translateY(230px);
         }
     }
+}
+
+@media(max-width: 999px){
+    .hero-illustration{
+        width: 100%;
+        height: auto;
+    }
+
+
+    .hero-illustration--animated{
+        display: none;
+    }
+
+    .hero-illustration--static {
+        display: block;
+        width: 340px;
+        height: 250px;
+    }
+
 }

@@ -127,7 +127,7 @@
 @media(max-width: 999px) {
     .home-top-grid {
         grid-template-columns: 1fr;
-        row-gap: 16px;
+        row-gap: 32px;
         grid-template-areas: "headline" "illustration" "description" "button";
 
         &__description {
