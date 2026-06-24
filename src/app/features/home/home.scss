@@ -54,12 +54,12 @@
     
 
     &__headline {
-        @include mixins.setup-font("Nerko-One", 72px, 400, var.$primary-orange);
+        @include mixins.setup-font("Nerko-One", clamp(3.25rem, 3.0185rem + 1.2346vw, 4.5rem), 400, var.$primary-orange);
     }
 
     &__notice {
         align-items: flex-start;
-        @include mixins.setup-font("Mulish", 32px, 500, rgba(255, 255, 255, 1));
+        @include mixins.setup-font("Mulish", clamp(1.25rem, 1.1111rem + 0.7407vw, 2rem), 500, rgba(255, 255, 255, 1));
     }
 }
 
@@ -146,6 +146,13 @@
         }
     }
 
+    .highlight-cards {
+        overflow-x: auto;
+    }
 
+    .home-survey-list-section__header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
 
 }
