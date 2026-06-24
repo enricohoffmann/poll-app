@@ -10,49 +10,53 @@
                 Collect opinions, engage your audience,
                 and turn feedback into action.
             </p>
-            <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'" class="home-top-grid__button"
-                (click)="onNewSurvey()">New survey</app-button>
+            <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
+                class="home-top-grid__button" (click)="onNewSurvey()">New survey</app-button>
 
             <aside class="home-top-grid__illustration">
                 <app-hero-illustration></app-hero-illustration>
             </aside>
         </article>
 
-        <section class="home-surveys-section mt-32">
-            <h2 class="home-surveys-section home-surveys-section__headline">Your surveys</h2>
-            <p class="home-surveys-section home-surveys-section__notice mt-32">Ending soon surveys</p>
+        <main class="home-section-main mb-72">
+            <section class="home-surveys-section mt-32">
+                <h2 class="home-surveys-section home-surveys-section__headline">Your surveys</h2>
+                <p class="home-surveys-section home-surveys-section__notice">Ending soon surveys</p>
 
-            <aside class="highlight-cards mt-48">
-                @for (survey of surveyService.surveyHighlights(); track survey.id) {
-                <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
-                }@empty {
-                <p class="empty-state">No ending soon surveys right now.</p>
-                }
-            </aside>
+                <aside class="highlight-cards">
+                    @for (survey of surveyService.surveyHighlights(); track survey.id) {
+                    <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
+                    }@empty {
+                    <p class="empty-state">No ending soon surveys right now.</p>
+                    }
+                </aside>
 
-        </section>
+            </section>
 
-        <section class="home-survey-list-section mt-48 mb-72">
-            <header class="home-survey-list-section__header">
-                <div class="home-survey-filter-buttons">
-                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()"
-                        (click)="onFilterActiveSurveys()">Active survey</app-button>
-                    <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()"
-                        (click)="onFilterPastSurveys()">Past survey</app-button>
-                </div>
-                <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)"></app-drop-down-menu>
+            <section class="home-survey-list-section mt-48">
+                <header class="home-survey-list-section__header">
+                    <div class="home-survey-filter-buttons">
+                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()"
+                            (click)="onFilterActiveSurveys()">Active survey</app-button>
+                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()"
+                            (click)="onFilterPastSurveys()">Past survey</app-button>
+                    </div>
+                    <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)"></app-drop-down-menu>
 
-                <span class="home-survey-list-section__header__sorting-category">{{currentCategory()?.name}}</span>
-            </header>
-            <aside class="home-survey-list-section__list">
-                @for (survey of surveySortedList(); track survey.id){
-                <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
-                } @empty {
-                <p class="empty-state-sm">{{showEmptyState()}}</p>
-                }
-            </aside>
+                    <span class="home-survey-list-section__header__sorting-category">{{currentCategory()?.name}}</span>
+                </header>
+                <aside class="home-survey-list-section__list">
+                    @for (survey of surveySortedList(); track survey.id){
+                    <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
+                    } @empty {
+                    <p class="empty-state-sm">{{showEmptyState()}}</p>
+                    }
+                </aside>
 
-        </section>
+            </section>
+        </main>
+
+
 
     </section>
 </div>
