@@ -65,7 +65,10 @@
 
 .highlight-cards {
     width: 100%;
-    @include mixins.setup-display-flex(row, flex-start, center, 24px);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: 28px;
+    padding-bottom: 8px;
 }
 
 .empty-state {
@@ -153,6 +156,21 @@
     .home-survey-list-section__header {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
+    }
+
+    .highlight-cards {
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var.$gray-primary;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
     }
 
 }

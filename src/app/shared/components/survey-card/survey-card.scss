@@ -12,8 +12,8 @@
     transition: background-color 125ms ease-out, box-shadow 125ms ease-out;
 
     &--highlights {
-        height: 310px;
-        width: 320px;
+        width: 100%;
+        aspect-ratio: 320 / 310;
         background-color: var.$background-color-card-default;
         border-radius: 0 80px 0 0;
         padding: 40px 32px;
@@ -74,3 +74,4 @@
 
 
 }
+
