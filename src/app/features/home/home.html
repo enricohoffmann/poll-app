@@ -35,14 +35,18 @@
 
             <section class="home-survey-list-section mt-48">
                 <header class="home-survey-list-section__header">
+                    <!-- Buttons left -->
                     <div class="home-survey-filter-buttons">
                         <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()"
                             (click)="onFilterActiveSurveys()">Active survey</app-button>
                         <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()"
                             (click)="onFilterPastSurveys()">Past survey</app-button>
                     </div>
-                    <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)"></app-drop-down-menu>
-
+                    <!-- Dropdown -->
+                    <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)" class="home-survey-category-drop-down"></app-drop-down-menu>
+                    <!-- Empty Cell -->
+                    <div class="home-survey-list-section__header__empty-cell"></div>
+                    <!-- Selected Category -->
                     <span class="home-survey-list-section__header__sorting-category">{{currentCategory()?.name}}</span>
                 </header>
                 <aside class="home-survey-list-section__list">
