@@ -55,12 +55,29 @@
             &--date-and-category {
                 display: grid;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-rows: auto auto;
+                grid-template-areas: "set-date choose-category" "set-date current-category";
                 column-gap: 12px;
+
             }
         }
 
-        &__fieldset--question-container {
-            
-        }
+        &__fieldset--question-container {}
     }
+}
+
+.set-date-field {
+    grid-area: set-date;
+}
+
+.choose-category-field {
+    grid-area: choose-category;
+}
+
+.current-category-field {
+    grid-area: current-category;
+    @include mixins.setup-display-flex(row, flex-start, center);
+    height: 26px;
+    padding-left: 18px;
+    @include mixins.setup-font("Mulish", 14px, 400, var.$primary-orange);
 }

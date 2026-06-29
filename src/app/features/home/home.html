@@ -43,7 +43,9 @@
                             (click)="onFilterPastSurveys()">Past survey</app-button>
                     </div>
                     <!-- Dropdown -->
-                    <app-drop-down-menu (sendCategorySelection)="onSortByCategory($event)" class="home-survey-category-drop-down"></app-drop-down-menu>
+                    <app-drop-down-menu 
+                        (sendCategorySelection)="onSortByCategory($event)" 
+                        class="home-survey-category-drop-down">Sort by categories</app-drop-down-menu>
                     <!-- Empty Cell -->
                     <div class="home-survey-list-section__header__empty-cell"></div>
                     <!-- Selected Category -->

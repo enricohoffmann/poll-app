@@ -1,6 +1,9 @@
 <aside class="drop-down-container">
-    <button type="button" class="drop-down" [class.drop-down--active]="isMenuOpen()" (click)="onButtonClick()">
-        <span class="drop-down__content">Sort by categories</span>
+    <button type="button" class="drop-down" 
+        [class.drop-down--active]="isMenuOpen()" 
+        [class.drop-down--is-category-selected]="isCategorySelected()"
+        (click)="onButtonClick()">
+        <span class="drop-down__content"><ng-content></ng-content></span>
         <div class="drop-down__icons">
             <div class="drop-down__icon drop-down__icon--up"></div>
             <div class="drop-down__icon drop-down__icon--down-white"></div>

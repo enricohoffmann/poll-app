@@ -83,7 +83,24 @@
             opacity: 1;
         }
     }
+
+    &--is-category-selected:not(.drop-down--active) {
+        background-color: rgba(217, 217, 217, 0.12);
+
+        .drop-down__icon--down-white {
+            opacity: 0;
+        }
+
+        .drop-down__icon--down-orange {
+            opacity: 1;
+        }
+    }
+
+
+     
 }
+
+
 
 .drop-down-list {
     box-sizing: border-box;

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -8,11 +8,16 @@ import { Question } from '../../interfaces/question-interface';
 import { Answer } from '../../interfaces/answer-interface';
 import { QuestionCreate } from '../../shared/components/question-create/question-create';
 import { SurveyService } from '../../services/survey-service';
+import { DropDownMenu } from "../../shared/components/drop-down-menu/drop-down-menu";
+import { Category } from '../../interfaces/category-interface';
+import { DateField } from '../../shared/components/date-field/date-field';
 
 
 @Component({
   selector: 'app-survey-create',
-  imports: [Status, Button, InputField, ReactiveFormsModule, QuestionCreate],
+  imports: [
+    Status, Button, InputField, ReactiveFormsModule, QuestionCreate, DropDownMenu, DateField
+  ],
   templateUrl: './survey-create.html',
   styleUrl: './survey-create.scss',
 })
@@ -27,6 +32,8 @@ export class SurveyCreate {
     is_published: false,
     created_at: ''
   };
+
+  currentCategory = signal<Category | null>(null);
 
   surveyForm = new FormGroup({
     title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]}),
@@ -108,4 +115,9 @@ export class SurveyCreate {
       questions.removeAt(questionIndex);
     }
   }
+
+  onChooseCategory(category: Category): void {
+    this.currentCategory.set(category);
+  }
+
 }

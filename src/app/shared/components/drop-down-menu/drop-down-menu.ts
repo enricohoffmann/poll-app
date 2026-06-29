@@ -12,6 +12,7 @@ export class DropDownMenu {
   surveyService = inject(SurveyService);
   isMenuOpen = signal(false);
   sendCategorySelection = output<Category>();
+  isCategorySelected = signal(false);
 
   ngOnInit(): void {
     this.surveyService.getCategories();
@@ -26,6 +27,7 @@ export class DropDownMenu {
     const currentCategory = this.surveyService.getCategoryByIndex(categoryIndex);
     if(currentCategory){
       this.sendCategorySelection.emit(currentCategory);
+      this.isCategorySelected.set(true);
     }
   }
 }
