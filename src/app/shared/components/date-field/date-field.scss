@@ -1,7 +1,101 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
 .date-field {
     min-width: 0;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto 0;
+    grid-template-areas: 
+        "label label" 
+        "input-container trash-button" 
+        "date-container date-container";
+    row-gap: 5px;
+    column-gap: 6px;
+
+    &__label {
+        grid-area: label;
+        @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
+
+        &--optional {
+            font-weight: 400;
+            padding-left: 4px;
+        }
+    }
+
+    &__container {
+        grid-area: input-container;
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        border-radius: 5px 20px 5px 5px;
+        position: relative;
+        height: 37px;
+        background-color: var.$background-color-bright;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: 2px;
+    }
+
+    &__input {
+        width: 100%;
+        min-width: 0;
+        padding: 7px 13px;
+        outline: unset;
+        border: unset;
+        cursor: pointer;
+        @include mixins.setup-font("Mulish", 16px, 400, var.$primary-purple);
+        background-color: transparent;
+
+        &--writing {
+            background-color: var.$third-orange;
+            @include mixins.setup-font("Mulish", 18px, 500, var.$primary-purple);
+        }
+    }
+
+    &__button {
+        width: 100%;
+        min-width: 0;
+        border: none;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 0 20px 5px 0;
+        cursor: pointer;
+        @include mixins.setup-display-flex(column, center, center);
+        background-color: var.$light-pruple;
+        transition: background-color 125ms ease-in;
+
+        &__icon {
+            height: 24px;
+            aspect-ratio: 1 / 1;
+            @include mixins.setup-image('/assets/icons/edit-calendar.svg')
+        }
+
+        &:hover {
+            background-color: var.$secondary-orange;
+        }
+    }
+
+    &__trash {
+        width: 100%;
+        min-width: 0;
+        grid-area: trash-button;
+    }
+
+    &__date-container {
+        width: 100%;
+        min-width: 0;
+        height: 0;
+        grid-area: date-container;
+        @include mixins.setup-display-flex(row, center, center);
+    }
+
+    &__date-select {
+        height: 0;
+        border: none;
+        outline: none;
+        pointer-events: none;
+    }
+
 }

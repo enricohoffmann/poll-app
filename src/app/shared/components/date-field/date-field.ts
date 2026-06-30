@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { Button } from "../button/button";
 
 @Component({
@@ -7,4 +7,22 @@ import { Button } from "../button/button";
   templateUrl: './date-field.html',
   styleUrl: './date-field.scss',
 })
-export class DateField {}
+export class DateField {
+
+  isPickerOpen = signal(false);
+
+  @ViewChild('dateSelectField') dateSelect!: ElementRef<HTMLInputElement>;
+
+  onCalenderButtonClick(): void{
+
+    if(!this.isPickerOpen()){
+      this.dateSelect.nativeElement.showPicker();
+    } else {
+      this.dateSelect.nativeElement.blur();
+    }
+
+    this.isPickerOpen.set(!this.isPickerOpen());
+
+  }
+
+}
