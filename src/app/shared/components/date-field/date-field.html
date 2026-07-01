@@ -3,7 +3,13 @@
     <label for="end-date" class="date-field__label">Set end date <span class="date-field__label--optional">(optional)</span></label>
 
     <div class="date-field__container">
-        <input id="end-date" name="end-date" type="text" class="date-field__input">
+        <input 
+            id="end-date" 
+            name="end-date" 
+            type="text" 
+            class="date-field__input" 
+            [formControl]="dateInputControl()"
+        >
         <button type="button" class="date-field__button" (click)="onCalenderButtonClick()">
             <div class="date-field__button__icon"></div>
         </button>
@@ -17,10 +23,11 @@
             type="date" 
             class="date-field__date-select"
             #dateSelectField
+            (change)="onDatePickerChange()"
             >
     </div>
    
-    <app-button class="" [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"></app-button>
+    <app-button class="date-field__trash" [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"></app-button>
 
 
     

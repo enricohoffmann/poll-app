@@ -24,7 +24,7 @@
                         <!-- <app-input-field class="set-date-field" [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.expires_at" 
                         [label]="'Set end date'" [isOptional]="true"
                         ></app-input-field> -->
-                        <app-date-field></app-date-field>
+                        <app-date-field [dateInputControl]="surveyForm.controls.expires_at"></app-date-field>
 
                         <app-drop-down-menu class="choose-category-field" (sendCategorySelection)="onChooseCategory($event)" >Choose category</app-drop-down-menu>
 
