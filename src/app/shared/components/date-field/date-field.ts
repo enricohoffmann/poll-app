@@ -20,8 +20,18 @@ export class DateField {
   }
 
   onDatePickerChange():void {
-    this.dateInputControl().setValue(this.dateSelect.nativeElement.value);
+    const germanDate = this.getGermanDate(this.dateSelect.nativeElement.value);
+    this.dateInputControl().setValue(germanDate);
     this.isPickerOpen.set(false);
+  }
+
+  getGermanDate(rawDate: string): string {
+    const dateArray = rawDate.split('-');
+    return `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`;
+  }
+
+  clearDateField(): void {
+    this.dateInputControl().setValue('');
   }
 
 }

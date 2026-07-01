@@ -18,16 +18,17 @@ export class Button {
     trashBtn: 'btn--trash'
   };
 
-  private readonly BUTTON_ICON_CLASSES: Record<'add'|'check', string> = {
+  private readonly BUTTON_ICON_CLASSES: Record<'add'|'check'|'addWhite', string> = {
     add: 'btn-icon--add',
-    check: 'btn-icon--check'
+    check: 'btn-icon--check',
+    addWhite: 'btn-icon--add-white'
   }
 
   buttonVariant = input<ButtonVariant>('primaryBtn');
   buttonClass = computed(() => this.BUTTON_CLASSES[this.buttonVariant()]);
   hasIcon = input(false);
   hasTrashIcon = input(false);
-  buttonIconVariant = input<'add' | 'check'>('add');
+  buttonIconVariant = input<'add' | 'check' | 'addWhite'>('add');
   buttonIconClass = computed(() => this.BUTTON_ICON_CLASSES[this.buttonIconVariant()]);
   toggleIsActive = input<boolean>(false);
   isActivated = computed(() => {
@@ -39,7 +40,6 @@ export class Button {
 
   ngOnInit(){}
 
-  onButtonClick(){
-  }
+  onButtonClick(){}
 
 }

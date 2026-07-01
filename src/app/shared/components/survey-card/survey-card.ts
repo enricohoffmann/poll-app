@@ -3,7 +3,7 @@ import { SurveyWithCategory } from '../../../interfaces/survey-with-category-int
 import { Status } from '../status/status';
 import { SurveyCardVariant } from '../../utils/types';
 import { NgClass } from '@angular/common';
-import { ExpiryViewChange } from '../../../utils/custom-pips';
+import { ExpiryViewChange } from '../../../pips/custom-pips';
 
 @Component({
   selector: 'app-survey-card',

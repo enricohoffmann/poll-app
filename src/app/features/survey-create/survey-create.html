@@ -45,7 +45,12 @@
                             ></app-question-create>
                     }
 
-                    <app-button (click)="addQuestion()">Add next question</app-button>
+                    <app-button 
+                        (click)="addQuestion()" 
+                        [buttonVariant]="'secondaryBtn'"
+                        [hasIcon]="true"
+                        [buttonIconVariant]="'addWhite'"
+                    >Add next question</app-button>
 
                 </article>
 

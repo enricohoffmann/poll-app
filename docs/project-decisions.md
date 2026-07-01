@@ -30,3 +30,11 @@ Keine Authentifizierung laut Projektvorgabe.
 - "Past" und "Active" können nicht gleichzeitig deaktiviert werden,
   es wird dann der "Active" - Filter gesetzt.
   Beim Start ist der "Active" - Filter vorbelegt.
+
+## Feature: Support surveys without an end date
+
+Rules:
+- expires_at nullable
+- unlimited surveys are always active
+- never appear in "Ending soon"
+- not part of expiry calculation

@@ -27,7 +27,13 @@
             >
     </div>
    
-    <app-button class="date-field__trash" [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"></app-button>
+    <app-button 
+        class="date-field__trash" 
+        [buttonVariant]="'trashBtn'" 
+        [hasIcon]="false" 
+        [hasTrashIcon]="true"
+        (click)="clearDateField()"
+    ></app-button>
 
 
     

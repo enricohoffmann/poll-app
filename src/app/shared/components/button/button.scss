@@ -28,6 +28,23 @@
         }
     }
 
+    &--secondary {
+        padding: 8px 12px;
+        background-color: var.$btn-seconday-bg-default;
+        @include mixins.setup-font("Nokora", 18px, 700, var.$background-color-bright, -5%);
+
+        .btn-icon {
+            width: 24px;
+            margin-left: 10px;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        &:hover {
+            background-color: var.$btn-seconday-bg-hover;
+        }
+    }
+
     &--filter {
         border-radius: 20px;
         padding: 3px 10px;
@@ -80,12 +97,11 @@
     margin-left: 0;
     opacity: 0;
     transform: scale(0.6);
-    transition: 
+    transition:
         width 300ms ease-out,
         margin-left 300ms ease-out,
         opacity 300ms ease-out,
-        transform 300ms ease-out
-    ;
+        transform 300ms ease-out;
 
     &--add {
         background-image: url('/assets/icons/add-circle.svg');
@@ -93,6 +109,10 @@
 
     &--check {
         background-image: url('/assets/icons/check.svg');
+    }
+
+    &--add-white {
+        background-image: url('/assets/icons/add_circle_white.svg');
     }
 }
 
@@ -121,4 +141,3 @@
         }
     }
 }
-
