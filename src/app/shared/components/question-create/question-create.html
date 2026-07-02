@@ -12,16 +12,13 @@
             <span class="question-field-section__text--md">Allow multiple answers.</span>
         </div>
     </div>
-    @for(answer of answers.controls; track $index){
+    @for(answer of answers.controls; track $index;){
         <app-answer-create 
             [answerFormGroup]="answer" 
             [answerIndex]="$index"
             (removeAnswer)="onRemoveAnswer($event)"
+            [canInsertAnswer]="$last && $index < 7"
             ></app-answer-create>
-    }
-
-    @if(answerCount() < 6){
-        <app-button (click)='onAddAnswer()'>Add answer</app-button>
     }
 
 </figure>

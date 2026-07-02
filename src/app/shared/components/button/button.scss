@@ -3,14 +3,19 @@
 
 .btn {
     height: 48px;
-    @include mixins.setup-display-flex(row, center, center);
     overflow: hidden;
     border-radius: 10px;
     border: none;
     outline: none;
-    @include mixins.setup-font("Nokora", 18px, 700, var.$dark-purple, -5%);
+    @include mixins.setup-font("Nokora", 18px, 700, var.$dark-purple);
     transition: background-color 300ms ease-out;
     cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 0;
+    grid-template-areas: "content icon";
+    grid-area: content;
+    align-items: center;
 
     &--primary {
         padding: 12px 16px;
@@ -31,7 +36,7 @@
     &--secondary {
         padding: 8px 12px;
         background-color: var.$btn-seconday-bg-default;
-        @include mixins.setup-font("Nokora", 18px, 700, var.$background-color-bright, -5%);
+        @include mixins.setup-font("Nokora", 18px, 700, var.$background-color-bright);
 
         .btn-icon {
             width: 24px;
@@ -45,11 +50,34 @@
         }
     }
 
+    &--tertiary {
+        height: 40px;
+        background-color: transparent;
+        border-radius: 0;
+        padding: 6px 12px 8px 12px;
+        grid-template-rows: auto auto;
+        row-gap: 4px;
+        grid-template-areas: "content icon" "line line";
+        @include mixins.setup-font("Nokora", 18px, 700, var.$background-color-bright);
+        transition: background-color 125ms ease-in;
+
+        .btn-icon {
+            width: 24px;
+            margin-left: 10px;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        &:hover {
+            background-color: rgba(250, 245, 254, 0.2);
+        }
+    }
+
     &--filter {
         border-radius: 20px;
         padding: 3px 10px;
         height: auto;
-        @include mixins.setup-font("Nokora", 16px, 400, var.$primary-purple, -2%);
+        @include mixins.setup-font("Nokora", 16px, 400, var.$primary-purple);
         background-color: var.$third-orange;
 
         &:hover:not(.btn--activated) {
@@ -86,9 +114,17 @@
             }
         }
     }
+
+    &__line {
+        grid-area: line;
+        border-top: 1px solid rgba(255, 255, 255, 1);
+        height: 1px;
+        width: 100%;
+    }
 }
 
 .btn-icon {
+    grid-area: icon;
     width: 0;
     aspect-ratio: 1 / 1;
     background-position: center;
@@ -114,9 +150,11 @@
     &--add-white {
         background-image: url('/assets/icons/add_circle_white.svg');
     }
+
 }
 
 .btn-icon-container {
+    grid-area: icon;
     position: relative;
     box-sizing: border-box;
     width: 26px;

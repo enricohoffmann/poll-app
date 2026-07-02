@@ -1,14 +1,24 @@
-<button type="button" class="btn" [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
+<button 
+    type="button" 
+    class="btn" 
+    [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
     (click)="onButtonClick()">
+
     <span>
         <ng-content></ng-content>
     </span>
+
     @if(hasIcon()){
-    <div class="btn-icon" [ngClass]="buttonIconClass()"></div>
+        <div class="btn-icon" [ngClass]="buttonIconClass()"></div>
     }@else if (hasTrashIcon()) {
-    <div class="btn-icon-container">
-        <div class="btn-icon-container__icon btn-icon-container__icon--default"></div>
-        <div class="btn-icon-container__icon btn-icon-container__icon--hover"></div>
-    </div>
+        <div class="btn-icon-container">
+            <div class="btn-icon-container__icon btn-icon-container__icon--default"></div>
+            <div class="btn-icon-container__icon btn-icon-container__icon--hover"></div>
+        </div>
     }
+
+    @if(buttonVariant() === 'tertiaryBtn') {
+        <div class="btn__line"></div>
+    }
+
 </button>

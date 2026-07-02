@@ -21,6 +21,7 @@ export class AnswerCreate {
 
   answerFormGroup = input.required<FormGroup>();
   answerIndex = input<number>(0);
+  canInsertAnswer = input<boolean>(true);
   readonly removeAnswer = output<number>();
 
   getAnswer():FormControl<string> {
