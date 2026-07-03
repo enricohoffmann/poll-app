@@ -31,8 +31,8 @@ export class QuestionCreate {
     return this.questionFormGroup().controls['answers'] as FormArray;
   }
 
-  onAddAnswer(){
-    this.addAnswerEvent.emit(this.questionIndex());
+  onAddAnswer(questionIndex: number){
+    this.addAnswerEvent.emit(questionIndex);
     this.updateAnswerCount();
   }
 

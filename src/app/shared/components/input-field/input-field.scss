@@ -69,3 +69,7 @@
         @include mixins.setup-display-flex(row, center, flex-start);
     }
 }
+
+.input-field__label--hidden {
+    display: none;
+}

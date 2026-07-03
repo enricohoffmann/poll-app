@@ -2,15 +2,48 @@
 @use 'abstracts/mixins' as mixins;
 
 .answer-container {
-    @include mixins.setup-display-flex(row, stretch, center);
+    display: grid;
+    grid-template-columns: auto 1fr 37px;
+    grid-template-rows: auto auto;
+    grid-template-areas: "identifier input trash" "emptySm addSection addSection";
+    column-gap: 8px;
     margin-bottom: 10px;
-
-    &__input {
-        flex: 1;
-    }
+    align-items: center;
 
     &__identifier {
+        grid-area: identifier;
+        @include mixins.setup-display-flex(row, center, center);
         @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
-        width: 28px;
+        height: 100%;
     }
+
+    &__input {
+        grid-area: input;
+        min-width: 0;
+        width: 100%;
+        align-self: center;
+    }
+
+    &__trash-button {
+        grid-area: trash;
+        @include mixins.setup-display-flex(row, center, center);
+    }
+
+    &__emptySm {
+        width: auto;
+        aspect-ratio: 1 / 1;
+        grid-area: emptySm;
+    }
+
+    &__add-section {
+        margin-top: 10px;
+        grid-area: addSection;
+        @include mixins.setup-display-flex(row, space-between, center, 12px);
+    }
+
+    &__add-button {}
+
+    &__notice {}
+
+
 }

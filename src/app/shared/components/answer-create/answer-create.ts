@@ -1,10 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { InputField } from "../input-field/input-field";
+import { Button } from '../button/button';
 
 @Component({
   selector: 'app-answer-create',
-  imports: [InputField],
+  imports: [InputField, Button],
   templateUrl: './answer-create.html',
   styleUrl: './answer-create.scss',
 })
@@ -21,8 +22,10 @@ export class AnswerCreate {
 
   answerFormGroup = input.required<FormGroup>();
   answerIndex = input<number>(0);
+  questionIndex = input<number>(0);
   canInsertAnswer = input<boolean>(true);
   readonly removeAnswer = output<number>();
+  readonly addAnswer = output<number>();
 
   getAnswer():FormControl<string> {
     return this.answerFormGroup().controls['text'] as FormControl<string>;
@@ -35,4 +38,9 @@ export class AnswerCreate {
   onRemoveAnswer(): void {
     this.removeAnswer.emit(this.answerIndex());
   }
+
+  onAddAnswer(): void {
+    this.addAnswer.emit(this.questionIndex());
+  }
+
 }

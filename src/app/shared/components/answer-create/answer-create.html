@@ -1,10 +1,35 @@
 <article class="answer-container">
     <span class="answer-container__identifier">{{getIdentifier()}}.</span>
-    <app-input-field class="answer-container__input" 
-        [inputFieldVariant]="'noLabel'" 
-        [hasTrash]="true" [inputControl]="getAnswer()"
-        (removeItem)="onRemoveAnswer()"
-        ></app-input-field>
+
+    <app-input-field class="answer-container__input" [inputFieldVariant]="'noLabel'" [hasTrash]="false"
+        [inputControl]="getAnswer()" (removeItem)="onRemoveAnswer()" [fieldId]="'answer-' + answerIndex()">
+    </app-input-field>
+
+    <app-button class="answer-container__trash-button" 
+        [buttonVariant]="'trashBtn'" 
+        [hasIcon]="false" 
+        [hasTrashIcon]="true"
+        (click)="onRemoveAnswer()"
+        >
+    </app-button>
+
+    @if(canInsertAnswer()){
+        <div class="answer-container__add-section">
+            <app-button 
+                class="answer-container__add-button" 
+                [buttonVariant]="'tertiaryBtn'" 
+                [hasIcon]="true" 
+                [buttonIconVariant]="'addWhite'"
+                (click)="onAddAnswer()"
+            >Add answer</app-button>
+             
+            @if(answerIndex() >= 2){
+                <span class="answer-container__notice">You can add up to 6 answer fields.</span>
+            }
+            
+        </div>
+    }
+
 </article>
 
 

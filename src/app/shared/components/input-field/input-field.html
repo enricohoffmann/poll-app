@@ -1,5 +1,5 @@
 <article class="input-field">
-    <label class="input-field__label" [for]="fieldId()">
+    <label class="input-field__label" [for]="fieldId()" [class.input-field__label--hidden]="inputFieldVariant() == 'noLabel'">
         <span>{{label()}}</span>
         @if(isOptional()){
             <span class="input-field__label--optional">(optional)</span>
