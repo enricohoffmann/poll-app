@@ -35,9 +35,6 @@ export class Button {
     return this.toggleIsActive() && this.buttonVariant() === 'filterBtn';
   });
 
-
-  
-
   ngOnInit(){}
 
   onButtonClick(){}

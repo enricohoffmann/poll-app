@@ -2,7 +2,8 @@
     type="button" 
     class="btn" 
     [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
-    (click)="onButtonClick()">
+    (click)="onButtonClick()"
+    >
 
     <span>
         <ng-content></ng-content>

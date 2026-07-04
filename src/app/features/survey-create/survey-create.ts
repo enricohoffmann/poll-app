@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -41,6 +41,8 @@ export class SurveyCreate {
     expires_at: new FormControl(this.survey.expires_at, { nonNullable: true }),
     questions: new FormArray<FormGroup>([])
   });
+
+  questionsCount = signal<number>(0);
 
   private surveyService = inject(SurveyService);
 
@@ -107,12 +109,14 @@ export class SurveyCreate {
 
   addQuestion(): void {
     this.surveyForm.controls.questions.push(this.createNewQuestion());
+    this.questionsCount.set(this.surveyForm.controls.questions.length);
   }
 
   removeQuestion(questionIndex: number): void {
     const questions = this.questions;
     if (questions.length > 1) {
       questions.removeAt(questionIndex);
+      this.questionsCount.set(questions.length);
     }
   }
 

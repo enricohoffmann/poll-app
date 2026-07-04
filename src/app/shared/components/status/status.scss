@@ -22,5 +22,9 @@
     &--active {
         background-color: var.$primary-orange;
     }
+
+    &--disable-events {
+        pointer-events: none;
+    }
 }
 

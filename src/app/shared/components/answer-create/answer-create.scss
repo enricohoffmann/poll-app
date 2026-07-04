@@ -41,9 +41,10 @@
         @include mixins.setup-display-flex(row, space-between, center, 12px);
     }
 
-    &__add-button {}
 
-    &__notice {}
+    &__notice {
+        @include mixins.setup-font("Mulish", 12px, 400, rgba(255, 255, 255, 1));
+    }
 
 
 }

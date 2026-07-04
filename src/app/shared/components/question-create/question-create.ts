@@ -3,10 +3,11 @@ import { Button } from "../button/button";
 import { InputField } from "../input-field/input-field";
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AnswerCreate } from '../answer-create/answer-create';
+import { CheckField } from '../check-field/check-field';
 
 @Component({
   selector: 'app-question-create',
-  imports: [Button, InputField, AnswerCreate],
+  imports: [Button, InputField, AnswerCreate, CheckField],
   templateUrl: './question-create.html',
   styleUrl: './question-create.scss',
 })

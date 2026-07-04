@@ -2,11 +2,12 @@
 @use 'abstracts/mixins' as mixins;
 
 .create-wrapper {
-    height: 100vh;
-    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     background-color: var.$background-color-bright;
     @include mixins.setup-display-flex(column, center, center);
     overflow-x: auto;
+    
 }
 
 .create-section {
@@ -16,6 +17,8 @@
     background-color: var.$primary-purple;
     border-radius: 5px 100px 5px 5px;
     padding: 40px 54px;
+    margin-top: 36px;
+    margin-bottom: 36px;
 }
 
 .create-section-header {

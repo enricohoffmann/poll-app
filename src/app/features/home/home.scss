@@ -72,7 +72,7 @@
 }
 
 .empty-state {
-    @include mixins.setup-font("Mulish", 40px, 600, rgba(255, 255, 255, 1));
+    @include mixins.setup-font("Mulish", 24px, 600, rgba(255, 255, 255, 1));
 }
 
 .empty-state-sm {

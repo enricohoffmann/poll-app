@@ -21,9 +21,6 @@
                     ></app-input-field>
 
                     <div class="create-form__fields__fieldset--survey-info--date-and-category">
-                        <!-- <app-input-field class="set-date-field" [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.expires_at" 
-                        [label]="'Set end date'" [isOptional]="true"
-                        ></app-input-field> -->
                         <app-date-field [dateInputControl]="surveyForm.controls.expires_at"></app-date-field>
 
                         <app-drop-down-menu class="choose-category-field" (sendCategorySelection)="onChooseCategory($event)" >Choose category</app-drop-down-menu>
@@ -45,12 +42,15 @@
                             ></app-question-create>
                     }
 
-                    <app-button 
-                        (click)="addQuestion()" 
-                        [buttonVariant]="'secondaryBtn'"
-                        [hasIcon]="true"
-                        [buttonIconVariant]="'addWhite'"
-                    >Add next question</app-button>
+                    @if(questionsCount() < 6){
+                        <app-button 
+                            (click)="addQuestion()" 
+                            [buttonVariant]="'secondaryBtn'"
+                            [hasIcon]="true"
+                            [buttonIconVariant]="'addWhite'"
+                        >Add next question</app-button>
+                    }
+                   
 
                 </article>
 
