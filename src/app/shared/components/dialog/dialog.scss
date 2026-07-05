@@ -1,0 +1,9 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.dialog {
+    box-sizing: border-box;
+    padding: 12px 20px;
+    background-color: var.$third-orange;
+    border-radius: 5px 50px 5px 5px;
+}

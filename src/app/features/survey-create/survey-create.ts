@@ -12,12 +12,13 @@ import { DropDownMenu } from "../../shared/components/drop-down-menu/drop-down-m
 import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
+import { Dialog } from '../../shared/components/dialog/dialog';
 
 
 @Component({
   selector: 'app-survey-create',
   imports: [
-    Status, Button, InputField, ReactiveFormsModule, QuestionCreate, DropDownMenu, DateField
+    Status, Button, InputField, ReactiveFormsModule, QuestionCreate, DropDownMenu, DateField, Dialog
   ],
   templateUrl: './survey-create.html',
   styleUrl: './survey-create.scss',
