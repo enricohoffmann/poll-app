@@ -89,14 +89,20 @@
 }
 
 .survey-create-overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
+    z-index: 100;
     background-color: rgba(53, 39, 58, 0.3);
+    @include mixins.setup-display-flex(row, center, flex-end);
+    padding-bottom: 12vh;
 }
 
 .survey-publish-dialog {
-    position: absolute;
-    z-index: 10;
-    bottom: 109px;
-    right: 573px;
+    z-index: 101;
+    transform: translateX(150vw);
+    transition: transform 1500ms ease-in;
+
+    &--show {
+        transform: translateX(0);
+    }
 }

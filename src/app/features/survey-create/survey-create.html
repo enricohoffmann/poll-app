@@ -5,12 +5,8 @@
         <app-status [canHover]="false">Draft</app-status>
         <header class="create-section-header">
             <h1 class="create-section-header__title">Create new survey</h1>
-            <app-button 
-                [buttonVariant]="'secondaryBtn'"
-                    [hasIcon]="true"
-                    [buttonIconVariant]="'closeWhite'"
-                    (click)="onCancel()"
-                >Cancel</app-button>
+            <app-button [buttonVariant]="'secondaryBtn'" [hasIcon]="true" [buttonIconVariant]="'closeWhite'"
+                (click)="onCancel()">Cancel</app-button>
         </header>
 
         <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
@@ -22,57 +18,70 @@
                         [hasTrash]="true"></app-input-field>
 
                     <app-input-field [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
-                        [label]="'Describing text'" [isOptional]="true"
-                    ></app-input-field>
+                        [label]="'Describing text'" [isOptional]="true"></app-input-field>
 
                     <div class="create-form__fields__fieldset--survey-info--date-and-category">
-                        <app-date-field [dateInputControl]="surveyForm.controls.expires_at"></app-date-field>
+                        <app-date-field [dateInputControl]="surveyForm.controls.expires_at" class="set-date-field"></app-date-field>
 
-                        <app-drop-down-menu class="choose-category-field" (sendCategorySelection)="onChooseCategory($event)" >Choose category</app-drop-down-menu>
+                        <app-drop-down-menu class="choose-category-field"
+                            (sendCategorySelection)="onChooseCategory($event)">Choose category</app-drop-down-menu>
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 
                     </div>
+
+                    @if(surveyForm.controls.expires_at.hasError('dateInvalid')) {
+                        <span>Please enter a valid date.</span>
+                    } @else if(surveyForm.controls.expires_at.hasError('dateExpired')) {
+                        <span>The date is in the past.</span>
+                    }
+
+                    <!-- Vali 
+                        @if (surveyForm.controls.category_id.hasError('categoryNotSelected')) {
+                            <span>Please select a category.</span>}
+                    -->
+
                 </fieldset>
 
                 <article class="create-form__fields__fieldset--survey-info mt-32">
 
                     @for(question of questions.controls; track $index){
-                        <app-question-create 
-                            [questionFormGroup]="question" 
-                            (addAnswerEvent)="addAnswer($event)"
-                            (removeAnswerEvent)="removeAnswer($event)"
-                            [questionIndex]="$index"
-                            (removeQuestionEvent)="removeQuestion($event)"
-                            ></app-question-create>
+                    <app-question-create [questionFormGroup]="question" (addAnswerEvent)="addAnswer($event)"
+                        (removeAnswerEvent)="removeAnswer($event)" [questionIndex]="$index"
+                        (removeQuestionEvent)="removeQuestion($event)"></app-question-create>
                     }
 
-                    @if(questionsCount() < 6){
-                        <app-button 
-                            (click)="addQuestion()" 
-                            [buttonVariant]="'secondaryBtn'"
-                            [hasIcon]="true"
-                            [buttonIconVariant]="'addWhite'"
-                        >Add next question</app-button>
-                    }
-                   
+                    @if(questionsCount() < 6){ <app-button (click)="addQuestion()" [buttonVariant]="'secondaryBtn'"
+                        [hasIcon]="true" [buttonIconVariant]="'addWhite'">Add next question</app-button>
+                        }
+
 
                 </article>
 
-                
+
 
             </div>
 
-            <app-button class="survey-forms-submit-button" type="submit" [buttonVariant]="'primaryBtn'" [hasIcon]="false">submit</app-button>
+            <app-button 
+                class="survey-forms-submit-button" 
+                [buttonVariant]="'primaryBtn'"
+                [buttonType]="'submit'"
+                [hasIcon]="false">submit</app-button>
 
         </form>
 
+
+
     </section>
 
-    <app-dialog class="survey-publish-dialog"></app-dialog>
-
-</div>
-
-<div class="survey-create-overlay">
+    @if(showOverlay()){
+        <div class="survey-create-overlay">
+            <app-dialog 
+                class="survey-publish-dialog" 
+                [class.survey-publish-dialog--show]="showDialog()"
+                (dialogCloseEvent)="onSuccessDialogClose()"
+            ></app-dialog>
+        </div>
+    }
 
 </div>

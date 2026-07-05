@@ -6,4 +6,31 @@
     padding: 12px 20px;
     background-color: var.$third-orange;
     border-radius: 5px 50px 5px 5px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 16px;
+
+    &__message {
+        max-width: 268px;
+        @include mixins.setup-font("Nerko-One", 24px, 400, var.$primary-purple);
+    }
+
+    &__button {
+        border: none;
+        outline: none;
+        height: 24px;
+        aspect-ratio: 1 / 1;
+        box-sizing: border-box;
+        background-color: transparent;
+        @include mixins.setup-display-flex(row, center, center);
+        cursor: pointer;
+        padding-right: 12px;
+    }
+
+}
+
+.dialog-close-icon {
+    height: 13px;
+    aspect-ratio: 1 / 1;
+    @include mixins.setup-image('/assets/icons/close-purple.svg');
 }

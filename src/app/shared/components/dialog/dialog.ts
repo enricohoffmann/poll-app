@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -6,4 +6,10 @@ import { Component } from '@angular/core';
   templateUrl: './dialog.html',
   styleUrl: './dialog.scss',
 })
-export class Dialog {}
+export class Dialog {
+  dialogCloseEvent = output();
+
+  onDialogClose(): void {
+    this.dialogCloseEvent.emit();
+  }
+}

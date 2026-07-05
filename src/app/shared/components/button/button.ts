@@ -35,6 +35,8 @@ export class Button {
   isActivated = computed(() => {
     return this.toggleIsActive() && this.buttonVariant() === 'filterBtn';
   });
+  buttonType = input<string>('button');
+  
 
   ngOnInit(){}
 

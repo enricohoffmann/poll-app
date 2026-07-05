@@ -78,12 +78,11 @@ export class SurveyService implements OnInit {
     return (response.data ?? []) as QuestionWithAnswers[];
   }
 
-  async handleAddSurvey(surveyForm: FormGroup):Promise<boolean> {
+  async handleAddSurvey(surveyForm: FormGroup):Promise<number> {
     const survey = new SurveyModel(surveyForm.value);
-    survey.category_id = 1;
     const responseSurveyId = await this.createSurvey(survey);
-    if(responseSurveyId === 0){return false;}
-    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId);
+    if(responseSurveyId === 0){return 0;}
+    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId) == true ? responseSurveyId : 0;
     
   }
 

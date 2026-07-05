@@ -13,6 +13,8 @@ import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
 import { Dialog } from '../../shared/components/dialog/dialog';
+import { SurveyModel } from '../../models/survey-model';
+import { categorySelectedValidator, expiresDateValidator } from '../../shared/utils/validators';
 
 
 @Component({
@@ -24,6 +26,9 @@ import { Dialog } from '../../shared/components/dialog/dialog';
   styleUrl: './survey-create.scss',
 })
 export class SurveyCreate {
+
+  private readonly DIALOG_DELAY = 125;
+  private readonly OVERLAY_CLOSE_DELAY = 1600;
 
   survey: Survey = {
     id: 0,
@@ -40,11 +45,16 @@ export class SurveyCreate {
   surveyForm = new FormGroup({
     title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]}),
     description: new FormControl(this.survey.description, { nonNullable: true, validators: [Validators.maxLength(300)]}),
-    expires_at: new FormControl(this.survey.expires_at, { nonNullable: true }),
-    questions: new FormArray<FormGroup>([])
+    expires_at: new FormControl(this.survey.expires_at, { nonNullable: true,  validators: [expiresDateValidator()]}),
+    questions: new FormArray<FormGroup>([]),
+    is_published: new FormControl(this.survey.is_published),
+    category_id: new FormControl(this.survey.category_id, {nonNullable: true, validators: [Validators.required, categorySelectedValidator()]})
   });
 
   questionsCount = signal<number>(0);
+  
+  showDialog = signal<boolean>(false);
+  showOverlay = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
@@ -54,8 +64,11 @@ export class SurveyCreate {
       /* const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
       console.log(surveyAddResult); */
 
+      this.surveyForm.get('is_published')?.setValue(true);
+
       console.log(this.surveyForm.value);
       
+      this.afterCreateSurvey();
       
     }
   }
@@ -128,10 +141,26 @@ export class SurveyCreate {
 
   onChooseCategory(category: Category): void {
     this.currentCategory.set(category);
+    this.surveyForm.get('category_id')?.setValue(category.id);
   }
 
   onCancel():void {
     this.router.navigate(['']);
   }
+
+  private afterCreateSurvey(): void {
+    this.showOverlay.set(true);
+    setTimeout(() => {
+      this.showDialog.set(true);
+    }, this.DIALOG_DELAY);
+  }
+
+  onSuccessDialogClose(): void {
+    this.showDialog.set(false);
+    setTimeout(() => {
+      this.showOverlay.set(false);
+    }, this.OVERLAY_CLOSE_DELAY);
+  }
+
 
 }

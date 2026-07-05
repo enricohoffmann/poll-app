@@ -1,5 +1,5 @@
 <button 
-    type="button" 
+    [type]="(buttonType())" 
     class="btn" 
     [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
     (click)="onButtonClick()"
