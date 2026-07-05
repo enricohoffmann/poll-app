@@ -5,7 +5,12 @@
         <app-status [canHover]="false">Draft</app-status>
         <header class="create-section-header">
             <h1 class="create-section-header__title">Create new survey</h1>
-            <app-button>Cancel</app-button>
+            <app-button 
+                [buttonVariant]="'secondaryBtn'"
+                    [hasIcon]="true"
+                    [buttonIconVariant]="'closeWhite'"
+                    (click)="onCancel()"
+                >Cancel</app-button>
         </header>
 
         <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
@@ -58,7 +63,7 @@
 
             </div>
 
-            <button type="submit">submit</button>
+            <app-button class="survey-forms-submit-button" type="submit" [buttonVariant]="'primaryBtn'" [hasIcon]="false">submit</app-button>
 
         </form>
 

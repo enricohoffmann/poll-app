@@ -11,6 +11,7 @@ import { SurveyService } from '../../services/survey-service';
 import { DropDownMenu } from "../../shared/components/drop-down-menu/drop-down-menu";
 import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class SurveyCreate {
   questionsCount = signal<number>(0);
 
   private surveyService = inject(SurveyService);
+  private router = inject(Router);
 
   async onSubmit(): Promise<void> {
     if (this.surveyForm.valid) {
@@ -125,6 +127,10 @@ export class SurveyCreate {
 
   onChooseCategory(category: Category): void {
     this.currentCategory.set(category);
+  }
+
+  onCancel():void {
+    this.router.navigate(['']);
   }
 
 }

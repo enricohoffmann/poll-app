@@ -6,3 +6,5 @@ export type SurveyCardVariant = 'highlights' | 'listview';
 
 export type InputFieldVariant = 'labelTop' | 'labelLeft' | 'textArea' | 'noLabel';
 
+export type ButtonIconVariant = 'add' | 'check' | 'addWhite' | 'closeWhite';
+

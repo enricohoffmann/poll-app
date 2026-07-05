@@ -1,5 +1,5 @@
 import { Component, input, signal, computed } from '@angular/core';
-import { ButtonVariant } from '../../utils/types';
+import { ButtonIconVariant, ButtonVariant } from '../../utils/types';
 import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
@@ -18,17 +18,18 @@ export class Button {
     trashBtn: 'btn--trash'
   };
 
-  private readonly BUTTON_ICON_CLASSES: Record<'add'|'check'|'addWhite', string> = {
+  private readonly BUTTON_ICON_CLASSES: Record<ButtonIconVariant, string> = {
     add: 'btn-icon--add',
     check: 'btn-icon--check',
-    addWhite: 'btn-icon--add-white'
+    addWhite: 'btn-icon--add-white',
+    closeWhite: 'btn-icon--close-white'
   }
 
   buttonVariant = input<ButtonVariant>('primaryBtn');
   buttonClass = computed(() => this.BUTTON_CLASSES[this.buttonVariant()]);
   hasIcon = input(false);
   hasTrashIcon = input(false);
-  buttonIconVariant = input<'add' | 'check' | 'addWhite'>('add');
+  buttonIconVariant = input<ButtonIconVariant>('add');
   buttonIconClass = computed(() => this.BUTTON_ICON_CLASSES[this.buttonIconVariant()]);
   toggleIsActive = input<boolean>(false);
   isActivated = computed(() => {

@@ -84,3 +84,7 @@
     padding-left: 18px;
     @include mixins.setup-font("Mulish", 14px, 400, var.$primary-orange);
 }
+
+.survey-forms-submit-button {
+    justify-self: flex-end;
+}
