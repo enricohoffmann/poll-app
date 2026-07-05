@@ -1,6 +1,15 @@
 
-<div>
-    <input type="checkbox">
-</div>
+<button type="button" class="check-btn" 
+    [ngClass]="checkButtonVariant()" 
+    (click)="onCheckButtonClick()"
+    [class.check-btn--isChecked]="checkInputControl().value"
+    >
+
+    @if(checkInputControl().value){
+        <div class="check-btn__checkIcon"></div>
+    }
+
+
+</button>
 
 

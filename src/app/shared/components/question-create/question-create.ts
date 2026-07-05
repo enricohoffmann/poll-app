@@ -28,6 +28,10 @@ export class QuestionCreate {
     return this.questionFormGroup().controls['text'] as FormControl<string>;
   }
 
+  getAllowMultiAnswers(): FormControl<boolean> {
+    return this.questionFormGroup().controls['allow_multiple_answers'] as FormControl<boolean>;
+  }
+
   get answers(): FormArray<FormGroup> {
     return this.questionFormGroup().controls['answers'] as FormArray;
   }

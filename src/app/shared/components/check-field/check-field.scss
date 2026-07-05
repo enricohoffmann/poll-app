@@ -1,0 +1,33 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.check-btn {
+    @include mixins.setup-display-flex(column, center, center);
+    height: 15px;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-radius: 3px;
+    transition: background-color 125ms ease-in, border-color 125ms ease-in;
+    cursor: pointer;
+
+    &--isChecked {
+        border-color: var.$primary-orange !important;
+        background-color: var.$primary-orange;
+    }
+
+    &__checkIcon {
+        width: 9px;
+        height: 7px;
+        @include mixins.setup-image('/assets/icons/check-box-icon-sm.svg');
+    }
+}
+
+.check-btn-bright {
+    border: 1.5px solid rgba(255,255,255,1);
+
+    &:hover:not(.check-btn--isChecked){
+        background-color: rgba(255, 207, 161, 0.6);
+        border-color: rgba(250, 245, 254, 1);
+    }
+}
