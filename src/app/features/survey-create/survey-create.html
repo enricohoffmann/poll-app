@@ -30,10 +30,8 @@
 
                     </div>
 
-                    @if(surveyForm.controls.expires_at.hasError('dateInvalid')) {
-                        <span>Please enter a valid date.</span>
-                    } @else if(surveyForm.controls.expires_at.hasError('dateExpired')) {
-                        <span>The date is in the past.</span>
+                    @if(getErrorMessage(surveyForm.controls.expires_at)) {
+                        <span>{{getErrorMessage(surveyForm.controls.expires_at)}}</span>
                     }
 
                     <!-- Vali 

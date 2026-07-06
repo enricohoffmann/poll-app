@@ -1,8 +1,8 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
-import { FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Survey } from '../../interfaces/survey-interface';
 import { Question } from '../../interfaces/question-interface';
 import { Answer } from '../../interfaces/answer-interface';
@@ -14,7 +14,8 @@ import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
 import { Dialog } from '../../shared/components/dialog/dialog';
 import { SurveyModel } from '../../models/survey-model';
-import { categorySelectedValidator, expiresDateValidator } from '../../shared/utils/validators';
+import { categorySelectedValidator, expiresDateNotPastValidator, expiresDatePatternValidator, expiresDateValidator } from '../../shared/utils/validators';
+import { VALIDATION_MESSAGES } from '../../shared/utils/validation-messages';
 
 
 @Component({
@@ -43,21 +44,23 @@ export class SurveyCreate {
   currentCategory = signal<Category | null>(null);
 
   surveyForm = new FormGroup({
-    title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]}),
-    description: new FormControl(this.survey.description, { nonNullable: true, validators: [Validators.maxLength(300)]}),
-    expires_at: new FormControl(this.survey.expires_at, { nonNullable: true,  validators: [expiresDateValidator()]}),
+    title: new FormControl(this.survey.title, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
+    description: new FormControl(this.survey.description, { nonNullable: true, validators: [Validators.maxLength(300)] }),
+    expires_at: new FormControl(this.survey.expires_at, { nonNullable: true, validators: [expiresDatePatternValidator(), expiresDateValidator(), expiresDateNotPastValidator()] }),
     questions: new FormArray<FormGroup>([]),
     is_published: new FormControl(this.survey.is_published),
-    category_id: new FormControl(this.survey.category_id, {nonNullable: true, validators: [Validators.required, categorySelectedValidator()]})
+    category_id: new FormControl(this.survey.category_id, { nonNullable: true, validators: [Validators.required, categorySelectedValidator()] })
   });
 
   questionsCount = signal<number>(0);
-  
+
   showDialog = signal<boolean>(false);
   showOverlay = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
+
+  
 
   async onSubmit(): Promise<void> {
     if (this.surveyForm.valid) {
@@ -67,9 +70,9 @@ export class SurveyCreate {
       this.surveyForm.get('is_published')?.setValue(true);
 
       console.log(this.surveyForm.value);
-      
+
       this.afterCreateSurvey();
-      
+
     }
   }
 
@@ -89,7 +92,7 @@ export class SurveyCreate {
   private createQuestionGroup(): FormGroup {
     const question: Question = { id: 0, survey_id: this.survey.id, text: '', allow_multiple_answers: false, sort_order: 1 };
     const questionFormGroup: FormGroup = new FormGroup({
-      text: new FormControl(question.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)]}),
+      text: new FormControl(question.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)] }),
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, { nonNullable: true }),
       answers: new FormArray<FormGroup>([])
     });
@@ -99,7 +102,7 @@ export class SurveyCreate {
   private createAnswerGroup(): FormGroup {
     const answer: Answer = { id: 0, question_id: 0, text: '', sort_order: 1 };
     const answerFormGroup: FormGroup = new FormGroup({
-      text: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)]})
+      text: new FormControl(answer.text, { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] })
     });
     return answerFormGroup;
   }
@@ -144,7 +147,7 @@ export class SurveyCreate {
     this.surveyForm.get('category_id')?.setValue(category.id);
   }
 
-  onCancel():void {
+  onCancel(): void {
     this.router.navigate(['']);
   }
 
@@ -160,6 +163,17 @@ export class SurveyCreate {
     setTimeout(() => {
       this.showOverlay.set(false);
     }, this.OVERLAY_CLOSE_DELAY);
+  }
+
+  getErrorMessage(control: AbstractControl): string | null {
+    if(!control.errors) {return null;}
+    console.log(control.errors);
+    
+    const firstErrorKey = Object.keys(control.errors)[0];
+    const errorMessageFactory = VALIDATION_MESSAGES[firstErrorKey as keyof typeof VALIDATION_MESSAGES];
+    if(!errorMessageFactory) {return 'Unknown validation error.';}
+    
+    return errorMessageFactory(control.errors[firstErrorKey]);
   }
 
 
