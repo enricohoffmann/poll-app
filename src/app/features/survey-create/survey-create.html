@@ -1,7 +1,6 @@
 <div class="create-wrapper">
     <section class="create-section">
 
-        <!-- Hier muss noch eine andere Farbe rein -->
         <app-status [canHover]="false">Draft</app-status>
         <header class="create-section-header">
             <h1 class="create-section-header__title">Create new survey</h1>
@@ -43,13 +42,6 @@
 
                     </div>
 
-
-
-                    <!-- Vali 
-                        @if (surveyForm.controls.category_id.hasError('categoryNotSelected')) {
-                            <span>Please select a category.</span>}
-                    -->
-
                 </fieldset>
 
                 <article class="create-form__fields__fieldset--survey-info mt-32">
@@ -67,16 +59,12 @@
 
                 </article>
 
-
-
             </div>
 
             <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'"
                 [hasIcon]="false">Publish</app-button>
 
         </form>
-
-
 
     </section>
 

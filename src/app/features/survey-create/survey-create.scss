@@ -71,6 +71,7 @@
                     "date-error category-error"
                 ;
                 column-gap: 12px;
+                row-gap: 6px;
 
             }
         }
@@ -95,7 +96,7 @@
 }
 
 .current-category-field {
-    grid-area: date-error;
+    grid-area: current-category;
     @include mixins.setup-display-flex(row, flex-start, center);
     height: 26px;
     padding-left: 18px;
