@@ -1,5 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { checkGermanDate } from "./custom-functions";
+import { checkDateInGermanFormat, getDateFromGermanDate } from "./custom-functions";
+
 
 
 export function categorySelectedValidator(): ValidatorFn {
@@ -27,8 +28,8 @@ export function expiresDateValidator(): ValidatorFn {
 
         const value = control.value as string;
         if(!value) {return null;}
-
-        if(!checkGermanDate(value)) { return {dateInvalid: true}; }
+        
+        if(!checkDateInGermanFormat(value)) { return {dateInvalid: true}; }
 
         return null;
     }
@@ -38,14 +39,13 @@ export function expiresDateNotPastValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
         const value = control.value as string;
-       
         if(!value) {return null;}
 
-        const date = new Date(value);
-        const dateNow = Date.now();
+        const date = getDateFromGermanDate(value);
+        const dateNow = new Date();
+        dateNow.setHours(0, 0, 0, 0);
 
-        if(!checkGermanDate(value)) { return {dateInvalid: true}; }
-        if(dateNow > date.getTime()) { return {dateExpired: true}; }
+        if(dateNow.getTime() > date.getTime()) { return {dateExpired: true}; }
 
         return null;
     }

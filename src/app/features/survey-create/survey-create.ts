@@ -167,7 +167,6 @@ export class SurveyCreate {
 
   getErrorMessage(control: AbstractControl): string | null {
     if(!control.errors) {return null;}
-    console.log(control.errors);
     
     const firstErrorKey = Object.keys(control.errors)[0];
     const errorMessageFactory = VALIDATION_MESSAGES[firstErrorKey as keyof typeof VALIDATION_MESSAGES];

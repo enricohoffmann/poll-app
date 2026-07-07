@@ -13,26 +13,37 @@
 
             <div class="create-form__fields">
                 <fieldset class="create-form__fields__fieldset--survey-info">
-                    <app-input-field [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.title"
+                    <app-input-field class="title-field" [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.title"
                         [label]="'Survey name'" [fieldId]="'survey-title'" [placeHolder]="''"
                         [hasTrash]="true"></app-input-field>
 
-                    <app-input-field [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
+                    @if(getErrorMessage(surveyForm.controls.title)) {
+                            <span class="error error__title">{{getErrorMessage(surveyForm.controls.title)}}</span>
+                        }
+
+                    <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
                         [label]="'Describing text'" [isOptional]="true"></app-input-field>
 
                     <div class="create-form__fields__fieldset--survey-info--date-and-category">
-                        <app-date-field [dateInputControl]="surveyForm.controls.expires_at" class="set-date-field"></app-date-field>
+                        <app-date-field [dateInputControl]="surveyForm.controls.expires_at"
+                            class="set-date-field"></app-date-field>
 
                         <app-drop-down-menu class="choose-category-field"
                             (sendCategorySelection)="onChooseCategory($event)">Choose category</app-drop-down-menu>
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 
+                        @if(getErrorMessage(surveyForm.controls.expires_at)) {
+                            <span class="error error__date">{{getErrorMessage(surveyForm.controls.expires_at)}}</span>
+                        }
+
+                        @if(getErrorMessage(surveyForm.controls.category_id)) {
+                            <span class="error error__category">{{getErrorMessage(surveyForm.controls.category_id)}}</span>
+                        }
+
                     </div>
 
-                    @if(getErrorMessage(surveyForm.controls.expires_at)) {
-                        <span>{{getErrorMessage(surveyForm.controls.expires_at)}}</span>
-                    }
+
 
                     <!-- Vali 
                         @if (surveyForm.controls.category_id.hasError('categoryNotSelected')) {
@@ -60,11 +71,8 @@
 
             </div>
 
-            <app-button 
-                class="survey-forms-submit-button" 
-                [buttonVariant]="'primaryBtn'"
-                [buttonType]="'submit'"
-                [hasIcon]="false">submit</app-button>
+            <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'"
+                [hasIcon]="false">Publish</app-button>
 
         </form>
 
@@ -73,13 +81,10 @@
     </section>
 
     @if(showOverlay()){
-        <div class="survey-create-overlay">
-            <app-dialog 
-                class="survey-publish-dialog" 
-                [class.survey-publish-dialog--show]="showDialog()"
-                (dialogCloseEvent)="onSuccessDialogClose()"
-            ></app-dialog>
-        </div>
+    <div class="survey-create-overlay">
+        <app-dialog class="survey-publish-dialog" [class.survey-publish-dialog--show]="showDialog()"
+            (dialogCloseEvent)="onSuccessDialogClose()"></app-dialog>
+    </div>
     }
 
 </div>
