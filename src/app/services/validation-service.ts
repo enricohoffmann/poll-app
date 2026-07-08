@@ -9,7 +9,7 @@ export class ValidationService {
 
   getErrorMessage(control: AbstractControl): string | null {
     if (!control.errors) { return null; }
-    if (!(control.touched || control.dirty)) { return null; }
+    if (control.untouched && control.invalid) { return null; }
 
     const firstErrorKey = Object.keys(control.errors)[0];
     const errorMessageFactory = VALIDATION_MESSAGES[firstErrorKey as keyof typeof VALIDATION_MESSAGES];
