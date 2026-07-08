@@ -17,7 +17,7 @@ export class InputField {
   fieldId = input<string>("");
   placeHolder = input<string>("");
   hasTrash = input<boolean>(true);
-  isWriting = signal(false);
+  isWriting = signal<boolean>(false);
   isOptional = input<boolean>(false);
   readonly removeItem = output();
 

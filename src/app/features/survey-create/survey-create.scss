@@ -68,7 +68,7 @@
                 grid-template-areas:
                     "set-date choose-category"
                     "set-date current-category"
-                    "date-error category-error"
+                    "date-error empty"
                 ;
                 column-gap: 12px;
                 row-gap: 6px;
@@ -139,7 +139,7 @@
     }
 
     &__category {
-        grid-area: category-error;
+        grid-area: current-category;
         padding-left: 20px;
     }
 }

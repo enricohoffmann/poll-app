@@ -44,6 +44,7 @@
         padding: 7px 13px;
         outline: unset;
         border: unset;
+        border-radius: 5px;
         cursor: pointer;
         @include mixins.setup-font("Mulish", 16px, 400, var.$primary-purple);
         background-color: transparent;

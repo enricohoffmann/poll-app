@@ -15,6 +15,8 @@ export class DateField {
   @ViewChild('dateSelectField') dateSelect!: ElementRef<HTMLInputElement>;
   dateInputControl = input.required<FormControl<string>>();
 
+  isWriting = signal<boolean>(false);
+
   onCalenderButtonClick(): void{
     this.dateSelect.nativeElement.showPicker();
   }
@@ -32,6 +34,14 @@ export class DateField {
 
   clearDateField(): void {
     this.dateInputControl().setValue('');
+  }
+
+  onDateFieldEnter(): void {
+    this.isWriting.set(true);
+  }
+
+  onDateFieldLeave(): void {
+    this.isWriting.set(false);
   }
 
 }

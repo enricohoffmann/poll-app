@@ -16,8 +16,8 @@
                         [label]="'Survey name'" [fieldId]="'survey-title'" [placeHolder]="''"
                         [hasTrash]="true"></app-input-field>
 
-                    @if(getErrorMessage(surveyForm.controls.title)) {
-                            <span class="error error__title">{{getErrorMessage(surveyForm.controls.title)}}</span>
+                    @if(validationService.getErrorMessage(surveyForm.controls.title)) {
+                            <span class="error error__title">{{validationService.getErrorMessage(surveyForm.controls.title)}}</span>
                         }
 
                     <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
@@ -32,12 +32,12 @@
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 
-                        @if(getErrorMessage(surveyForm.controls.expires_at)) {
-                            <span class="error error__date">{{getErrorMessage(surveyForm.controls.expires_at)}}</span>
+                        @if(validationService.getErrorMessage(surveyForm.controls.expires_at)) {
+                            <span class="error error__date">{{validationService.getErrorMessage(surveyForm.controls.expires_at)}}</span>
                         }
 
-                        @if(getErrorMessage(surveyForm.controls.category_id)) {
-                            <span class="error error__category">{{getErrorMessage(surveyForm.controls.category_id)}}</span>
+                        @if(validationService.getErrorMessage(surveyForm.controls.category_id)) {
+                            <span class="error error__category">{{validationService.getErrorMessage(surveyForm.controls.category_id)}}</span>
                         }
 
                     </div>

@@ -15,13 +15,19 @@ import { Router } from '@angular/router';
 import { Dialog } from '../../shared/components/dialog/dialog';
 import { SurveyModel } from '../../models/survey-model';
 import { categorySelectedValidator, expiresDateNotPastValidator, expiresDatePatternValidator, expiresDateValidator } from '../../shared/utils/validators';
-import { VALIDATION_MESSAGES } from '../../shared/utils/validation-messages';
-
+import { ValidationService } from '../../services/validation-service';
 
 @Component({
   selector: 'app-survey-create',
   imports: [
-    Status, Button, InputField, ReactiveFormsModule, QuestionCreate, DropDownMenu, DateField, Dialog
+    Status, 
+    Button, 
+    InputField, 
+    ReactiveFormsModule, 
+    QuestionCreate, 
+    DropDownMenu, 
+    DateField, 
+    Dialog
   ],
   templateUrl: './survey-create.html',
   styleUrl: './survey-create.scss',
@@ -58,11 +64,15 @@ export class SurveyCreate {
   showOverlay = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
+  validationService = inject(ValidationService);
   private router = inject(Router);
 
   
 
   async onSubmit(): Promise<void> {
+
+    this.setAllFieldTouched();
+
     if (this.surveyForm.valid) {
       /* const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
       console.log(surveyAddResult); */
@@ -165,15 +175,8 @@ export class SurveyCreate {
     }, this.OVERLAY_CLOSE_DELAY);
   }
 
-  getErrorMessage(control: AbstractControl): string | null {
-    if(!control.errors) {return null;}
-    
-    const firstErrorKey = Object.keys(control.errors)[0];
-    const errorMessageFactory = VALIDATION_MESSAGES[firstErrorKey as keyof typeof VALIDATION_MESSAGES];
-    if(!errorMessageFactory) {return 'Unknown validation error.';}
-    
-    return errorMessageFactory(control.errors[firstErrorKey]);
+  private setAllFieldTouched(): void {
+    this.surveyForm.markAllAsTouched();
   }
-
 
 }

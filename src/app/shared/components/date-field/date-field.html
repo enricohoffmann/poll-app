@@ -9,6 +9,9 @@
             type="text" 
             class="date-field__input" 
             [formControl]="dateInputControl()"
+            (focus)="onDateFieldEnter()"
+            (blur)="onDateFieldLeave()"
+            [class.date-field__input--writing]="isWriting()"
         >
         <button type="button" class="date-field__button" (click)="onCalenderButtonClick()">
             <div class="date-field__button__icon"></div>
