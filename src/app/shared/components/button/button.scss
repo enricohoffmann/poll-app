@@ -102,7 +102,13 @@
         background-color: transparent;
         transition: background-color 125ms ease-out;
 
-        &:hover {
+        &--disabled {
+            cursor: unset;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        &:hover:not(.btn--trash--disabled) {
             background-color: rgba(255, 183, 112, 0.6);
 
             .btn-icon-container__icon--default {

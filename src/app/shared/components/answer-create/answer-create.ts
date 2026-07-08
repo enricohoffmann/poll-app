@@ -25,6 +25,7 @@ export class AnswerCreate {
   answerIndex = input<number>(0);
   questionIndex = input<number>(0);
   canInsertAnswer = input<boolean>(true);
+  canRemoveAnswer = input<boolean>(true);
   readonly removeAnswer = output<number>();
   readonly addAnswer = output<number>();
   validationService = inject(ValidationService);

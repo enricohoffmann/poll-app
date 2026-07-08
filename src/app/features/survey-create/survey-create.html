@@ -49,7 +49,9 @@
                     @for(question of questions.controls; track $index){
                     <app-question-create [questionFormGroup]="question" (addAnswerEvent)="addAnswer($event)"
                         (removeAnswerEvent)="removeAnswer($event)" [questionIndex]="$index"
-                        (removeQuestionEvent)="removeQuestion($event)"></app-question-create>
+                        (removeQuestionEvent)="removeQuestion($event)"
+                        [canRemoveQuestion]="questions.length > 1"
+                        ></app-question-create>
                     }
 
                     @if(questionsCount() < 6){ <app-button (click)="addQuestion()" [buttonVariant]="'secondaryBtn'"

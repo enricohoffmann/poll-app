@@ -6,7 +6,7 @@
     </app-input-field>
 
     <app-button class="answer-container__trash-button" [buttonVariant]="'trashBtn'" [hasIcon]="false"
-        [hasTrashIcon]="true" (click)="onRemoveAnswer()">
+        [hasTrashIcon]="true" (click)="onRemoveAnswer()" [isDisabled]="canRemoveAnswer()">
     </app-button>
 
     @if(validationService.getErrorMessage(getAnswer())) {

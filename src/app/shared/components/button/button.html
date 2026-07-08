@@ -3,6 +3,7 @@
     class="btn" 
     [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
     (click)="onButtonClick()"
+    [class.btn--trash--disabled]="isDisabled()"
     >
 
     <span>

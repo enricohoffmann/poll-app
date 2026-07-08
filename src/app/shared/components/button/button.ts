@@ -36,6 +36,7 @@ export class Button {
     return this.toggleIsActive() && this.buttonVariant() === 'filterBtn';
   });
   buttonType = input<string>('button');
+  isDisabled = input<boolean>(false);
   
 
   ngOnInit(){}

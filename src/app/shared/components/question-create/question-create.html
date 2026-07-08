@@ -3,7 +3,7 @@
     <div class="question-field-section__top">
         <p class="question-field-section__text">{{questionIndex() + 1}}. Question</p>
         <app-button [buttonVariant]="'trashBtn'" [hasIcon]="false" [hasTrashIcon]="true"
-            (click)="onRemoveQuestion()"></app-button>
+            (click)="onRemoveQuestion()" [isDisabled]="!canRemoveQuestion()"></app-button>
     </div>
 
     <app-input-field class="question-field-section__question" [inputFieldVariant]="'noLabel'"
@@ -23,9 +23,15 @@
 
     <aside>
         @for(answer of answers.controls; track $index; let last = $last){
-        <app-answer-create [answerFormGroup]="answer" [answerIndex]="$index" [questionIndex]="questionIndex()"
-            (removeAnswer)="onRemoveAnswer($event)" [canInsertAnswer]="last && $index < 5"
-            (addAnswer)="onAddAnswer($event)"></app-answer-create>
+        <app-answer-create 
+            [answerFormGroup]="answer" 
+            [answerIndex]="$index" 
+            [questionIndex]="questionIndex()"
+            (removeAnswer)="onRemoveAnswer($event)" 
+            [canInsertAnswer]="last && $index < 5"
+            (addAnswer)="onAddAnswer($event)"
+            [canRemoveAnswer]="answerCount() <= 2"
+            ></app-answer-create>
         }
     </aside>
 

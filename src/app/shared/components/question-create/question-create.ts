@@ -20,6 +20,7 @@ export class QuestionCreate {
   readonly removeAnswerEvent = output<{ questionIndex: number; answerIndex: number }>(); 
   readonly removeQuestionEvent = output<number>();
   validationService = inject(ValidationService);
+  canRemoveQuestion = input<boolean>(true);
 
   ngOnInit():void {
     this.updateAnswerCount();
@@ -50,6 +51,7 @@ export class QuestionCreate {
 
   onRemoveAnswer(answerIndex: number): void{
     this.removeAnswerEvent.emit({questionIndex: this.questionIndex(), answerIndex: answerIndex});
+    this.updateAnswerCount();
   }
 
   onRemoveQuestion(): void {
