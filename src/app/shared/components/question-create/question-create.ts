@@ -1,9 +1,10 @@
-import { Component, input, signal, output } from '@angular/core';
+import { Component, input, signal, output, inject } from '@angular/core';
 import { Button } from "../button/button";
 import { InputField } from "../input-field/input-field";
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AnswerCreate } from '../answer-create/answer-create';
 import { CheckField } from '../check-field/check-field';
+import { ValidationService } from '../../../services/validation-service';
 
 @Component({
   selector: 'app-question-create',
@@ -18,6 +19,7 @@ export class QuestionCreate {
   readonly addAnswerEvent = output<number>();
   readonly removeAnswerEvent = output<{ questionIndex: number; answerIndex: number }>(); 
   readonly removeQuestionEvent = output<number>();
+  validationService = inject(ValidationService);
 
   ngOnInit():void {
     this.updateAnswerCount();

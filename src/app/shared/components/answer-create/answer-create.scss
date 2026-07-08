@@ -4,8 +4,10 @@
 .answer-container {
     display: grid;
     grid-template-columns: auto 1fr 37px;
-    grid-template-rows: auto auto;
-    grid-template-areas: "identifier input trash" "emptySm addSection addSection";
+    grid-template-areas: 
+        "identifier input trash" 
+        "emptySm error-field error-field"
+        "emptySm addSection addSection";
     column-gap: 8px;
     margin-bottom: 10px;
     align-items: center;
@@ -44,6 +46,12 @@
 
     &__notice {
         @include mixins.setup-font("Mulish", 12px, 400, rgba(255, 255, 255, 1));
+    }
+
+    &__error {
+        grid-area: error-field;
+        margin-top: 4px;
+        @include mixins.setup-font("Mulish", 12px, 400, var.$primary-orange);
     }
 
 

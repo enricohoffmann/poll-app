@@ -1,7 +1,8 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { InputField } from "../input-field/input-field";
 import { Button } from '../button/button';
+import { ValidationService } from '../../../services/validation-service';
 
 @Component({
   selector: 'app-answer-create',
@@ -26,6 +27,7 @@ export class AnswerCreate {
   canInsertAnswer = input<boolean>(true);
   readonly removeAnswer = output<number>();
   readonly addAnswer = output<number>();
+  validationService = inject(ValidationService);
 
   getAnswer():FormControl<string> {
     return this.answerFormGroup().controls['text'] as FormControl<string>;

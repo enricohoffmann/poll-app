@@ -3,7 +3,7 @@
 
 .question-field-section {
 
-    &__header {
+    &__top {
         @include mixins.setup-display-flex(row, space-between, center);
         margin-bottom: 8px
     }
@@ -24,6 +24,10 @@
         &--md {
             @include mixins.setup-font("Mulish", 12px, 400, rgba(255,255,255,1));
         }
+    }
+
+    &__error {
+        @include mixins.setup-font("Mulish", 12px, 400, var.$primary-orange);
     }
 
 }
