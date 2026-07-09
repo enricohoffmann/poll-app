@@ -16,19 +16,21 @@ import { Dialog } from '../../shared/components/dialog/dialog';
 import { SurveyModel } from '../../models/survey-model';
 import { categorySelectedValidator, expiresDateNotPastValidator, expiresDatePatternValidator, expiresDateValidator } from '../../shared/utils/validators';
 import { ValidationService } from '../../services/validation-service';
+import { Header } from "../../layout/header/header";
 
 @Component({
   selector: 'app-survey-create',
   imports: [
-    Status, 
-    Button, 
-    InputField, 
-    ReactiveFormsModule, 
-    QuestionCreate, 
-    DropDownMenu, 
-    DateField, 
-    Dialog
-  ],
+    Status,
+    Button,
+    InputField,
+    ReactiveFormsModule,
+    QuestionCreate,
+    DropDownMenu,
+    DateField,
+    Dialog,
+    Header
+],
   templateUrl: './survey-create.html',
   styleUrl: './survey-create.scss',
 })

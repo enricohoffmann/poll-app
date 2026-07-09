@@ -10,18 +10,26 @@
 
 }
 
+.create-section,
+.create-header {
+    width: min(1170px, calc(100vw - 48px));
+}
+
+.create-header {
+    @include mixins.setup-display-flex(row, flex-start, center);
+}
+
 .create-section {
     box-sizing: border-box;
-    width: clamp(300px, calc(138.889px + 53.704vw), 1170px);
-    min-height: 842px;
     background-color: var.$primary-purple;
     border-radius: 5px 100px 5px 5px;
-    padding: 40px 54px;
-    margin-top: 36px;
+    padding: 32px 59px 32px 59px;
+    margin-top: 24px;
     margin-bottom: 36px;
 }
 
 .create-section-header {
+    width: 100%;
     @include mixins.setup-display-flex(row, space-between, center);
 
     &__title {
@@ -33,9 +41,11 @@
     box-sizing: border-box;
     display: grid;
     grid-template-rows: 1fr auto;
-    row-gap: 32px;
-    width: clamp(300px, calc(160.741px + 46.42vw), 1052px);
-    min-height: 549px;
+    row-gap: 24px;
+    /* width: clamp(300px, calc(160.741px + 46.42vw), 1052px); */
+    min-width: 0;
+    width: 100%;
+    /* min-height: 549px; */
     margin-top: 32px;
 
     &__fields {
@@ -141,5 +151,17 @@
     &__category {
         grid-area: current-category;
         padding-left: 20px;
+    }
+}
+
+@media (max-width: 1122px) {
+    .create-form__fields__fieldset--survey-info--date-and-category {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-template-areas:
+            "choose-category"
+            "current-category"
+            "set-date"
+            "date-error"
+        ;
     }
 }
