@@ -6,11 +6,16 @@
     min-width: 0;
     width: 100%;
     display: grid;
-    grid-template-rows: auto;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "input-label empty"
+        "input-input input-button"
+    ;
     row-gap: 6px;
+    column-gap: 12px;
 
     &__label {
-        grid-row: 1;
+        grid-area: input-label;
         @include mixins.setup-font("Mulish", 18px, 700, var.$background-color-bright);
 
         &--optional {
@@ -22,7 +27,7 @@
     &__input-container {
         min-width: 0;
         display: grid;
-        height: 37px;
+        min-height: 37px;
         grid-template-columns: 1fr 37px;
         column-gap: 10px;
 
@@ -36,7 +41,7 @@
     &__input {
         width: 100%;
         min-width: 0;
-        grid-column: 1;
+        grid-area: input-input;
         box-sizing: border-box;
         border-radius: 5px 20px 5px 5px;
         padding: 7px 13px;
@@ -54,15 +59,17 @@
 
     &__text-area {
         resize: vertical;
-        min-height: 37px;
+        min-height: 120px;
         max-height: 120px;
         overflow-y: auto;
-        padding: 10px 13px 8px 13px;
+        padding: 10px 13px 8px 13px !important;
+        resize: vertical;
+
     }
 
     &__button-container {
         @include mixins.setup-display-flex(row, center, center);
-        grid-column: 2;
+        grid-area: input-button;
     }
 
     &__text-area+&__button-container {
@@ -72,4 +79,15 @@
 
 .input-field__label--hidden {
     display: none;
+}
+
+@media (max-width: 650px) {
+    .input-field {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "input-label input-button"
+            "input-input input-input"
+        ;
+        row-gap: 6px;
+    }
 }

@@ -7,9 +7,9 @@
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto 0;
-    grid-template-areas: 
-        "label label" 
-        "input-container trash-button" 
+    grid-template-areas:
+        "label label"
+        "input-container trash-button"
         "date-container date-container";
     row-gap: 5px;
     column-gap: 6px;
@@ -99,4 +99,20 @@
         pointer-events: none;
     }
 
+}
+
+@media (max-width: 650px) {
+    .date-field {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "label trash-button"
+            "input-container input-container"
+            "date-container date-container";
+        row-gap: 5px;
+        column-gap: 6px;
+    }
+
+    .date-field__label {
+        align-self: center;
+    }
 }

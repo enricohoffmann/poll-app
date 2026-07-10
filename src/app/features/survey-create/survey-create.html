@@ -8,7 +8,7 @@
         <header class="create-section-header">
             <h1 class="create-section-header__title">Create new survey</h1>
             <app-button [buttonVariant]="'secondaryBtn'" [hasIcon]="true" [buttonIconVariant]="'closeWhite'"
-                (click)="onCancel()">Cancel</app-button>
+                (click)="onCancel()" [hideTextOnMobile]="true">Cancel</app-button>
         </header>
 
         <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
@@ -24,7 +24,7 @@
                         }
 
                     <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
-                        [label]="'Describing text'" [isOptional]="true"></app-input-field>
+                        [label]="'Describing text'" [isOptional]="true" [fieldId]="'survey-description'"></app-input-field>
 
                     <div class="create-form__fields__fieldset--survey-info--date-and-category">
                         <app-date-field [dateInputControl]="surveyForm.controls.expires_at"
@@ -57,7 +57,7 @@
                         ></app-question-create>
                     }
 
-                    @if(questionsCount() < 6){ <app-button (click)="addQuestion()" [buttonVariant]="'secondaryBtn'"
+                    @if(questionsCount() < 6){ <app-button class="survey-add-question" (click)="addQuestion()" [buttonVariant]="'secondaryBtn'"
                         [hasIcon]="true" [buttonIconVariant]="'addWhite'">Add next question</app-button>
                         }
 

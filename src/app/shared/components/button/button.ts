@@ -37,6 +37,10 @@ export class Button {
   });
   buttonType = input<string>('button');
   isDisabled = input<boolean>(false);
+  hideTextOnMobile = input<boolean>(false);
+  hideText = computed(() => {
+    return this.buttonVariant() === 'secondaryBtn' && this.hideTextOnMobile();
+  });
   
 
   ngOnInit(){}
