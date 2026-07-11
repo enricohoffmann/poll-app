@@ -197,4 +197,25 @@
     .create-form__fields {
         padding: 40px 12px;
     }
+
+    .create-section-header__title {
+        line-height: 80%;
+        margin-top: 12px;
+        font-size: clamp(2.25rem, 1.0379rem + 6.0606vw, 3.5rem);
+    }
+}
+
+@media (max-width: 400px) {
+    .create-header {
+        width: 95vw;
+    }
+
+    .create-section {
+        padding: 31px 10px 32px 10px;
+        width: 95vw;
+    }
+
+    .create-form__fields {
+        padding: 40px 8px;
+    }
 }

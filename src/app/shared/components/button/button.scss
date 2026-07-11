@@ -48,6 +48,8 @@
         &:hover {
             background-color: var.$btn-seconday-bg-hover;
         }
+
+        &--cancel {}
     }
 
     &--tertiary {
@@ -202,5 +204,22 @@
 
     .btn-icon--hide-margin {
         margin-left: 0 !important;
+    }
+}
+
+@media(max-width: 650px){
+    .btn--secondary {
+        height: 38px;
+    }
+
+    .btn--secondary--cancel {
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-self: center;
+        align-self: center;
+    }
+
+    .btn-icon--hide-margin {
+        transform: scale(2) !important;
     }
 }
