@@ -82,8 +82,7 @@ export class SurveyService implements OnInit {
     const survey = new SurveyModel(surveyForm.value);
     const responseSurveyId = await this.createSurvey(survey);
     if(responseSurveyId === 0){return 0;}
-    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId) == true ? responseSurveyId : 0;
-    
+    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId) == true ? responseSurveyId : 0; 
   }
 
   async createSurvey(survey: SurveyModel): Promise<number> {

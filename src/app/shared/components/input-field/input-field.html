@@ -14,7 +14,7 @@
             (blur)="onInputLeave()" [class.input-field__input--writing]="isWriting()">
     } @else {
         <textarea class="input-field__text-area" [id]="fieldId()" [name]="fieldId()" [formControl]="inputControl()"
-            [placeholder]="placeHolder()" [title]="label()" autocomplete="off" (focus)="onInputEnter()"
+            [placeholder]="placeHolder()" [title]="label()" autocomplete="off" (focus)="onInputEnter()" spellcheck="false"
             (blur)="onInputLeave()" [class.input-field__input--writing]="isWriting()">
         </textarea>
     }

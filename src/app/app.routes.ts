@@ -4,6 +4,7 @@ import { SurveyCreate } from './features/survey-create/survey-create';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
+    { path: 'home', component: Home},
     { path: 'create', component: SurveyCreate },
     { path: '**', redirectTo: '' }
 ];

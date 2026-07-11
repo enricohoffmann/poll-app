@@ -1,12 +1,11 @@
 @use '../../../../styles/abstracts/variables' as var;
 @use '../../../..//styles/abstracts/mixins' as mixins;
-@use '../../../../styles.scss';
 
 
 .card {
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     cursor: pointer;
     row-gap: 16px;
     transition: background-color 125ms ease-out, box-shadow 125ms ease-out;
@@ -16,7 +15,6 @@
         aspect-ratio: 320 / 310;
         background-color: var.$background-color-card-default;
         border-radius: 0 80px 0 0;
-        /* padding: 40px 32px; */
         padding: 1.3rem 1.2rem;
 
         .card-category {
@@ -26,10 +24,18 @@
 
         .card-title {
             grid-row: 2;
+            min-width: 0;
             @include mixins.setup-font("Mulish", 26px, 700, var.$primary-purple);
+            align-self: start;
+            min-width: 0;
+            line-height: 1.05;
+            max-height: calc(3 * 1.05em);
+
             display: -webkit-box;
-            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+
             overflow: hidden;
         }
 
@@ -75,4 +81,3 @@
 
 
 }
-

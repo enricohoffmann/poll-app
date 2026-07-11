@@ -13,7 +13,6 @@ import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
 import { Dialog } from '../../shared/components/dialog/dialog';
-import { SurveyModel } from '../../models/survey-model';
 import { categorySelectedValidator, expiresDateNotPastValidator, expiresDatePatternValidator, expiresDateValidator } from '../../shared/utils/validators';
 import { ValidationService } from '../../services/validation-service';
 import { Header } from "../../layout/header/header";
@@ -76,15 +75,11 @@ export class SurveyCreate {
     this.setAllFieldTouched();
 
     if (this.surveyForm.valid) {
-      const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
-      console.log(surveyAddResult);
-
       this.surveyForm.get('is_published')?.setValue(true);
-
-      //console.log(this.surveyForm.value);
-
-      this.afterCreateSurvey();
-
+      const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
+      if(surveyAddResult > 0){
+        this.afterCreateSurvey();
+      }
     }
   }
 
@@ -174,6 +169,7 @@ export class SurveyCreate {
     this.showDialog.set(false);
     setTimeout(() => {
       this.showOverlay.set(false);
+      this.router.navigate(['home']);
     }, this.OVERLAY_CLOSE_DELAY);
   }
 

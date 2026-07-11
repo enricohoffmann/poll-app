@@ -1,4 +1,5 @@
 import { Survey } from '../interfaces/survey-interface';
+import { getIsoDateFromGerminDate } from '../shared/utils/custom-functions';
 
 export class SurveyModel implements Survey {
     id: number;
@@ -18,6 +19,10 @@ export class SurveyModel implements Survey {
         this.is_published = surveyData.is_published ?? false;
         this.created_at = surveyData.created_at ?? '';
 
+        if(this.expires_at) {
+            this.expires_at = getIsoDateFromGerminDate(this.expires_at);
+        }
+
     }
 
     getCleanAddSurveyJson(): {} {
@@ -29,4 +34,5 @@ export class SurveyModel implements Survey {
             is_published: this.is_published
         };
     }
+
 }
