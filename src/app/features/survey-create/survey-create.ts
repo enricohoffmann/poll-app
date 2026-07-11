@@ -76,12 +76,12 @@ export class SurveyCreate {
     this.setAllFieldTouched();
 
     if (this.surveyForm.valid) {
-      /* const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
-      console.log(surveyAddResult); */
+      const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
+      console.log(surveyAddResult);
 
       this.surveyForm.get('is_published')?.setValue(true);
 
-      console.log(this.surveyForm.value);
+      //console.log(this.surveyForm.value);
 
       this.afterCreateSurvey();
 

@@ -24,6 +24,7 @@ export class DateField {
   onDatePickerChange():void {
     const germanDate = this.getGermanDate(this.dateSelect.nativeElement.value);
     this.dateInputControl().setValue(germanDate);
+    this.dateInputControl().markAsTouched();
     this.isPickerOpen.set(false);
   }
 

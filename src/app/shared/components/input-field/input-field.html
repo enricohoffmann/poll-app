@@ -8,13 +8,6 @@
 
     </label>
 
-    <!-- <div class="input-field__input-container" [class.input-field__input-container--one-column]="!hasTrash()">
-
-        
-
-        
-    </div> -->
-
     @if(inputFieldVariant() !== 'textArea'){
         <input class="input-field__input" type="text" [id]="fieldId()" [name]="fieldId()" [formControl]="inputControl()"
             [placeholder]="placeHolder()" [title]="label()" autocomplete="off" (focus)="onInputEnter()"

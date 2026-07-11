@@ -49,7 +49,6 @@
             background-color: var.$btn-seconday-bg-hover;
         }
 
-        &--cancel {}
     }
 
     &--tertiary {
@@ -205,9 +204,21 @@
     .btn-icon--hide-margin {
         margin-left: 0 !important;
     }
+
+    .btn--primary {
+        background-color: var.$primary-orange;
+        
+        .btn-icon {
+            width: 24px;
+            margin-left: 10px;
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
 }
 
-@media(max-width: 650px){
+@media(max-width: 650px) {
+
     .btn--secondary {
         height: 38px;
     }
@@ -220,6 +231,6 @@
     }
 
     .btn-icon--hide-margin {
-        transform: scale(2) !important;
+        transform: scale(1.5) !important;
     }
 }

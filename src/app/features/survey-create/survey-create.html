@@ -14,7 +14,7 @@
         <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
 
             <div class="create-form__fields">
-                <fieldset class="create-form__fields__fieldset--survey-info">
+                <fieldset class="survey-info-fields">
                     <app-input-field class="title-field" [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.title"
                         [label]="'Survey name'" [fieldId]="'survey-title'" [placeHolder]="''"
                         [hasTrash]="true"></app-input-field>
@@ -26,7 +26,7 @@
                     <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
                         [label]="'Describing text'" [isOptional]="true" [fieldId]="'survey-description'"></app-input-field>
 
-                    <div class="create-form__fields__fieldset--survey-info--date-and-category">
+                    <div class="date-category-fields">
                         <app-date-field [dateInputControl]="surveyForm.controls.expires_at"
                             class="set-date-field"></app-date-field>
 
@@ -47,7 +47,7 @@
 
                 </fieldset>
 
-                <article class="create-form__fields__fieldset--survey-info mt-32">
+                <article class="question-fields mt-16">
 
                     @for(question of questions.controls; track $index){
                     <app-question-create [questionFormGroup]="question" (addAnswerEvent)="addAnswer($event)"
@@ -67,7 +67,7 @@
             </div>
 
             <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'"
-                [hasIcon]="false">Publish</app-button>
+                [hasIcon]="true" [buttonIconVariant]="'check'">Publish</app-button>
 
         </form>
 

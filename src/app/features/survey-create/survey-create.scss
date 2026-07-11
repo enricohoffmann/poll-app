@@ -12,7 +12,7 @@
 
 .create-section,
 .create-header {
-    width: min(1170px, calc(100vw - 48px));
+    width: min(1170px, calc(100vw - 24px));
 }
 
 .create-header {
@@ -23,14 +23,20 @@
     box-sizing: border-box;
     background-color: var.$primary-purple;
     border-radius: 5px 100px 5px 5px;
-    padding: 32px 59px 32px 59px;
+    /* padding: 32px 59px 32px 59px; */
+    padding-block: 32px;
+    padding-inline: clamp(10px, 4vw, 59px);
     margin-top: 24px;
     margin-bottom: 36px;
 }
 
 .create-section-header {
     width: 100%;
-    @include mixins.setup-display-flex(row, space-between, center);
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+    align-items: start;
 
     &__title {
         @include mixins.setup-font("Nerko-One", 56px, 400, var.$fourth-orange);
@@ -42,51 +48,56 @@
     display: grid;
     grid-template-rows: 1fr auto;
     row-gap: 24px;
-    /* width: clamp(300px, calc(160.741px + 46.42vw), 1052px); */
     min-width: 0;
     width: 100%;
-    /* min-height: 549px; */
     margin-top: 32px;
 
     &__fields {
         box-sizing: border-box;
         width: 100%;
         border-radius: 5px 80px 5px 5px;
-        padding: 40px 32px;
+        padding-block: 40px;
+        padding-inline: clamp(8px, 3vw, 32px);
         grid-row: 1;
         background-color: var.$create-form-bg;
-
-        &__fieldset--survey-info {
-            box-sizing: border-box;
-            outline: unset;
-            border: unset;
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            grid-template-areas:
-                "title-field description-field"
-                "title-error description-field"
-                "date-category description-field"
-            ;
-            column-gap: 32px;
-            row-gap: 8px;
-
-            &--date-and-category {
-                margin-top: 8px;
-                grid-area: date-category;
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                grid-template-areas:
-                    "set-date choose-category"
-                    "set-date current-category"
-                    "date-error empty"
-                ;
-                column-gap: 12px;
-                row-gap: 6px;
-
-            }
-        }
-
     }
+}
+
+.survey-info-fields {
+    box-sizing: border-box;
+    outline: unset;
+    border: unset;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+        "title-field description-field"
+        "title-error description-field"
+        "date-category description-field"
+    ;
+    column-gap: 32px;
+    row-gap: 8px;
+
+}
+
+.date-category-fields {
+    margin-top: 8px;
+    grid-area: date-category;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+        "set-date choose-category"
+        "set-date current-category"
+        "date-error empty"
+    ;
+    column-gap: 12px;
+    row-gap: 6px;
+
+}
+
+.question-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
 }
 
 .title-field {
@@ -155,7 +166,7 @@
 }
 
 @media (max-width: 1122px) {
-    .create-form__fields__fieldset--survey-info--date-and-category {
+    .date-category-fields {
         grid-template-columns: repeat(1, minmax(0, 1fr));
         grid-template-areas:
             "choose-category"
@@ -167,7 +178,7 @@
 }
 
 @media (max-width: 900px) {
-    .create-form__fields__fieldset--survey-info {
+    .survey-info-fields {
         grid-template-columns: 1fr;
         grid-template-areas:
             "title-field"
@@ -177,6 +188,11 @@
         ;
         column-gap: 0px;
         row-gap: 8px;
+    }
+
+    .question-fields {
+        grid-template-columns: 1fr;
+        column-gap: 0;
     }
 
     .survey-forms-submit-button {
@@ -191,31 +207,16 @@
 
 @media (max-width: 650px) {
     .create-section {
-        padding: 31px 20px 32px 20px;
+        border-radius: 5px 60px 5px 5px;
     }
 
     .create-form__fields {
-        padding: 40px 12px;
+        border-radius: 5px 48px 5px 5px;
     }
 
     .create-section-header__title {
         line-height: 80%;
         margin-top: 12px;
         font-size: clamp(2.25rem, 1.0379rem + 6.0606vw, 3.5rem);
-    }
-}
-
-@media (max-width: 400px) {
-    .create-header {
-        width: 95vw;
-    }
-
-    .create-section {
-        padding: 31px 10px 32px 10px;
-        width: 95vw;
-    }
-
-    .create-form__fields {
-        padding: 40px 8px;
     }
 }
