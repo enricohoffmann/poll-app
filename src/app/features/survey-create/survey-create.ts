@@ -67,7 +67,7 @@ export class SurveyCreate {
   private surveyService = inject(SurveyService);
   validationService = inject(ValidationService);
   private router = inject(Router);
-
+  private currentSurveyId:number = 0;
   
 
   async onSubmit(): Promise<void> {
@@ -78,6 +78,7 @@ export class SurveyCreate {
       this.surveyForm.get('is_published')?.setValue(true);
       const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
       if(surveyAddResult > 0){
+        this.currentSurveyId = surveyAddResult;
         this.afterCreateSurvey();
       }
     }
@@ -165,16 +166,21 @@ export class SurveyCreate {
     }, this.DIALOG_DELAY);
   }
 
+
   onSuccessDialogClose(): void {
     this.showDialog.set(false);
     setTimeout(() => {
       this.showOverlay.set(false);
-      this.router.navigate(['home']);
+      this.callPublishedSurvey();
     }, this.OVERLAY_CLOSE_DELAY);
   }
 
   private setAllFieldTouched(): void {
     this.surveyForm.markAllAsTouched();
+  }
+
+  private callPublishedSurvey(): void {
+    this.router.navigate(['/view', this.currentSurveyId]);
   }
 
 }

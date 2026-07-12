@@ -28,8 +28,8 @@
             @include mixins.setup-font("Mulish", 26px, 700, var.$primary-purple);
             align-self: start;
             min-width: 0;
-            line-height: 1.05;
-            max-height: calc(3 * 1.05em);
+            line-height: 1.10;
+            max-height: calc(3 * 1.12em);
 
             display: -webkit-box;
             -webkit-box-orient: vertical;

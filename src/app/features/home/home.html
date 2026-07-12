@@ -25,7 +25,7 @@
 
                 <aside class="highlight-cards">
                     @for (survey of surveyService.surveyHighlights(); track survey.id) {
-                    <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey"></app-survey-card>
+                    <app-survey-card [cardVariant]="'highlights'" [surveyWithCategory]="survey" (click)="onSurveyView(survey.id)"></app-survey-card>
                     }@empty {
                     <p class="empty-state">No ending soon surveys right now.</p>
                     }
@@ -53,7 +53,7 @@
                 </header>
                 <aside class="home-survey-list-section__list">
                     @for (survey of surveySortedList(); track survey.id){
-                    <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey"></app-survey-card>
+                    <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey" (click)="onSurveyView(survey.id)"></app-survey-card>
                     } @empty {
                     <p class="empty-state-sm">{{showEmptyState()}}</p>
                     }

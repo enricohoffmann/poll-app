@@ -17,7 +17,7 @@ import { HeroIllustration } from '../../shared/components/hero-illustration/hero
 })
 export class Home implements OnInit {
   surveyService = inject(SurveyService);
-  router = inject(Router);
+  private readonly router = inject(Router);
   showActiveSurveys = signal(true);
   showPastSurveys = signal(false);
   currentCategory = signal<Category | null>(null);
@@ -87,6 +87,10 @@ export class Home implements OnInit {
     if(this.showActiveSurveys() && !this.showPastSurveys()) {return 'No active surveys right now.';}
     if(!this.showActiveSurveys() && this.showPastSurveys()) {return 'No past surveys right now.';}
     return 'No surveys right now.';
+  }
+
+  onSurveyView(surveyId: number): void {
+    this.router.navigate(['/view', surveyId]);
   }
 
 }

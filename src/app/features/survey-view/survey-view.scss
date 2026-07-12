@@ -1,0 +1,33 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.view-wrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    @include mixins.setup-display-flex(column, center, center);
+    overflow-x: auto;
+}
+
+.survey-view,
+.view-header {
+    width: min(1218px, calc(100vw - 24px));
+}
+
+.view-header {
+    @include mixins.setup-display-flex(row, flex-start, center);
+}
+
+.survey-view {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "survey result";
+
+    &__survey {
+        grid-area: survey;
+    }
+
+    &__result {
+        grid-area: result;
+    }
+}
