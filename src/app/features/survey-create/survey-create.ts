@@ -41,8 +41,8 @@ export class SurveyCreate {
   survey: Survey = {
     id: 0,
     title: '',
-    description: '',
-    expires_at: '',
+    description: null,
+    expires_at: null,
     category_id: 0,
     is_published: false,
     created_at: ''

@@ -5,10 +5,14 @@ import { SurveyService } from '../../services/survey-service';
 import { Survey } from '../../interfaces/survey-interface';
 import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
 import { QuestionWithAnswers } from '../../interfaces/question-with-answers-interface';
+import { Status } from "../../shared/components/status/status";
+import { Button } from "../../shared/components/button/button";
+import { IsoDateToGerman } from '../../pips/custom-pips';
+import { QuestionView } from '../../shared/components/question-view/question-view';
 
 @Component({
   selector: 'app-survey-view',
-  imports: [Header],
+  imports: [Header, Status, Button, IsoDateToGerman, QuestionView],
   templateUrl: './survey-view.html',
   styleUrl: './survey-view.scss',
 })
@@ -22,8 +26,10 @@ export class SurveyView {
   async ngOnInit(): Promise<void> {
     const surveyIdParam = this.activatedRoute.snapshot.paramMap.get('surveyId');
     this.surveyId = Number(surveyIdParam);
-    await this.readSurveyById();
-    await this.readQuestionAndAnswers();
+    await Promise.all([
+      this.readSurveyById(),
+      this.readQuestionAndAnswers()
+    ]);
     console.log(this.survey());
     console.log(this.questionsAndAnswers());
     
@@ -34,6 +40,7 @@ export class SurveyView {
   private async readSurveyById(): Promise<void> {
     const surveyResponse = await this.surveyService.getSurveyById(this.surveyId);
     if(surveyResponse) {
+      if(surveyResponse.description && surveyResponse.description.length <= 4){surveyResponse.description = null;}
       this.survey.set(surveyResponse);
     }
   }

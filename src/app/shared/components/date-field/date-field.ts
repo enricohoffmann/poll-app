@@ -13,7 +13,7 @@ export class DateField {
   isPickerOpen = signal(false);
 
   @ViewChild('dateSelectField') dateSelect!: ElementRef<HTMLInputElement>;
-  dateInputControl = input.required<FormControl<string>>();
+  dateInputControl = input.required<FormControl<string | null>>();
 
   isWriting = signal<boolean>(false);
 

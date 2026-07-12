@@ -65,7 +65,8 @@ export class SurveyService implements OnInit {
   async getSurveyById(surveyId: number): Promise<SurveyWithCategory> {
     const response = await this.supabaseClient.from('unfiltered_surveys')
       .select(`*,category:categories(id, name)`)
-      .eq('id', surveyId);
+      .eq('id', surveyId)
+      .single();
       return (response.data ?? {} ) as SurveyWithCategory;
   }
 

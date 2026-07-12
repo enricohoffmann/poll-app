@@ -33,6 +33,7 @@ export class Home implements OnInit {
     return this.sortingSurveyList(category, surveys);
   });
 
+  /**TODO: Die Nullwerte vom Ablaufdatum noch einbauen, in der DB schon drin. */
 
   constructor() {
     effect(() => {

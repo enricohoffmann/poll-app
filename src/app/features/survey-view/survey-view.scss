@@ -15,6 +15,7 @@
 
 .view-header {
     @include mixins.setup-display-flex(row, flex-start, center);
+    margin-bottom: 24px;
 }
 
 .survey-view {
@@ -22,6 +23,12 @@
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas: "survey result";
+    background-color: rgba(142, 112, 153, 0.1);
+    border-radius: 0 160px 0 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-inline-start: 45px;
+    padding-inline-end: 45px;
 
     &__survey {
         grid-area: survey;
@@ -31,3 +38,55 @@
         grid-area: result;
     }
 }
+
+.survey-view-header {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: 
+        "status status"
+        "expires category"
+        "title title"
+        "description description"
+        ;
+    row-gap: 12px;
+
+    &__status {
+        grid-area: status;
+        pointer-events: none;
+    }
+
+    &__expires {
+        grid-area: expires;
+        @include mixins.setup-font("Mulish", 14px, 500, var.$primary-purple);
+    }
+
+    &__category {
+        grid-area: category;
+        justify-self: end;
+        @include mixins.setup-font("Mulish", 14px, 400, var.$dark-purple);
+    }
+
+    &__close {
+        grid-area: close;
+        display: none;
+    }
+
+    &__title {
+        grid-area: title;
+        @include mixins.setup-font("Nerko-One", 56px, 400, var.$fourth-orange);
+        line-height: 50px;
+    }
+
+    &__description {
+        grid-area: description;
+        @include mixins.setup-font("Mulish", 16px, 500, var.$primary-purple);
+    }
+}
+
+.survey-view-main {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    
+}
+

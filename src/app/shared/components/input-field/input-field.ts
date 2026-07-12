@@ -12,7 +12,7 @@ import { Button } from "../button/button";
 export class InputField {
 
   inputFieldVariant = input<InputFieldVariant>('labelTop');
-  inputControl = input.required<FormControl<string>>();
+  inputControl = input.required<FormControl<string | null>>();
   label = input<string>("");
   fieldId = input<string>("");
   placeHolder = input<string>("");

@@ -13,3 +13,16 @@ export class ExpiryViewChange implements PipeTransform {
         return '';
     }
 }
+
+
+@Pipe({
+    name: 'isoDateToGerman'
+})
+export class IsoDateToGerman implements PipeTransform {
+    transform(dateValue: string | undefined | null): string {
+        if(!dateValue) { return '';}
+        if(dateValue.length === 0) { return '';}
+        const [year, month, day] = dateValue.split('-');
+        return `${day}.${month}.${year}`;
+    }
+}
