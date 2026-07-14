@@ -14,3 +14,4 @@ export function getIsoDateFromGerminDate(dateValue: string): string {
     const [day, month, year] = dateValue.split('.').map(Number);
     return`${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
+

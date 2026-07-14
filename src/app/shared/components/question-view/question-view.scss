@@ -1,0 +1,38 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.question-section {
+    width: 100%;
+    box-sizing: border-box;
+
+    &__header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas: "identifier question" "empty multiple-answer";
+        row-gap: 6px;
+
+    }
+}
+
+.question {
+    align-self: start;
+    @include mixins.setup-font("Mulish", 18px, 700, var.$primary-purple);
+
+    &__identifier {
+        grid-area: identifier;
+        padding-right: 6px;
+    }
+
+    &__question {
+        grid-area: question;
+        background-color: aqua;
+    }
+
+
+    &__multiple-answer {
+        grid-area: multiple-answer;
+        font-size: 12;
+        font-weight: 400;
+    }
+}
+

@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { InputField } from "../input-field/input-field";
 import { Button } from '../button/button';
 import { ValidationService } from '../../../services/validation-service';
+import { AnswerForm } from '../../utils/types';
 
 @Component({
   selector: 'app-answer-create',
@@ -21,7 +22,7 @@ export class AnswerCreate {
     5: 'F'
   };
 
-  answerFormGroup = input.required<FormGroup>();
+  answerFormGroup = input.required<FormGroup<AnswerForm>>();
   answerIndex = input<number>(0);
   questionIndex = input<number>(0);
   canInsertAnswer = input<boolean>(true);
@@ -31,7 +32,7 @@ export class AnswerCreate {
   validationService = inject(ValidationService);
 
   getAnswer():FormControl<string> {
-    return this.answerFormGroup().controls['text'] as FormControl<string>;
+    return this.answerFormGroup().controls.answerText;
   } 
 
   getIdentifier(): string {

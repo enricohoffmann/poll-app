@@ -5,7 +5,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { AnswerCreate } from '../answer-create/answer-create';
 import { CheckField } from '../check-field/check-field';
 import { ValidationService } from '../../../services/validation-service';
-
+import { QuestionForm } from '../../utils/types';
 @Component({
   selector: 'app-question-create',
   imports: [Button, InputField, AnswerCreate, CheckField],
@@ -13,7 +13,7 @@ import { ValidationService } from '../../../services/validation-service';
   styleUrl: './question-create.scss',
 })
 export class QuestionCreate {
-  questionFormGroup = input.required<FormGroup>();
+  questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionIndex = input<number>(0);
   answerCount = signal<number>(0);
   readonly addAnswerEvent = output<number>();
@@ -27,25 +27,13 @@ export class QuestionCreate {
     
   }
 
-  getQuestion(): FormControl<string> {
-    return this.questionFormGroup().controls['text'] as FormControl<string>;
-  }
-
-  getAllowMultiAnswers(): FormControl<boolean> {
-    return this.questionFormGroup().controls['allow_multiple_answers'] as FormControl<boolean>;
-  }
-
-  get answers(): FormArray<FormGroup> {
-    return this.questionFormGroup().controls['answers'] as FormArray;
-  }
-
   onAddAnswer(questionIndex: number){
     this.addAnswerEvent.emit(questionIndex);
     this.updateAnswerCount();
   }
 
   private updateAnswerCount(): void {
-    const answerFormArray = this.questionFormGroup().controls['answers'] as FormArray;
+    const answerFormArray = this.questionFormGroup().controls.answers;
     this.answerCount.set(answerFormArray.length);
   }
 

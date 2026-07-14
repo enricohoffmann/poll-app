@@ -4,46 +4,42 @@
 
     <section class="survey-view">
 
-        <aside class="survey-view__survey">
-            
+        <form class="survey-view__survey" [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+
 
             <header class="survey-view-header">
                 <app-status class="survey-view-header__status" [isActive]="true">Published</app-status>
                 <!-- Hier pipe einbauen -->
                 @if(survey()?.expires_at){
-                    <span class="survey-view-header__expires">Ends on {{survey()?.expires_at | isoDateToGerman}}</span>
+                <span class="survey-view-header__expires">Ends on {{survey()?.expires_at | isoDateToGerman}}</span>
                 }
-                
-                <span class="survey-view-header__category" >Category: {{survey()?.category?.name}}</span>
-                
-                <app-button 
-                    class="survey-view-header__close"
-                    [buttonVariant]="'secondaryBtn'" 
-                    [hasIcon]="true" 
-                    [buttonIconVariant]="'closeWhite'" 
-                    [hideTextOnMobile]="true">
+
+                <span class="survey-view-header__category">Category: {{survey()?.category?.name}}</span>
+
+                <app-button class="survey-view-header__close" [buttonVariant]="'secondaryBtn'" [hasIcon]="true"
+                    [buttonIconVariant]="'closeWhite'" [hideTextOnMobile]="true">
                 </app-button>
 
                 <h1 class="survey-view-header__title">{{survey()?.title}}</h1>
 
                 @if (survey()?.description) {
-                    <p class="survey-view-header__description">{{survey()?.description}}</p>
+                <p class="survey-view-header__description">{{survey()?.description}}</p>
                 }
-                
+
 
             </header>
 
             <main class="survey-view-main">
-                @for(question of questionsAndAnswers(); track $index){
-                    <app-question-view [question]="question" [questionIndex]="$index" ></app-question-view>
+                @for(question of voteForm.controls.questions.controls ; track $index){
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"></app-question-view>
                 }
             </main>
 
 
-        </aside>
+        </form>
 
         <aside class="survey-view__results">
-            
+
 
 
 

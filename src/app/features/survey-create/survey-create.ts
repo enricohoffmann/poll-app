@@ -116,7 +116,7 @@ export class SurveyCreate {
   }
 
   get questions(): FormArray<FormGroup> {
-    return this.surveyForm.controls.questions as FormArray;
+    return this.surveyForm.controls.questions;
   }
 
   getAnswers(questionIndex: number): FormArray {

@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
-import { QuestionWithAnswers } from '../../../interfaces/question-with-answers-interface';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { QuestionForm } from '../../utils/types';
 
 @Component({
   selector: 'app-question-view',
@@ -8,6 +9,7 @@ import { QuestionWithAnswers } from '../../../interfaces/question-with-answers-i
   styleUrl: './question-view.scss',
 })
 export class QuestionView {
-  question = input.required<QuestionWithAnswers>();
+  questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionIndex = input.required<number>();
+
 }

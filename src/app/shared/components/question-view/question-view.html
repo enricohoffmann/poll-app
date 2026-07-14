@@ -1,1 +1,18 @@
-<p>question-view works!</p>
+<section class="question-section">
+
+    <header class="question-section__header">
+        <span class="question question__identifier">{{questionIndex() + 1}}.</span>
+        <h5 class="question question__question">{{questionFormGroup().controls.text.value}}</h5>
+        @if(questionFormGroup().controls.allow_multiple_answers.value){
+            <span class="question question__multiple-answer">More than one answers are possible.</span>
+        }
+    </header>
+
+    <main>
+
+
+
+    </main>
+
+
+</section>

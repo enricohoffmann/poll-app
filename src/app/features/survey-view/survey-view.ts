@@ -12,10 +12,11 @@ import { QuestionView } from '../../shared/components/question-view/question-vie
 import { FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
 import { Answer } from '../../interfaces/answer-interface';
 import { AnswerVoting } from '../../interfaces/answer-voting-interface';
+import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
 
 @Component({
   selector: 'app-survey-view',
-  imports: [Header, Status, Button, IsoDateToGerman, QuestionView],
+  imports: [Header, Status, Button, IsoDateToGerman, QuestionView, ReactiveFormsModule],
   templateUrl: './survey-view.html',
   styleUrl: './survey-view.scss',
 })
@@ -26,8 +27,8 @@ export class SurveyView {
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
 
-  voteForm = new FormGroup({
-    questions: new FormArray<FormGroup>([])
+  voteForm = new FormGroup<VoteFrom>({
+    questions: new FormArray<FormGroup<QuestionForm>>([])
   });
 
   async ngOnInit(): Promise<void> {
@@ -35,10 +36,6 @@ export class SurveyView {
     this.surveyId = Number(surveyIdParam);
     await this.getDataFromDb();
     this.createQuestionFormArray();
-    
-    console.log(this.voteForm);
-    
-
   }
 
   private async getDataFromDb(): Promise<void> {
@@ -70,22 +67,20 @@ export class SurveyView {
     }
   }
 
-  private createQuestionFormGroup(question: QuestionWithAnswers): FormGroup {
+  private createQuestionFormGroup(question: QuestionWithAnswers): FormGroup<QuestionForm> {
 
-    const answers = this.fillAnswers(question.answers);
-
-    return new FormGroup({
+    return new FormGroup<QuestionForm>({
       id: new FormControl(question.id, {nonNullable: true}),
       text: new FormControl(question.text, {nonNullable: true}),
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, {nonNullable: true}),
       sort: new FormControl(question.sort_order, {nonNullable: true}),
-      answers
+      answers: this.fillAnswers(question.answers)
     });
 
   }
 
-  private fillAnswers(answers: Answer[]): FormArray<FormGroup> {
-    const answersFormArray = new FormArray<FormGroup>([]);
+  private fillAnswers(answers: Answer[]): FormArray<FormGroup<AnswerForm>> {
+    const answersFormArray = new FormArray<FormGroup<AnswerForm>>([]);
 
     for(let aIndex = 0; aIndex < answers.length; aIndex++) {
       answersFormArray.push(this.createAnswerFormGroup(answers[aIndex]));
@@ -94,15 +89,19 @@ export class SurveyView {
     return answersFormArray;
   }
 
-  private createAnswerFormGroup(answer: Answer): FormGroup {
-    const answerVoting: AnswerVoting = {...answer, selected: false};
-    return new FormGroup ({
-      answerId: new FormControl(answerVoting.id),
-      sort: new FormControl(answerVoting.sort_order),
-      answerText: new FormControl(answerVoting.text),
-      select: new FormControl(answerVoting.selected)
+  private createAnswerFormGroup(answer: Answer): FormGroup<AnswerForm> {
+    return new FormGroup<AnswerForm> ({
+      answerId: new FormControl(answer.id, {nonNullable: true}),
+      sort: new FormControl(answer.sort_order, {nonNullable: true}),
+      answerText: new FormControl(answer.text, { nonNullable: true}),
+      select: new FormControl(false, {nonNullable: true})
     });
 
   }
+
+  onSubmit(): void {
+
+  }
+
 
 }
