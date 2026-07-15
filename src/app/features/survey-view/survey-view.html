@@ -30,9 +30,20 @@
             </header>
 
             <main class="survey-view-main">
-                @for(question of voteForm.controls.questions.controls ; track $index){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"></app-question-view>
-                }
+
+                <div class="survey-view-main__columns">
+                    @for(question of leftQuestions; track question.controls.id.value){
+                        <app-question-view [questionFormGroup]="question" 
+                        [questionIndex]="$index * 2"></app-question-view>
+                    }
+                </div>
+
+                <div class="survey-view-main__columns">
+                    @for(question of rightQuestions; track question.controls.id.value){
+                        <app-question-view [questionFormGroup]="question" 
+                        [questionIndex]="$index * 2 + 1"></app-question-view>
+                    }
+                </div>
             </main>
 
 

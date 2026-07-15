@@ -42,12 +42,12 @@
 .survey-view-header {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas: 
+    grid-template-areas:
         "status status"
         "expires category"
         "title title"
         "description description"
-        ;
+    ;
     row-gap: 12px;
 
     &__status {
@@ -89,6 +89,12 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
-    /* background-color: rgb(211, 156, 165); */
-}
+    column-gap: 20px;
 
+    &__column {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 0;
+    }
+}

@@ -4,6 +4,7 @@
 .question-section {
     width: 100%;
     box-sizing: border-box;
+    margin-bottom: 16px;
 
     &__header {
         display: grid;
@@ -25,7 +26,6 @@
 
     &__question {
         grid-area: question;
-        background-color: aqua;
     }
 
 
