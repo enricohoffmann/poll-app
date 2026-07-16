@@ -1,0 +1,52 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.answer-btn {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 3px 6px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: "check identifier answer";
+    @include mixins.setup-font("Mulish", 16px, 700, var.$primary-purple);
+    transition: background-color 125ms ease-in;
+
+    &:hover:not(.answer-btn--active) {
+        background-color: rgba(255, 207, 161, 0.4);
+    }
+
+    &__identifier {
+        grid-area: identifier;
+        align-self: start;
+        padding-inline: 4px;
+    }
+
+    &__answer {
+        grid-area: answer;
+        align-self: start;
+        font-weight: 400;
+        text-align: left;
+    }
+}
+
+
+
+.answer-btn-check {
+    grid-area: check;
+    align-self: start;
+    @include mixins.setup-display-flex(column, center, center);
+    box-sizing: border-box;
+    border: solid 1.5px var.$primary-purple;
+    border-radius: 3px;
+    width: 15px;
+    aspect-ratio: 1 / 1;
+    margin-right: 12px;
+    transition: 
+        background-color 125ms ease-in, border 125ms ease-in ;
+}
+

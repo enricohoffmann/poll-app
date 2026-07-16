@@ -8,9 +8,14 @@
         }
     </header>
 
-    <main>
+    <main class="question-section__answers">
 
-
+        @for (answer of questionFormGroup().controls.answers.controls; track answer.controls.answerId) {
+            <app-answer-view 
+                [answerControl]="answer" 
+                [answerIndex]="$index" 
+                class="question-section__answer"></app-answer-view>
+        }
 
     </main>
 

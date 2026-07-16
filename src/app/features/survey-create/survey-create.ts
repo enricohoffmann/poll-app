@@ -93,7 +93,7 @@ export class SurveyCreate {
     const questionFormGroup: FormGroup<QuestionForm> = new FormGroup<QuestionForm>({
       id: new FormControl(0, {nonNullable: true}),
       text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)] }),
-      allow_multiple_answers: new FormControl(true, { nonNullable: true }),
+      allow_multiple_answers: new FormControl(false, { nonNullable: true }),
       sort: new FormControl(0, {nonNullable: true}),
       answers: new FormArray<FormGroup<AnswerForm>>([])
     });

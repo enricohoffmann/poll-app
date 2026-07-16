@@ -1,17 +1,15 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
-import { Survey } from '../../interfaces/survey-interface';
 import { SurveyWithCategory } from '../../interfaces/survey-with-category-interface';
 import { QuestionWithAnswers } from '../../interfaces/question-with-answers-interface';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { IsoDateToGerman } from '../../pips/custom-pips';
 import { QuestionView } from '../../shared/components/question-view/question-view';
-import { FormGroup, ReactiveFormsModule, Validators, FormControl, FormArray, AbstractControl } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { Answer } from '../../interfaces/answer-interface';
-import { AnswerVoting } from '../../interfaces/answer-voting-interface';
 import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
 
 @Component({
