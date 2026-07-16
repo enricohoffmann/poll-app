@@ -20,8 +20,8 @@
                         [hasTrash]="true"></app-input-field>
 
                     @if(validationService.getErrorMessage(surveyForm.controls.title)) {
-                            <span class="error error__title">{{validationService.getErrorMessage(surveyForm.controls.title)}}</span>
-                        }
+                        <span class="error error__title">{{validationService.getErrorMessage(surveyForm.controls.title)}}</span>
+                    }
 
                     <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
                         [label]="'Describing text'" [isOptional]="true" [fieldId]="'survey-description'"></app-input-field>

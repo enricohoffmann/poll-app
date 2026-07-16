@@ -28,3 +28,13 @@ export type AnswerForm = {
 export type VoteFrom = {
     questions: FormArray<FormGroup<QuestionForm>>;
 }
+
+export type SurveyForm = {
+    id: FormControl<number>;
+    title: FormControl<string>;
+    description: FormControl<string | null>;
+    expires_at: FormControl<string | null>;
+    questions: FormArray<FormGroup<QuestionForm>>;
+    is_published: FormControl<boolean>;
+    category_id: FormControl<number>;
+};

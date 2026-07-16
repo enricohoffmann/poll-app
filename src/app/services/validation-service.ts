@@ -7,7 +7,8 @@ import { VALIDATION_MESSAGES } from '../shared/utils/validation-messages';
 })
 export class ValidationService {
 
-  getErrorMessage(control: AbstractControl): string | null {
+  getErrorMessage(control: AbstractControl | null): string | null {
+    if(control == null) {return null;}
     if (!control.errors) { return null; }
     if (control.untouched && control.invalid) { return null; }
 
