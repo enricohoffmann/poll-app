@@ -48,5 +48,17 @@
     margin-right: 12px;
     transition: 
         background-color 125ms ease-in, border 125ms ease-in ;
+
+    &--active {
+        background-color: var.$primary-orange;
+        border: solid 1.5px var.$primary-orange;
+    }
+    
+}
+
+.check-icon {
+    @include mixins.setup-image('/assets/icons/check.svg');
+    width: 10px;
+    height: 8px;
 }
 

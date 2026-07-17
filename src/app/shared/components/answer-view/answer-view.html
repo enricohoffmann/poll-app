@@ -1,7 +1,13 @@
-<button type="button" class="answer-btn">
+<button 
+    type="button" 
+    class="answer-btn" 
+    [class.answer-btn--active]="answerControl().controls.select.value" 
+    (click)="onAnswerClick()">
 
-    <div class="answer-btn-check">
-        <div class="answer-btn-check__icon"></div>
+    <div class="answer-btn-check" [class.answer-btn-check--active]="answerControl().controls.select.value">
+        @if(answerControl().controls.select.value){
+            <div class="check-icon"></div>
+        }
     </div>
 
     <span class="answer-btn__identifier">{{identifier}}.</span>

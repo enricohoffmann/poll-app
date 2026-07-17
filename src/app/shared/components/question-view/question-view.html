@@ -14,7 +14,9 @@
             <app-answer-view 
                 [answerControl]="answer" 
                 [answerIndex]="$index" 
-                class="question-section__answer"></app-answer-view>
+                class="question-section__answer"
+                (toggleAnswerEvent)="toggleAnswer($event)"
+                ></app-answer-view>
         }
 
     </main>

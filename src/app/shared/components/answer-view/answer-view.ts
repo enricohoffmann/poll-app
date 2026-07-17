@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, computed, signal, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AnswerForm } from '../../utils/types';
 
@@ -21,6 +21,7 @@ export class AnswerView {
 
   answerIndex = input.required<number>();
   answerControl = input.required<FormGroup<AnswerForm>>();
+  toggleAnswerEvent = output<number>();
 
   get answer():FormControl<string> {
     return this.answerControl().controls.answerText;
@@ -28,5 +29,9 @@ export class AnswerView {
 
   get identifier(): string {
     return this.ANSWER_IDENTIFIER[this.answerIndex()];
+  }
+
+  onAnswerClick(): void { 
+    this.toggleAnswerEvent.emit(this.answerIndex()); 
   }
 }
