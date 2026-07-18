@@ -38,6 +38,10 @@
         background-color: var.$btn-seconday-bg-default;
         @include mixins.setup-font("Nokora", 18px, 700, var.$background-color-bright);
 
+        &--dark {
+            color: var.$primary-purple;
+        }
+
         .btn-icon {
             width: 24px;
             margin-left: 10px;

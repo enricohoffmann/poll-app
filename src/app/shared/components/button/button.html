@@ -1,7 +1,7 @@
 <button [type]="(buttonType())" class="btn" [ngClass]="[buttonClass(), isActivated() ? 'btn--activated': '']"
     (click)="onButtonClick()" [class.btn--trash--disabled]="isDisabled()" [class.btn--secondary--cancel]="hideText()">
 
-    <span class="btn__text" [class.btn__text--hide]="hideText()">
+    <span class="btn__text" [class.btn__text--hide]="hideText()" [class.btn--secondary--dark]="isDarkFontColor()">
         <ng-content></ng-content>
     </span>
 

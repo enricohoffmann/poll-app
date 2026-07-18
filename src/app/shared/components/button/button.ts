@@ -41,7 +41,7 @@ export class Button {
   hideText = computed(() => {
     return this.buttonVariant() === 'secondaryBtn' && this.hideTextOnMobile();
   });
-  
+  isDarkFontColor = input<boolean>(false);
 
   ngOnInit(){}
 

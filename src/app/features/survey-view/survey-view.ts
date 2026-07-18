@@ -24,6 +24,7 @@ export class SurveyView {
   private readonly surveyService = inject(SurveyService);
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
+  isLoading = signal<boolean>(true);
 
   voteForm = new FormGroup<VoteFrom>({
     questions: new FormArray<FormGroup<QuestionForm>>([])
@@ -32,36 +33,28 @@ export class SurveyView {
   async ngOnInit(): Promise<void> {
     const surveyIdParam = this.activatedRoute.snapshot.paramMap.get('surveyId');
     this.surveyId = Number(surveyIdParam);
-    await this.getDataFromDb();
-    this.createQuestionFormArray();
+    this.initializeSurveyView();
   }
 
-  private async getDataFromDb(): Promise<void> {
-    await Promise.all([
-      this.readSurveyById(),
-      this.readQuestionAndAnswers()
-    ]);
+  private async initializeSurveyView(): Promise<void> {
+    try {
+      const [survey, questions] = await Promise.all([
+        this.surveyService.getSurveyById(this.surveyId),
+        this.surveyService.getQuestionsWithAnswersBySurveyId(this.surveyId)
+      ]);
+
+      this.survey.set(survey);
+      this.questionsAndAnswers.set(questions);
+      this.createQuestionFormArray(questions);
+
+    } finally { this.isLoading.set(false); }
   }
 
-  private async readSurveyById(): Promise<void> {
-    const surveyResponse = await this.surveyService.getSurveyById(this.surveyId);
-    if (surveyResponse) {
-      if (surveyResponse.description && surveyResponse.description.length <= 4) { surveyResponse.description = null; }
-      this.survey.set(surveyResponse);
-    }
-  }
-
-  private async readQuestionAndAnswers(): Promise<void> {
-    const responseData = await this.surveyService.getQuestionsWithAnswersBySurveyId(this.surveyId);
-    if (responseData) {
-      this.questionsAndAnswers.set(responseData);
-    }
-  }
-
-  private createQuestionFormArray(): void {
-    const questionFormArray = this.voteForm.controls['questions'] as FormArray;
-    for (let qIndex = 0; qIndex < this.questionsAndAnswers().length; qIndex++) {
-      questionFormArray.push(this.createQuestionFormGroup(this.questionsAndAnswers()[qIndex]));
+  private createQuestionFormArray(questions: QuestionWithAnswers[]): void {
+    const questionFormArray = this.voteForm.controls.questions;
+    questionFormArray.clear();
+    for (const question of questions) {
+      questionFormArray.push(this.createQuestionFormGroup(question));
     }
   }
 
@@ -110,7 +103,10 @@ export class SurveyView {
   }
 
   onSubmit(): void {
-
+    if(this.voteForm.valid) {
+      console.log(this.voteForm);
+      
+    }
   }
 
 
