@@ -13,6 +13,9 @@ export class QuestionView {
   questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionIndex = input.required<number>();
 
+  ngOnInit(): void {
+
+  }
 
   toggleAnswer(answerIndex: number): void {
 

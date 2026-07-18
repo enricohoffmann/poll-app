@@ -60,8 +60,20 @@
 
             <aside class="survey-view__results">
 
-                <h5>Survey results <span>LIVE</span></h5>
+                <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
+                <!-- <p class="result-notice">Results will be shown here after participants complete the survey.</p> -->
+
+
+                <!-- <p class="result-empty">There are no answears yet.</p> -->
+
+                <div class="result-votings">
+                    @for(question of questions; track question.controls.id) {
+                        <app-question-vote [questionIndex]="$index" [questionFormGroup]="question"></app-question-vote>
+                    }
+                </div>
+
+                
 
 
             </aside>

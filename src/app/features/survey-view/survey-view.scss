@@ -27,7 +27,7 @@
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas: "survey result";
-    column-gap: 24px;
+    column-gap: 36px;
 
     &__survey {
         grid-area: survey;
@@ -39,8 +39,12 @@
         padding-inline-end: 45px;
     }
 
-    &__result {
+    &__results {
         grid-area: result;
+        margin-top: 100px;
+        padding-right: 150px;
+        min-width: 0;
+        max-width: 315px;
     }
 }
 
@@ -107,4 +111,27 @@
 .survey-view-submit-btn-container {
     width: 100%;
     @include mixins.setup-display-flex(row, flex-end, center);
+}
+
+.result-headline {
+    @include mixins.setup-font("Nerko-One", 32px, 400, var.$dark-purple);
+
+    &__orange {
+        color: var.$primary-orange;
+    }
+}
+
+.result-notice {
+    @include mixins.setup-font("Mulish", 18px, 700, var.$primary-purple);
+    margin-top: 24px;
+}
+
+.result-empty {
+    @include mixins.setup-font("Mulish", 18px, 700, var.$primary-purple);
+    text-align: center;
+    margin-top: 80px;
+}
+
+.result-votings {
+    margin-top: 24px;
 }

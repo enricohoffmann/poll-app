@@ -1,0 +1,37 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.question-vote-section {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+
+    &__header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas: "identifier question";
+    }
+
+    &__answers-result {
+        margin-top: 12px;
+        @include mixins.setup-display-flex(column, center, flex-start, 8px);
+    }
+
+    &__answer-result {
+        width: 100%;
+    }
+}
+
+.question {
+    align-self: start;
+    @include mixins.setup-font("Mulish", 18px, 700, var.$primary-purple);
+
+    &__identifier {
+        grid-area: identifier;
+        padding-right: 6px;
+    }
+
+    &__question {
+        grid-area: question;
+    }
+}

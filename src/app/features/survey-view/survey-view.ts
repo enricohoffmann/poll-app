@@ -11,10 +11,20 @@ import { QuestionView } from '../../shared/components/question-view/question-vie
 import { FormGroup, ReactiveFormsModule, FormControl, FormArray } from '@angular/forms';
 import { Answer } from '../../interfaces/answer-interface';
 import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
+import { QuestionVote } from '../../shared/components/question-vote/question-vote';
+import { questionAnsweredValidator } from '../../shared/utils/validators';
 
 @Component({
   selector: 'app-survey-view',
-  imports: [Header, Status, Button, IsoDateToGerman, QuestionView, ReactiveFormsModule],
+  imports: [
+    Header, 
+    Status, 
+    Button, 
+    IsoDateToGerman, 
+    QuestionView, 
+    ReactiveFormsModule,
+    QuestionVote
+  ],
   templateUrl: './survey-view.html',
   styleUrl: './survey-view.scss',
 })
@@ -66,7 +76,7 @@ export class SurveyView {
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, { nonNullable: true }),
       sort: new FormControl(question.sort_order, { nonNullable: true }),
       answers: this.fillAnswers(question.answers)
-    });
+    }, { validators: questionAnsweredValidator()});
 
   }
 
@@ -100,6 +110,10 @@ export class SurveyView {
     return this.voteForm.controls.questions.controls.filter(
       (_, index) => index % 2 === 1
     );
+  }
+
+  get questions(): FormGroup<QuestionForm>[] {
+    return this.voteForm.controls.questions.controls;
   }
 
   onSubmit(): void {

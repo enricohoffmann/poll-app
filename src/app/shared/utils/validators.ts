@@ -1,5 +1,6 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
 import { checkDateInGermanFormat, getDateFromGermanDate } from "./custom-functions";
+import { QuestionForm } from "./types";
 
 
 
@@ -20,7 +21,7 @@ export function expiresDatePatternValidator(): ValidatorFn {
 
         if(!datePattern.test(value)) { return {datePatternInvalid: true}; }
         return null;
-    }
+    };
 }
 
 export function expiresDateValidator(): ValidatorFn {
@@ -32,7 +33,7 @@ export function expiresDateValidator(): ValidatorFn {
         if(!checkDateInGermanFormat(value)) { return {dateInvalid: true}; }
 
         return null;
-    }
+    };
 }
 
 export function expiresDateNotPastValidator(): ValidatorFn {
@@ -49,4 +50,15 @@ export function expiresDateNotPastValidator(): ValidatorFn {
 
         return null;
     }
+}
+
+export function questionAnsweredValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const question = control as FormGroup<QuestionForm>;
+        const hasSelectedAnswer = question.controls.answers.controls.some(
+            answer => answer.controls.select.value
+        );
+
+        return hasSelectedAnswer ? null : { noAnswerSelected: true};
+    };
 }
