@@ -6,9 +6,12 @@ import { Survey } from '../interfaces/survey-interface';
 import { SurveyWithCategory } from '../interfaces/survey-with-category-interface';
 import { QuestionWithAnswers } from '../interfaces/question-with-answers-interface';
 import { SurveyModel } from '../models/survey-model';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { QuestionModel } from '../models/question-model';
 import { AnswerModel } from '../models/answer-model';
+import { AnswerForm, QuestionForm, VoteFrom } from '../shared/utils/types';
+import { Vote } from '../interfaces/vote-interface';
+import { VoteModel } from '../models/vote-model';
 
 @Injectable({
   providedIn: 'root',
@@ -141,5 +144,29 @@ export class SurveyService implements OnInit {
     const category = this.categoriesList()[categoryIndex];
     return category;
   }
+
+  handleAddVote(voteForm: FormGroup<VoteFrom>): Promise<number> {
+    const questions = voteForm.controls.questions;
+    this.handleVoteQuestions(questions);
+  }
+
+  private handleVoteQuestions(questions: FormArray<FormGroup<QuestionForm>>){
+    const voteResult: VoteModel[] = [];
+
+    questions.controls.forEach((question) => {
+      this.handleVoteAnswers(question.controls.answers, question.controls.id.value, voteResult);
+
+    });
+  }
+
+  private handleVoteAnswers(answers: FormArray<FormGroup<AnswerForm>>, questionId: number, votes: VoteModel[]): VoteModel[] {
+    answers.controls.forEach((answer) => {
+      if(answer.controls.select.value){
+        const answer = new AnswerModel(answers.controls, questionId);
+        votes.push(new VoteModel(answer.value, questionId));
+      }
+    });
+  }
+  
 
 }

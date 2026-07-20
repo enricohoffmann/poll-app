@@ -117,6 +117,9 @@ export class SurveyView {
   }
 
   onSubmit(): void {
+
+    this.voteForm.markAllAsTouched();
+
     if(this.voteForm.valid) {
       console.log(this.voteForm);
       

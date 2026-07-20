@@ -49,10 +49,16 @@
                 </main>
 
                 <div class="survey-view-submit-btn-container">
+
+                    <span 
+                        class="vote-error-message" 
+                        [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an answer.</span>
+
                     <app-button 
                     [buttonType]="'submit'" 
                     [buttonVariant]="'secondaryBtn'"
                     [isDarkFontColor]="true"
+                    class="vote-submit-btn"
                     >Complete survey</app-button>
                 </div>
 

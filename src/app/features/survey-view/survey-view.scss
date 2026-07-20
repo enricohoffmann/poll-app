@@ -109,8 +109,29 @@
 }
 
 .survey-view-submit-btn-container {
+    margin-top: 24px;
     width: 100%;
-    @include mixins.setup-display-flex(row, flex-end, center);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "error-message submit-button";
+    column-gap: 16px;
+    
+}
+
+.vote-error-message {
+    align-self: center;
+    grid-area: error-message;
+    @include mixins.setup-font("Mulish", 14px, 400, var.$fourth-orange);
+    opacity: 0;
+    transition: opacity 125ms ease-in;
+
+    &--visible {
+        opacity: 1;
+    }
+}
+
+.vote-submit-btn {
+    grid-area: submit-button;
 }
 
 .result-headline {

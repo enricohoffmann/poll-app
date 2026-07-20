@@ -3,5 +3,4 @@ export interface Vote {
     question_id: number;
     answer_id: number;
     voter_token: string;
-    created_at: string;
 }
