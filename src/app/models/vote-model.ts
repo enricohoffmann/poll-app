@@ -1,7 +1,4 @@
-import { inject } from "@angular/core";
-import { Answer } from "../interfaces/answer-interface";
 import { Vote } from "../interfaces/vote-interface";
-import { VoterTokenService } from "../services/voter-token-service";
 
 
 export class VoteModel implements Vote {
@@ -10,14 +7,18 @@ export class VoteModel implements Vote {
     answer_id: number;
     voter_token: string;
 
-    voterTokenService = inject(VoterTokenService);
-
-    constructor(answerData: Partial<Answer> = {}, questinId: number) {
+    constructor(answerId: number, questinId: number, voterToken: string) {
         this.id = 0;
         this.question_id = questinId;
-        this.answer_id = answerData.id ?? 0;
-        this.voter_token = this.voterTokenService.getToken();
-        
+        this.answer_id = answerId;
+        this.voter_token = voterToken;
     }
 
+    getCleanAddVoteJson(): {} {
+        return {
+            question_id: this.question_id,
+            answer_id: this.answer_id,
+            voter_token: this.voter_token
+        };
+    }
 }

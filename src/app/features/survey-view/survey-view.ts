@@ -116,13 +116,13 @@ export class SurveyView {
     return this.voteForm.controls.questions.controls;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
 
     this.voteForm.markAllAsTouched();
 
     if(this.voteForm.valid) {
-      console.log(this.voteForm);
-      
+      const result = await this.surveyService.handleAddVotes(this.voteForm);
+      console.log(result);
     }
   }
 

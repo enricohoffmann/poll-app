@@ -1,4 +1,4 @@
-import { Injectable, OnInit, signal, computed } from '@angular/core';
+import { Injectable, OnInit, signal, computed, inject } from '@angular/core';
 import { createClient, RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 import { ENVIRONMENT } from '../../environments/environment';
 import { Category } from '../interfaces/category-interface';
@@ -12,6 +12,7 @@ import { AnswerModel } from '../models/answer-model';
 import { AnswerForm, QuestionForm, VoteFrom } from '../shared/utils/types';
 import { Vote } from '../interfaces/vote-interface';
 import { VoteModel } from '../models/vote-model';
+import { VoterTokenService } from './voter-token-service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class SurveyService implements OnInit {
   surveyList = signal<SurveyWithCategory[]>([]);
   surveyHighlights = signal<SurveyWithCategory[]>([]);
   categoriesList = signal<Category[]>([]);
+  voterTokenService = inject(VoterTokenService);
 
   constructor() {
     this.supabaseClient = createClient(ENVIRONMENT.supabaseUrl, ENVIRONMENT.supabaseKey);
@@ -145,28 +147,36 @@ export class SurveyService implements OnInit {
     return category;
   }
 
-  handleAddVote(voteForm: FormGroup<VoteFrom>): Promise<number> {
-    const questions = voteForm.controls.questions;
-    this.handleVoteQuestions(questions);
+  async handleAddVotes(voteForm: FormGroup<VoteFrom>): Promise<number> {
+    const votes: VoteModel[] = [];
+    voteForm.controls.questions.controls.forEach((question) => {
+      this.collectSelectedAnswers(question, votes);
+    });
+
+    for (const vote of votes) {
+      const voteResult = await this.createVote(vote);
+      if(voteResult == 0) {return 0;}
+    }
+
+    return 1;
   }
 
-  private handleVoteQuestions(questions: FormArray<FormGroup<QuestionForm>>){
-    const voteResult: VoteModel[] = [];
-
-    questions.controls.forEach((question) => {
-      this.handleVoteAnswers(question.controls.answers, question.controls.id.value, voteResult);
-
+  private collectSelectedAnswers(question: FormGroup<QuestionForm>, votes: VoteModel[]): void {
+    const questinId = question.controls.id.value;
+    const voterToken = this.voterTokenService.getToken();
+    question.controls.answers.controls.forEach((answer) => {
+      if(!answer.controls.select.value) {return;}
+      votes.push(new VoteModel(answer.controls.answerId.value, questinId, voterToken));
     });
   }
 
-  private handleVoteAnswers(answers: FormArray<FormGroup<AnswerForm>>, questionId: number, votes: VoteModel[]): VoteModel[] {
-    answers.controls.forEach((answer) => {
-      if(answer.controls.select.value){
-        const answer = new AnswerModel(answers.controls, questionId);
-        votes.push(new VoteModel(answer.value, questionId));
-      }
-    });
+  private async createVote(vote: VoteModel): Promise<number> {
+    const voteJson = vote.getCleanAddVoteJson();
+    const voteResponse = await this.supabaseClient
+      .from('votes').insert([ voteJson ,]).select();
+    return voteResponse.data?.[0]?.id ?? 0;
   }
+
   
 
 }
