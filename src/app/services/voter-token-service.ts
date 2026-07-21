@@ -12,6 +12,10 @@ export class VoterTokenService {
         return !token ? this.setToken() : token;
     }
 
+    getTokenForReview():string {
+        return crypto.randomUUID();
+    }
+
     private setToken(): string {
         const token = crypto.randomUUID();
         localStorage.setItem(this.STORAGE_KEY, token);

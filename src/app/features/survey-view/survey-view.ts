@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed, OnDestroy, OnInit } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -13,6 +13,7 @@ import { Answer } from '../../interfaces/answer-interface';
 import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
 import { QuestionVote } from '../../shared/components/question-vote/question-vote';
 import { questionAnsweredValidator } from '../../shared/utils/validators';
+import { Vote } from '../../interfaces/vote-interface';
 
 @Component({
   selector: 'app-survey-view',
@@ -28,13 +29,15 @@ import { questionAnsweredValidator } from '../../shared/utils/validators';
   templateUrl: './survey-view.html',
   styleUrl: './survey-view.scss',
 })
-export class SurveyView {
+export class SurveyView implements OnDestroy, OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   surveyId = 0;
   private readonly surveyService = inject(SurveyService);
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
+
+  readonly votes = this.surveyService.voteList;
 
   voteForm = new FormGroup<VoteFrom>({
     questions: new FormArray<FormGroup<QuestionForm>>([])
@@ -44,6 +47,10 @@ export class SurveyView {
     const surveyIdParam = this.activatedRoute.snapshot.paramMap.get('surveyId');
     this.surveyId = Number(surveyIdParam);
     this.initializeSurveyView();
+  }
+
+  ngOnDestroy(): void {
+    this.surveyService.clearCurrentQuestionIds();
   }
 
   private async initializeSurveyView(): Promise<void> {
@@ -56,6 +63,7 @@ export class SurveyView {
       this.survey.set(survey);
       this.questionsAndAnswers.set(questions);
       this.createQuestionFormArray(questions);
+      await this.initializeVotes(questions);
 
     } finally { this.isLoading.set(false); }
   }
@@ -66,6 +74,15 @@ export class SurveyView {
     for (const question of questions) {
       questionFormArray.push(this.createQuestionFormGroup(question));
     }
+  }
+
+  private async initializeVotes(questions: QuestionWithAnswers[]): Promise<void> {
+    this.surveyService.setCurrentQuestionIds(this.getQuestionIds(questions));
+    await this.surveyService.loadVotesByQuestionIds();
+  }
+
+  private getQuestionIds(questions: QuestionWithAnswers[]): number[]{
+    return questions.map(question => question.id);
   }
 
   private createQuestionFormGroup(question: QuestionWithAnswers): FormGroup<QuestionForm> {
