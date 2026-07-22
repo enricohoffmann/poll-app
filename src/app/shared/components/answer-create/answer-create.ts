@@ -4,6 +4,7 @@ import { InputField } from "../input-field/input-field";
 import { Button } from '../button/button';
 import { ValidationService } from '../../../services/validation-service';
 import { AnswerForm } from '../../utils/types';
+import { AnswerIdentifierService } from '../../../services/answer-identifier-service';
 
 @Component({
   selector: 'app-answer-create',
@@ -13,14 +14,6 @@ import { AnswerForm } from '../../utils/types';
 })
 export class AnswerCreate {
 
-  private readonly ANSWER_IDENTIFIER: Record<number, string> = {
-    0: 'A',
-    1: 'B',
-    2: 'C',
-    3: 'D',
-    4: 'E',
-    5: 'F'
-  };
 
   answerFormGroup = input.required<FormGroup<AnswerForm>>();
   answerIndex = input<number>(0);
@@ -30,13 +23,14 @@ export class AnswerCreate {
   readonly removeAnswer = output<number>();
   readonly addAnswer = output<number>();
   validationService = inject(ValidationService);
+  answerIdentifierService = inject(AnswerIdentifierService);
 
   getAnswer():FormControl<string> {
     return this.answerFormGroup().controls.answerText;
   } 
 
   getIdentifier(): string {
-    return this.ANSWER_IDENTIFIER[this.answerIndex()];
+    return this.answerIdentifierService.getIdentifier(this.answerIndex());
   }
 
   onRemoveAnswer(): void {

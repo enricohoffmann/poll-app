@@ -1,0 +1,20 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.answer-vote {
+    display: grid;
+    grid-template-columns: 20px 1fr 34px;
+    grid-template-areas: "identifier bar percent";
+    column-gap: 12px;
+
+
+    &__identifier {
+        grid-area: identifier;
+        @include mixins.setup-font("Mulish", 12px, 700, var.$primary-purple);
+    }
+
+    &__percent {
+        grid-area: percent;
+        @include mixins.setup-font("Mulish", 12px, 800, rgba(215, 148, 81, 1));
+    }
+}

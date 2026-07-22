@@ -5,7 +5,16 @@
         <h5 class="question question__question">{{questionFormGroup().controls.text.value}}</h5>
     </header>
 
-    <main class="question-vote-section__answer-results">
+    <main class="question-vote-section__answers">
+
+        @for(answer of getAnswers(); track answer.controls.answerId){
+            <app-answer-vote 
+                [answerIndex]="$index" 
+                [answerId]="answer.controls.answerId.value"
+                [questionVotes]=" questionVotes()"
+                >
+            </app-answer-vote>
+        }
 
     </main>
 

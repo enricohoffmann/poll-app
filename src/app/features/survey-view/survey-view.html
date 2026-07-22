@@ -5,84 +5,80 @@
     <section class="survey-view">
 
         @if(isLoading()) {
-            <p class="view-loading">Loading survey...</p>
+        <p class="view-loading">Loading survey...</p>
         } @else if (survey()) {
-            <form class="survey-view__survey" [formGroup]="voteForm" (ngSubmit)="onSubmit()">
+        <form class="survey-view__survey" [formGroup]="voteForm" (ngSubmit)="onSubmit()">
 
 
-                <header class="survey-view-header">
-                    <app-status class="survey-view-header__status" [isActive]="true">Published</app-status>
-                    <!-- Hier pipe einbauen -->
-                    @if(survey()?.expires_at){
-                    <span class="survey-view-header__expires">Ends on {{survey()?.expires_at | isoDateToGerman}}</span>
+            <header class="survey-view-header">
+                <app-status class="survey-view-header__status" [isActive]="true">Published</app-status>
+                <!-- Hier pipe einbauen -->
+                @if(survey()?.expires_at){
+                <span class="survey-view-header__expires">Ends on {{survey()?.expires_at | isoDateToGerman}}</span>
+                }
+
+                <span class="survey-view-header__category">Category: {{survey()?.category?.name}}</span>
+
+                <app-button class="survey-view-header__close" [buttonVariant]="'secondaryBtn'" [hasIcon]="true"
+                    [buttonIconVariant]="'closeWhite'" [hideTextOnMobile]="true">
+                </app-button>
+
+                <h1 class="survey-view-header__title">{{survey()?.title}}</h1>
+
+                @if (survey()?.description) {
+                <p class="survey-view-header__description">{{survey()?.description}}</p>
+                }
+
+
+            </header>
+
+            <main class="survey-view-main">
+
+                <div class="survey-view-main__columns">
+                    @for(question of leftQuestions; track question.controls.id.value){
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"></app-question-view>
                     }
-
-                    <span class="survey-view-header__category">Category: {{survey()?.category?.name}}</span>
-
-                    <app-button class="survey-view-header__close" [buttonVariant]="'secondaryBtn'" [hasIcon]="true"
-                        [buttonIconVariant]="'closeWhite'" [hideTextOnMobile]="true">
-                    </app-button>
-
-                    <h1 class="survey-view-header__title">{{survey()?.title}}</h1>
-
-                    @if (survey()?.description) {
-                    <p class="survey-view-header__description">{{survey()?.description}}</p>
-                    }
-
-
-                </header>
-
-                <main class="survey-view-main">
-
-                    <div class="survey-view-main__columns">
-                        @for(question of leftQuestions; track question.controls.id.value){
-                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"></app-question-view>
-                        }
-                    </div>
-
-                    <div class="survey-view-main__columns">
-                        @for(question of rightQuestions; track question.controls.id.value){
-                        <app-question-view [questionFormGroup]="question"
-                            [questionIndex]="$index * 2 + 1"></app-question-view>
-                        }
-                    </div>
-                </main>
-
-                <div class="survey-view-submit-btn-container">
-
-                    <span 
-                        class="vote-error-message" 
-                        [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an answer.</span>
-
-                    <app-button 
-                    [buttonType]="'submit'" 
-                    [buttonVariant]="'secondaryBtn'"
-                    [isDarkFontColor]="true"
-                    class="vote-submit-btn"
-                    >Complete survey</app-button>
                 </div>
 
-            </form>
+                <div class="survey-view-main__columns">
+                    @for(question of rightQuestions; track question.controls.id.value){
+                    <app-question-view [questionFormGroup]="question"
+                        [questionIndex]="$index * 2 + 1"></app-question-view>
+                    }
+                </div>
+            </main>
 
-            <aside class="survey-view__results">
+            <div class="survey-view-submit-btn-container">
 
-                <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
+                <span class="vote-error-message"
+                    [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
+                    answer.</span>
 
-                <!-- <p class="result-notice">Results will be shown here after participants complete the survey.</p> -->
+                <app-button [buttonType]="'submit'" [buttonVariant]="'secondaryBtn'" [isDarkFontColor]="true"
+                    class="vote-submit-btn">Complete survey</app-button>
+            </div>
 
+        </form>
 
-                <!-- <p class="result-empty">There are no answears yet.</p> -->
+        <aside class="survey-view__results">
 
+            <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
+
+            @if(votes().length == 0){
+                <p class="result-notice">Results will be shown here after participants complete the survey.</p>
+                <p class="result-empty">There are no answears yet.</p>
+            }@else {
                 <div class="result-votings">
                     @for(question of questions; track question.controls.id) {
-                        <app-question-vote [questionIndex]="$index" [questionFormGroup]="question"></app-question-vote>
+                        <app-question-vote 
+                            [questionId]="question.controls.id.value" 
+                            [questionFormGroup]="question"
+                            [questionIndex]="$index"
+                            ></app-question-vote>
                     }
                 </div>
-
-                
-
-
-            </aside>
+            }
+        </aside>
         }
 
 

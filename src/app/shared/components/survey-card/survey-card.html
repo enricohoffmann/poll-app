@@ -9,12 +9,14 @@
         <h5 class="card-title">
             {{survey.title}}</h5>
 
-        <app-status 
-            [isActive]="isHover()" 
-            [canHover]="cardVariant() == 'highlights'">
-            {{survey.difference_in_days | expiryViewChange}}
-        </app-status>
 
+        @if(surveyWithCategory()?.expires_at){
+            <app-status 
+                [isActive]="isHover()" 
+                [canHover]="cardVariant() == 'highlights'">
+                {{survey.difference_in_days | expiryViewChange}}
+            </app-status>
+        }    
 
     </section>
 }

@@ -12,14 +12,12 @@
         grid-template-areas: "identifier question";
     }
 
-    &__answers-result {
+    &__answers {
+        width: 100%;
         margin-top: 12px;
         @include mixins.setup-display-flex(column, center, flex-start, 8px);
     }
 
-    &__answer-result {
-        width: 100%;
-    }
 }
 
 .question {
