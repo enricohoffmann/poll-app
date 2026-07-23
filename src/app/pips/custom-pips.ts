@@ -26,3 +26,13 @@ export class IsoDateToGerman implements PipeTransform {
         return `${day}.${month}.${year}`;
     }
 }
+
+@Pipe({
+    name: 'resultRounding'
+})
+export class ResultRounding implements PipeTransform {
+    transform(unroundedValue: number | null | undefined): number {
+        if(!unroundedValue) {return 0;}
+        return Math.round(unroundedValue);
+    }
+}

@@ -18,11 +18,11 @@ import { Vote } from '../../interfaces/vote-interface';
 @Component({
   selector: 'app-survey-view',
   imports: [
-    Header, 
-    Status, 
-    Button, 
-    IsoDateToGerman, 
-    QuestionView, 
+    Header,
+    Status,
+    Button,
+    IsoDateToGerman,
+    QuestionView,
     ReactiveFormsModule,
     QuestionVote
   ],
@@ -36,6 +36,7 @@ export class SurveyView implements OnDestroy, OnInit {
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
+  hasSubmitted = signal<boolean>(false);
 
   readonly votes = this.surveyService.voteList;
 
@@ -81,7 +82,7 @@ export class SurveyView implements OnDestroy, OnInit {
     await this.surveyService.loadVotesByQuestionIds();
   }
 
-  private getQuestionIds(questions: QuestionWithAnswers[]): number[]{
+  private getQuestionIds(questions: QuestionWithAnswers[]): number[] {
     return questions.map(question => question.id);
   }
 
@@ -93,7 +94,7 @@ export class SurveyView implements OnDestroy, OnInit {
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, { nonNullable: true }),
       sort: new FormControl(question.sort_order, { nonNullable: true }),
       answers: this.fillAnswers(question.answers)
-    }, { validators: questionAnsweredValidator()});
+    }, { validators: questionAnsweredValidator() });
 
   }
 
@@ -134,12 +135,13 @@ export class SurveyView implements OnDestroy, OnInit {
   }
 
   async onSubmit(): Promise<void> {
+    if (this.hasSubmitted()) { return; }
 
     this.voteForm.markAllAsTouched();
 
-    if(this.voteForm.valid) {
+    if (this.voteForm.valid) {
       const result = await this.surveyService.handleAddVotes(this.voteForm);
-      console.log(result);
+      this.hasSubmitted.set(true);
     }
   }
 

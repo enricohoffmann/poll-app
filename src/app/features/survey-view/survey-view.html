@@ -54,8 +54,13 @@
                     [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
                     answer.</span>
 
-                <app-button [buttonType]="'submit'" [buttonVariant]="'secondaryBtn'" [isDarkFontColor]="true"
-                    class="vote-submit-btn">Complete survey</app-button>
+                <app-button 
+                    [buttonType]="'submit'" 
+                    [buttonVariant]="'secondaryBtn'" 
+                    [isDarkFontColor]="true"
+                    class="vote-submit-btn"
+                    [isDisabled]="hasSubmitted()"
+                    >Complete survey</app-button>
             </div>
 
         </form>

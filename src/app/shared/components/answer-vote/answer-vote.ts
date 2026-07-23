@@ -1,10 +1,11 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { AnswerIdentifierService } from '../../../services/answer-identifier-service';
 import { Vote } from '../../../interfaces/vote-interface';
+import { ResultRounding } from '../../../pips/custom-pips';
 
 @Component({
   selector: 'app-answer-vote',
-  imports: [],
+  imports: [ResultRounding],
   templateUrl: './answer-vote.html',
   styleUrl: './answer-vote.scss',
 })
@@ -26,7 +27,8 @@ export class AnswerVote {
   });
 
   percentage = computed(() => {
-    return this.answerVotes() / this.participants() * 100;
+    const value = this.answerVotes() / this.participants() * 100;
+    return Math.min(100, Math.max(0, value));
   });
 
   getIdentifier(): string {

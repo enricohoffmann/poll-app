@@ -1,8 +1,12 @@
 
-<article class="answer-vote">
-    <span class="answear-vote__identifier">{{getIdentifier()}}</span>
+<article class="answer-result">
+    <span class="answer-result__identifier">{{getIdentifier()}}</span>
 
-    <span class="answear-vote__percent">{{percentage()}}</span>
+    <div class="answer-result__track">
+        <div class="answer-result__bar" [style.width.%]="(percentage() | resultRounding)"></div>
+    </div>
+
+    <span class="answer-result__percent">{{percentage() | resultRounding}}%</span>
 </article>
 
 

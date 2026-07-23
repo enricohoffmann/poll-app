@@ -1,5 +1,5 @@
 <header>
-    <div class='header-logo' [class.header-logo--purple]="isPurple()"></div>
+    <div class='header-logo' [class.header-logo--purple]="isPurple()" (click)="backToHome()"></div>
     @if(isButtonAvailable()){
         <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
                 class="home-top-grid__button" (click)="onNewSurvey()">Create survey</app-button>

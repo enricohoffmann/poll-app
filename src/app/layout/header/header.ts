@@ -17,4 +17,8 @@ export class Header {
   onNewSurvey(): void {
     this.router.navigate(['create']);
   }
+
+  backToHome(): void {
+    this.router.navigate(['home']);
+  }
 }

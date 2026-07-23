@@ -9,6 +9,7 @@
 
         @for(answer of getAnswers(); track answer.controls.answerId){
             <app-answer-vote 
+                class="question-vote-section__result"
                 [answerIndex]="$index" 
                 [answerId]="answer.controls.answerId.value"
                 [questionVotes]=" questionVotes()"

@@ -18,6 +18,10 @@
         @include mixins.setup-display-flex(column, center, flex-start, 8px);
     }
 
+    &__result {
+        width: 100%;
+    }
+
 }
 
 .question {
