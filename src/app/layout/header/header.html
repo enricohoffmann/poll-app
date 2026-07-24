@@ -1,8 +1,15 @@
 <header>
     <div class='header-logo' [class.header-logo--purple]="isPurple()" (click)="backToHome()"></div>
     @if(isButtonAvailable()){
-        <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
+
+        @if(isMobile()) {
+            <app-button [buttonVariant]="'homeMobile'" [hasIcon]="true" [buttonIconVariant]="'closePurple'"
+                 [hideTextOnMobile]="true"></app-button>
+        }@else {
+            <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
                 class="home-top-grid__button" (click)="onNewSurvey()">Create survey</app-button>
+        }
+        
     }
     
 </header>

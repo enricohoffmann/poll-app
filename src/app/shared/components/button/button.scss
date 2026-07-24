@@ -126,6 +126,15 @@
         }
     }
 
+    &--home-mobile {
+        position: relative;
+        box-sizing: border-box;
+        width: 39px;
+        height: 32px;
+        border-radius: 10px;
+        background-color: var.$secondary-orange;
+    }
+
     &__line {
         grid-area: line;
         border-top: 1px solid rgba(255, 255, 255, 1);
@@ -169,6 +178,10 @@
 
     &--close-white {
         background-image: url('/assets/icons/close-white.svg');
+    }
+
+    &--close-purple {
+        background-image: url('/assets/icons/close-purple.svg');
     }
 
 }

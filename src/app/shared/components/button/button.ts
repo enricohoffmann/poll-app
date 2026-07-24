@@ -15,14 +15,16 @@ export class Button {
     secondaryBtn: 'btn--secondary',
     tertiaryBtn: 'btn--tertiary',
     filterBtn: 'btn--filter',
-    trashBtn: 'btn--trash'
+    trashBtn: 'btn--trash',
+    homeMobile: 'btn--home-mobile'
   };
 
   private readonly BUTTON_ICON_CLASSES: Record<ButtonIconVariant, string> = {
     add: 'btn-icon--add',
     check: 'btn-icon--check',
     addWhite: 'btn-icon--add-white',
-    closeWhite: 'btn-icon--close-white'
+    closeWhite: 'btn-icon--close-white',
+    closePurple: 'btn-icon--close-purple'
   }
 
   buttonVariant = input<ButtonVariant>('primaryBtn');

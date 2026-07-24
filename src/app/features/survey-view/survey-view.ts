@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -13,7 +13,9 @@ import { Answer } from '../../interfaces/answer-interface';
 import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
 import { QuestionVote } from '../../shared/components/question-vote/question-vote';
 import { questionAnsweredValidator } from '../../shared/utils/validators';
-import { Vote } from '../../interfaces/vote-interface';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-survey-view',
@@ -43,6 +45,14 @@ export class SurveyView implements OnDestroy, OnInit {
   voteForm = new FormGroup<VoteFrom>({
     questions: new FormArray<FormGroup<QuestionForm>>([])
   });
+
+  private breakpontObserver = inject(BreakpointObserver);
+
+  readonly isMobile = toSignal(
+    this.breakpontObserver.observe('(max-width: 900px)').pipe(
+      map(result => result.matches)
+    ), {initialValue: false}
+  );
 
   async ngOnInit(): Promise<void> {
     const surveyIdParam = this.activatedRoute.snapshot.paramMap.get('surveyId');

@@ -2,13 +2,13 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 
 export type HeaderVariant = 'whiteHeader' | 'prupleHeader';
 
-export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn' | 'trashBtn';
+export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn' | 'trashBtn' | 'homeMobile';
 
 export type SurveyCardVariant = 'highlights' | 'listview';
 
 export type InputFieldVariant = 'labelTop' | 'labelLeft' | 'textArea' | 'noLabel';
 
-export type ButtonIconVariant = 'add' | 'check' | 'addWhite' | 'closeWhite';
+export type ButtonIconVariant = 'add' | 'check' | 'addWhite' | 'closeWhite' | 'closePurple';
 
 export type QuestionForm = {
     id: FormControl<number>;
