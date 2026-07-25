@@ -3,6 +3,9 @@ import { Home } from './features/home/home';
 import { SurveyCreate } from './features/survey-create/survey-create';
 import { SurveyView } from './features/survey-view/survey-view';
 
+/**
+ * @description Application routes configuration.
+ */
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
     { path: 'home', component: Home},

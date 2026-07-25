@@ -2,25 +2,34 @@ import { Component, ElementRef, signal, ViewChild, input } from '@angular/core';
 import { Button } from "../button/button";
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
+/**
+ * @description A custom date field component that manages its own form control and date picker interactions.
+ */
 @Component({
   selector: 'app-date-field',
   imports: [Button, ReactiveFormsModule],
   templateUrl: './date-field.html',
-  styleUrl: './date-field.scss',
+  styleUrls: ['./date-field.scss'],
 })
 export class DateField {
 
   isPickerOpen = signal(false);
-
   @ViewChild('dateSelectField') dateSelect!: ElementRef<HTMLInputElement>;
   dateInputControl = input.required<FormControl<string | null>>();
-
   isWriting = signal<boolean>(false);
 
+  /**
+   * @description Handles the click event on the calendar button, triggering the date picker to open.
+   * @returns { void } No return value.
+   */
   onCalenderButtonClick(): void{
     this.dateSelect.nativeElement.showPicker();
   }
 
+  /**
+   * @description Handles the change event from the date picker, converting the selected date to German format and updating the form control.
+   * @returns { void } No return value.
+   */
   onDatePickerChange():void {
     const germanDate = this.getGermanDate(this.dateSelect.nativeElement.value);
     this.dateInputControl().setValue(germanDate);
@@ -28,19 +37,36 @@ export class DateField {
     this.isPickerOpen.set(false);
   }
 
+  /**
+   * @description Converts a date string from the format 'YYYY-MM-DD' to the German date format 'DD.MM.YYYY'.
+   * @param rawDate The date string in the format 'YYYY-MM-DD'.
+   * @returns {string} The date string converted to the German format 'DD.MM.YYYY'.
+   */
   getGermanDate(rawDate: string): string {
     const dateArray = rawDate.split('-');
     return `${dateArray[2]}.${dateArray[1]}.${dateArray[0]}`;
   }
 
+  /**
+   * @description Clears the value of the date input form control, effectively resetting the date field.
+   * @returns { void } No return value.
+   */
   clearDateField(): void {
     this.dateInputControl().setValue('');
   }
 
+  /**
+   * @description Sets the isWriting signal to true when the user starts interacting with the date field.
+   * @returns { void } No return value.
+   */
   onDateFieldEnter(): void {
     this.isWriting.set(true);
   }
 
+  /**
+   * @description Sets the isWriting signal to false when the user stops interacting with the date field.
+   * @returns { void } No return value.
+   */
   onDateFieldLeave(): void {
     this.isWriting.set(false);
   }

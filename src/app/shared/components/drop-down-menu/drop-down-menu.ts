@@ -1,27 +1,48 @@
-import { Component, inject, signal, output } from '@angular/core';
+import { Component, inject, signal, output, OnInit } from '@angular/core';
 import { SurveyService } from '../../../services/survey-service';
 import { Category } from '../../../interfaces/category-interface';
 
+/**
+ * @description This component is responsible for rendering a drop-down menu that allows users to select a category from a list of categories fetched from the SurveyService. 
+ * It manages the state of the menu (open/closed) and emits the selected category when a user makes a selection.
+ * @implements OnInit
+ */
 @Component({
   selector: 'app-drop-down-menu',
   imports: [],
   templateUrl: './drop-down-menu.html',
-  styleUrl: './drop-down-menu.scss',
+  styleUrls: ['./drop-down-menu.scss'],
 })
-export class DropDownMenu {
+export class DropDownMenu implements OnInit {
   surveyService = inject(SurveyService);
   isMenuOpen = signal(false);
   sendCategorySelection = output<Category>();
   isCategorySelected = signal(false);
 
+  /**
+   * @description Lifecycle hook that is called after the component's view has been fully initialized. It triggers the retrieval of categories from the SurveyService.
+   * @returns void
+   * @memberof DropDownMenu
+   */
   ngOnInit(): void {
     this.surveyService.getCategories();
   }
 
+  /**
+   * @description Toggles the state of the drop-down menu between open and closed when the button is clicked.
+   * @returns void
+   * @memberof DropDownMenu
+   */
   onButtonClick(): void {
     this.isMenuOpen.set(!this.isMenuOpen());
   }
 
+  /**
+   * @description Handles the event when a category is clicked in the drop-down menu. It closes the menu, retrieves the selected category from the SurveyService, and emits the selected category to the parent component.
+   * @returns void
+   * @memberof DropDownMenu
+   * @param categoryIndex 
+   */
   onCategoryClick(categoryIndex: number): void {
     this.isMenuOpen.set(false);
     const currentCategory = this.surveyService.getCategoryByIndex(categoryIndex);

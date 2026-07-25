@@ -3,7 +3,10 @@ import { checkDateInGermanFormat, getDateFromGermanDate } from "./custom-functio
 import { QuestionForm } from "./types";
 
 
-
+/**
+ * @description Validator to check if a category is selected.
+ * @returns {ValidatorFn} A validator function that returns a validation error if no category is selected.
+ */
 export function categorySelectedValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         if (control.value > 0) { return null; }
@@ -11,6 +14,10 @@ export function categorySelectedValidator(): ValidatorFn {
     };
 }
 
+/**
+ * @description Validator to check if the input value matches the German date format (dd.mm.yyyy).
+ * @returns {ValidatorFn} A validator function that returns a validation error if the date format is invalid.
+ */
 export function expiresDatePatternValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
@@ -24,6 +31,10 @@ export function expiresDatePatternValidator(): ValidatorFn {
     };
 }
 
+/**
+ * @description Validator to check if the input value is a valid date in German format (dd.mm.yyyy).
+ * @returns {ValidatorFn} A validator function that returns a validation error if the date is invalid.
+ */
 export function expiresDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
@@ -36,6 +47,10 @@ export function expiresDateValidator(): ValidatorFn {
     };
 }
 
+/**
+ * @description Validator to check if the input date is not in the past.
+ * @returns {ValidatorFn} A validator function that returns a validation error if the date is in the past.
+ */
 export function expiresDateNotPastValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
 
@@ -49,9 +64,13 @@ export function expiresDateNotPastValidator(): ValidatorFn {
         if(dateNow.getTime() > date.getTime()) { return {dateExpired: true}; }
 
         return null;
-    }
+    };
 }
 
+/**
+ * @description Validator to check if at least one answer is selected for a question.
+ * @returns {ValidatorFn} A validator function that returns a validation error if no answer is selected.
+ */
 export function questionAnsweredValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const question = control as FormGroup<QuestionForm>;

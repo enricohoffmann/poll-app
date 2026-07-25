@@ -1,3 +1,7 @@
+/**
+ * @description This file contains validation messages for form controls in the application. Each message corresponds to a specific validation error and provides user-friendly feedback.
+ */
+
 export const VALIDATION_MESSAGES = {
     required: () => 'This field is required.',
     minlength: (e: any) => `Minimum ${e.requiredLength} characters required.`,

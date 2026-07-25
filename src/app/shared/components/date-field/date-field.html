@@ -19,7 +19,7 @@
     </div>
 
     <div class="date-field__date-container">
-        <label for="end-date-select"></label>
+        <label for="end-date-select" class="date-field__date-label"></label>
         <input 
             id="end-date-select" 
             name="end-date-select" 
@@ -27,6 +27,7 @@
             class="date-field__date-select"
             #dateSelectField
             (change)="onDatePickerChange()"
+            aria-label="Select end date"
             >
     </div>
    
@@ -37,9 +38,4 @@
         [hasTrashIcon]="true"
         (click)="clearDateField()"
     ></app-button>
-
-
-    
-
-
 </article>

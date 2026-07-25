@@ -1,5 +1,5 @@
 import { Survey } from '../interfaces/survey-interface';
-import { getIsoDateFromGerminDate } from '../shared/utils/custom-functions';
+import { getIsoDateFromGermanDate } from '../shared/utils/custom-functions';
 
 /**
  * @description Represents a survey model that implements the Survey interface.
@@ -18,7 +18,7 @@ export class SurveyModel implements Survey {
     /**
      * Creates an instance of SurveyModel.
      * Initializes the survey properties.
-     * If the expires_at property is provided, it converts it to ISO format using the getIsoDateFromGerminDate function.
+     * If the expires_at property is provided, it converts it to ISO format using the getIsoDateFromGermanDate function.
      *
      * @param surveyData - Partial data for the survey.
      */
@@ -32,7 +32,7 @@ export class SurveyModel implements Survey {
         this.created_at = surveyData.created_at ?? '';
 
         if(this.expires_at) {
-            this.expires_at = getIsoDateFromGerminDate(this.expires_at);
+            this.expires_at = getIsoDateFromGermanDate(this.expires_at);
         }
 
     }
