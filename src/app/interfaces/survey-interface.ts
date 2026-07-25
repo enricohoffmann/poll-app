@@ -1,3 +1,7 @@
+
+/**
+ * @description Represents a survey.
+ */
 export interface Survey {
     id:number;
     title:string;
