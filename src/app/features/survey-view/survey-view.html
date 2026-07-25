@@ -29,18 +29,30 @@
 
             <main class="survey-view-main">
 
-                <div class="survey-view-main__columns">
+                @if(isMobile()) {
+
+                <div class="survey-view-main__mobile">
+                    @for(question of questions; track question.controls.id.value){
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"></app-question-view>
+                    }
+                </div>
+
+                }@else {
+                <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"></app-question-view>
                     }
                 </div>
 
-                <div class="survey-view-main__columns">
+                <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question"
                         [questionIndex]="$index * 2 + 1"></app-question-view>
                     }
                 </div>
+                }
+
+
             </main>
 
             <div class="survey-view-submit-btn-container">
@@ -49,13 +61,27 @@
                     [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
                     answer.</span>
 
-                <app-button 
-                    [buttonType]="'submit'" 
-                    [buttonVariant]="'secondaryBtn'" 
-                    [isDarkFontColor]="true"
-                    class="vote-submit-btn"
-                    [isDisabled]="hasSubmitted()"
-                    >Complete survey</app-button>
+                @if(isMobile()) {
+                    <app-button 
+                        [buttonType]="'submit'" 
+                        [buttonVariant]="'primaryBtn'" 
+                        [isDarkFontColor]="true" 
+                        [hasIcon]="true"
+                        class="vote-submit-btn" 
+                        [isDisabled]="hasSubmitted()" 
+                        [buttonIconVariant]="'check'"
+                        >Complete</app-button>
+                }@else {
+                    <app-button 
+                        [buttonType]="'submit'" 
+                        [buttonVariant]="'secondaryBtn'" 
+                        [isDarkFontColor]="true"
+                        class="vote-submit-btn" 
+                        [isDisabled]="hasSubmitted()"
+                        >Complete survey</app-button>
+                }
+
+
             </div>
 
         </form>
@@ -65,18 +91,15 @@
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
             @if(votes().length == 0){
-                <p class="result-notice">Results will be shown here after participants complete the survey.</p>
-                <p class="result-empty">There are no answears yet.</p>
+            <p class="result-notice">Results will be shown here after participants complete the survey.</p>
+            <p class="result-empty">There are no answears yet.</p>
             }@else {
-                <div class="result-votings">
-                    @for(question of questions; track question.controls.id) {
-                        <app-question-vote 
-                            [questionId]="question.controls.id.value" 
-                            [questionFormGroup]="question"
-                            [questionIndex]="$index"
-                            ></app-question-vote>
-                    }
-                </div>
+            <div class="result-votings">
+                @for(question of questions; track question.controls.id) {
+                <app-question-vote [questionId]="question.controls.id.value" [questionFormGroup]="question"
+                    [questionIndex]="$index"></app-question-vote>
+                }
+            </div>
             }
         </aside>
         }

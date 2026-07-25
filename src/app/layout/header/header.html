@@ -4,7 +4,7 @@
 
         @if(isMobile()) {
             <app-button [buttonVariant]="'homeMobile'" [hasIcon]="true" [buttonIconVariant]="'closePurple'"
-                 [hideTextOnMobile]="true"></app-button>
+                (click)="backToHome()"></app-button>
         }@else {
             <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
                 class="home-top-grid__button" (click)="onNewSurvey()">Create survey</app-button>

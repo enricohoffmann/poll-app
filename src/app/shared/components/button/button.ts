@@ -41,7 +41,7 @@ export class Button {
   isDisabled = input<boolean>(false);
   hideTextOnMobile = input<boolean>(false);
   hideText = computed(() => {
-    return this.buttonVariant() === 'secondaryBtn' && this.hideTextOnMobile();
+    return (this.buttonVariant() === 'secondaryBtn' && this.hideTextOnMobile()) || this.buttonVariant() === 'homeMobile';
   });
   isDarkFontColor = input<boolean>(false);
 

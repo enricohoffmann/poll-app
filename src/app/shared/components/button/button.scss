@@ -133,6 +133,14 @@
         height: 32px;
         border-radius: 10px;
         background-color: var.$secondary-orange;
+        @include mixins.setup-display-flex(row, center, center);
+
+        .btn-icon {
+            width: 16px;
+            opacity: 1;
+            transform: scale(0.8);
+            padding-left: 3px;
+        }
     }
 
     &__line {
@@ -232,6 +240,7 @@
             transform: scale(1);
         }
     }
+
 }
 
 @media(max-width: 650px) {
@@ -247,7 +256,7 @@
         align-self: center;
     }
 
-    .btn-icon--hide-margin {
+    .btn-icon--hide-margin :not(.btn--home-mobile) {
         transform: scale(1.5) !important;
     }
 }
