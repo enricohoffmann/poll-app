@@ -1,0 +1,22 @@
+<button type="button" class="accordeon-btn" (click)="toggleSee()">
+
+    <div class="accordeon-btn__text-container">
+        <span 
+            class="accordeon-btn__text-container__text"
+            [ngClass]="seeResult() ? 'text--see' : 'text--hide'"
+            >Close results</span>
+        <span 
+            class="accordeon-btn__text-container__text"
+            [ngClass]="!seeResult() ? 'text--see' : 'text--hide'"
+            >See results</span>
+    </div>
+
+    <div class="accordeon-btn__icon-container">
+        <div class="accordeon-btn__icon icon-orange"
+            [class.up]="seeResult()"
+        ></div>
+        <div class="accordeon-btn__icon icon-purple"
+            [class.up]="seeResult()"
+        ></div>
+    </div>
+</button>

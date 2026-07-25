@@ -1,0 +1,92 @@
+@use 'abstracts/variables' as var;
+@use 'abstracts/mixins' as mixins;
+
+.accordeon-btn {
+    box-sizing: border-box;
+    @include mixins.setup-display-flex(row, center, center, 12px);
+    padding: 4px 10px;
+    border-radius: 8px;
+    background-color: var.$light-pruple;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    @include mixins.setup-font("Mulish", 18px, 700, var.$primary-purple);
+
+    &__text-container {
+        box-sizing: border-box;
+        position: relative;
+        height: 24px;
+        @include mixins.setup-display-flex(row, center, center);
+        width: 200px;
+
+        &__text {
+            position: absolute;
+            inset: 0;
+            align-self: center;
+            justify-self: left;
+            transition: opacity 300ms ease-in;
+        }
+    }
+
+    &__icon-container {
+        box-sizing: border-box;
+        position: relative;
+        height: 24px;
+        width: 24px;
+        @include mixins.setup-display-flex(row, center, center);
+
+
+    }
+
+    &__icon {
+        position: absolute;
+        inset: 0;
+        height: 18px;
+        width: 18px;
+        align-self: center;
+        justify-self: center;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        opacity: 0;
+        transform: rotate(0);
+        transition: opacity 125ms ease-in, transform 1000ms ease-in;
+    }
+
+    &:hover &__icon.icon-orange {
+        opacity: 1;
+    } 
+
+    &:hover &__icon.icon-purple {
+        opacity: 0;
+    }
+}
+
+.text--see {
+    opacity: 1;
+}
+
+.text--hide {
+    opacity: 0;
+}
+
+.icon-orange {
+    background-image: url('/assets/icons/arrow-drop-down-orange.svg');
+    opacity: 0;
+}
+
+.icon-orange.up {
+    transform: rotate(-180deg);
+}
+
+.icon-purple {
+    background-image: url('/assets/icons/arrow-drop-down-purple.svg');
+    opacity: 1;
+}
+
+.icon-purple.up {
+    transform: rotate(-180deg);
+}
+
+
+

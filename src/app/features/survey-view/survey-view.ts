@@ -16,6 +16,7 @@ import { questionAnsweredValidator } from '../../shared/utils/validators';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { ResultAccordeon } from '../../shared/components/result-accordeon/result-accordeon';
 
 @Component({
   selector: 'app-survey-view',
@@ -26,7 +27,8 @@ import { map } from 'rxjs/operators';
     IsoDateToGerman,
     QuestionView,
     ReactiveFormsModule,
-    QuestionVote
+    QuestionVote,
+    ResultAccordeon
   ],
   templateUrl: './survey-view.html',
   styleUrl: './survey-view.scss',
@@ -142,6 +144,15 @@ export class SurveyView implements OnDestroy, OnInit {
 
   get questions(): FormGroup<QuestionForm>[] {
     return this.voteForm.controls.questions.controls;
+  }
+
+  hasDescription(): boolean {
+    const description = this.survey()?.description;
+    if(!description){
+      return false;
+    }else {
+      return description.length > 2;
+    }
   }
 
   async onSubmit(): Promise<void> {
