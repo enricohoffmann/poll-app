@@ -146,10 +146,6 @@
         row-gap: 32px;
         grid-template-areas: "headline" "illustration" "description" "button";
 
-        &__description {
-            /* max-width: 30ch; */
-        }
-
         &__button {
             @include mixins.setup-display-flex(row, center, center);
         }
@@ -163,8 +159,6 @@
     .highlight-cards {
         overflow-x: auto;
     }
-
-    /* grid-template-areas: "filter-buttons category-drop-down" "empty-cell selected-category"; */
 
     .home-survey-list-section__header {
         grid-template-columns: 1fr;

@@ -1,40 +1,41 @@
-# Entscheidungen
+# Project Decisions
 
-## Authentifizierung
+## Authentication
 
-Keine Authentifizierung laut Projektvorgabe.
+Authentication is out of scope for this project and is therefore not implemented.
 
-## Umfragen
+## Surveys
 
-- Draft → Publish
-- Nach Publish keine Bearbeitung vorgesehen.
+- Surveys follow a one-way lifecycle: Draft -> Published.
+- Once a survey is published, it is considered final and cannot be edited.
 
-## Fragen
+## Questions
 
-- Mindestens eine Frage mit mindestens 2 Antworten
+- Every survey must contain at least one question.
+- Each question must contain at least two answer options.
 
-## Antworten
+## Answers
 
-- Maximal 6 Antwortmöglichkeiten pro Frage.
-- Begrenzung erfolgt im Frontend, nicht in der Datenbank.
+- A question can have up to six answer options.
+- This limit is enforced in the frontend, not at the database level.
 
-## Textgrenzen
+## Text Constraints
 
-- Survey title: 4–80 Zeichen
-- Description: optional, max. 300 Zeichen
-- Question: 4–120 Zeichen
-- Answer: 1–80 Zeichen
+- Survey title: 4-80 characters
+- Description: optional, up to 300 characters
+- Question text: 4-120 characters
+- Answer text: 1-80 characters
 
-## Filter auf Home
+## Home Filters
 
-- "Past" und "Active" können nicht gleichzeitig deaktiviert werden,
-  es wird dann der "Active" - Filter gesetzt.
-  Beim Start ist der "Active" - Filter vorbelegt.
+- The Past and Active filters cannot both be disabled at the same time.
+- If that happens, Active is automatically enabled.
+- Active is preselected by default on initial load.
 
-## Feature: Support surveys without an end date
+## Feature: Surveys Without an End Date
 
 Rules:
-- expires_at nullable
-- unlimited surveys are always active
-- never appear in "Ending soon"
-- not part of expiry calculation
+- expires_at can be null
+- Surveys without an end date are always treated as active
+- Surveys without an end date are never shown in Ending soon
+- Surveys without an end date are excluded from expiry calculations
