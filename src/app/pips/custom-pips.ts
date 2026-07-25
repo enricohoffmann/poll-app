@@ -1,5 +1,10 @@
 import {Pipe, PipeTransform} from '@angular/core';
 
+/**
+ * This pipe is used to transform the number of days until expiry into a human-readable string.
+ * @implements {PipeTransform}
+ * @returns {string} A string representing the number of days until expiry.
+ */
 @Pipe({
     name: 'expiryViewChange',
 })
@@ -14,7 +19,11 @@ export class ExpiryViewChange implements PipeTransform {
     }
 }
 
-
+/**
+ * This pipe is used to transform an ISO date string into a German date format (DD.MM.YYYY).
+ * @implements {PipeTransform}
+ * @returns {string} A string representing the date in German format.
+ */
 @Pipe({
     name: 'isoDateToGerman'
 })
@@ -27,6 +36,11 @@ export class IsoDateToGerman implements PipeTransform {
     }
 }
 
+/**
+ * This pipe is used to round a number to the nearest integer.
+ * @implements {PipeTransform}
+ * @returns {number} The rounded integer value.
+ */
 @Pipe({
     name: 'resultRounding'
 })
