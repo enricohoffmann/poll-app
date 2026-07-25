@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit, computed } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -41,7 +41,7 @@ export class SurveyView implements OnDestroy, OnInit {
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
   hasSubmitted = signal<boolean>(false);
-
+  openResultMobile = signal<boolean>(false);
   readonly votes = this.surveyService.voteList;
 
   voteForm = new FormGroup<VoteFrom>({
@@ -153,6 +153,10 @@ export class SurveyView implements OnDestroy, OnInit {
     }else {
       return description.length > 2;
     }
+  }
+
+  toggleSeeResult(see: boolean):void {
+    this.openResultMobile.set(see);
   }
 
   async onSubmit(): Promise<void> {

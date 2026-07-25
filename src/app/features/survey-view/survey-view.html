@@ -77,11 +77,14 @@
 
         @if(isMobile()) {
             <div class="survey-view__accordeon-results">
-                <app-result-accordeon></app-result-accordeon>
+                <app-result-accordeon (seeResultEvent)="toggleSeeResult($event)"></app-result-accordeon>
             </div>
         }
 
-        <aside class="survey-view__results">
+        <aside class="survey-view__results" 
+            [class.survey-view__results--mobile]="isMobile()"
+            [class.survey-view__results--mobile--open]="openResultMobile()"
+            >
 
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 

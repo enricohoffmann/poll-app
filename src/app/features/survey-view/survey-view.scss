@@ -170,6 +170,17 @@
 }
 
 
+.survey-view__results--mobile {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 500ms ease-in;
+}
+
+.survey-view__results--mobile.survey-view__results--mobile--open {
+    max-height: 1500px;
+}
+
+
 @media(max-width: 999px) {
 
     .survey-view {
