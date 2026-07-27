@@ -16,7 +16,7 @@
     @include mixins.setup-font("Mulish", 16px, 700, var.$primary-purple);
     transition: background-color 125ms ease-in;
 
-    &:hover:not(.answer-btn--active) {
+    &:hover:not(.answer-btn--active):not(.answer-btn--disabled) {
         background-color: rgba(255, 207, 161, 0.4);
     }
 
@@ -34,7 +34,9 @@
     }
 }
 
-
+.answer-btn--disabled {
+    cursor: not-allowed;
+}
 
 .answer-btn-check {
     grid-area: check;

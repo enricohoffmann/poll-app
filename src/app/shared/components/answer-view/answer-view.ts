@@ -18,13 +18,14 @@ export class AnswerView {
   answerControl = input.required<FormGroup<AnswerForm>>();
   toggleAnswerEvent = output<number>();
   answerIdentifierService = inject(AnswerIdentifierService);
+  isReadOnly = input.required<boolean>();
 
   /**
    * @description Getter for the answer FormControl, which holds the text of the answer.
    * @returns {FormControl<string>} The FormControl for the answer text.
    */
   get answer():FormControl<string> {
-    return this.answerControl().controls.answerText;
+    return this.answerControl().controls.text;
   } 
 
   /**
@@ -32,6 +33,7 @@ export class AnswerView {
    * @returns {void}
    */ 
   onAnswerClick(): void { 
+    if(this.isReadOnly()) { return;}
     this.toggleAnswerEvent.emit(this.answerIndex()); 
   }
 }

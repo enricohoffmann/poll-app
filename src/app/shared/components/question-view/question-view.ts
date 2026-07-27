@@ -15,6 +15,7 @@ import { AnswerView } from '../answer-view/answer-view';
 export class QuestionView {
   questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionIndex = input.required<number>();
+  isReadOnly = input.required<boolean>();
 
   /**
    * @description Toggles the selection of an answer for the question.
@@ -24,7 +25,7 @@ export class QuestionView {
    */
   toggleAnswer(answerIndex: number): void {
 
-    if(!this.allowMultipleAnswer){
+    if(!this.allowMultipleAnswer && !this.isReadOnly){
       this.deselectAllAnswers();
     }
 

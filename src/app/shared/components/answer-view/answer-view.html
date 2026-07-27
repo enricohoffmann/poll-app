@@ -2,7 +2,8 @@
     type="button" 
     class="answer-btn" 
     [class.answer-btn--active]="answerControl().controls.select.value" 
-    (click)="onAnswerClick()">
+    (click)="onAnswerClick()"
+    [class.answer-btn--disabled]="isReadOnly()">
 
     <div class="answer-btn-check" [class.answer-btn-check--active]="answerControl().controls.select.value">
         @if(answerControl().controls.select.value){

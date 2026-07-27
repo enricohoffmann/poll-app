@@ -39,7 +39,7 @@ import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
 export class SurveyCreate {
 
   private readonly DIALOG_DELAY = 125;
-  private readonly OVERLAY_CLOSE_DELAY = 1600;
+  private readonly OVERLAY_CLOSE_DELAY = 1400;
 
   currentCategory = signal<Category | null>(null);
 
@@ -62,6 +62,7 @@ export class SurveyCreate {
   showDialog = signal<boolean>(false);
   showOverlay = signal<boolean>(false);
   validationService = inject(ValidationService);
+  isSubmitted = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
@@ -78,6 +79,7 @@ export class SurveyCreate {
   async onSubmit(): Promise<void> {
     this.setAllFieldTouched();
     if (this.surveyForm.valid) {
+      this.isSubmitted.set(true);
       this.surveyForm.get('is_published')?.setValue(true);
       const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
       if(surveyAddResult > 0){
@@ -117,7 +119,7 @@ export class SurveyCreate {
       id: new FormControl(0, {nonNullable: true}),
       text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)] }),
       allow_multiple_answers: new FormControl(false, { nonNullable: true }),
-      sort: new FormControl(0, {nonNullable: true}),
+      sort_order: new FormControl(0, {nonNullable: true}),
       answers: new FormArray<FormGroup<AnswerForm>>([])
     });
     return questionFormGroup;
@@ -129,10 +131,10 @@ export class SurveyCreate {
    */
   private createAnswerGroup(): FormGroup<AnswerForm> {
     const answerFormGroup: FormGroup<AnswerForm> = new FormGroup<AnswerForm>({
-      answerId: new FormControl(0, {nonNullable: true}),
-      answerText: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
+      id: new FormControl(0, {nonNullable: true}),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
       select: new FormControl(false, {nonNullable: true}),
-      sort: new FormControl(0, {nonNullable: true})
+      sort_order: new FormControl(0, {nonNullable: true})
     });
     return answerFormGroup;
   }

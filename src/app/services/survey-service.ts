@@ -8,11 +8,11 @@ import { QuestionWithAnswers } from '../interfaces/question-with-answers-interfa
 import { SurveyModel } from '../models/survey-model';
 import { QuestionModel } from '../models/question-model';
 import { AnswerModel } from '../models/answer-model';
-import { QuestionForm, VoteFrom } from '../shared/utils/types';
+import { AnswerForm, QuestionForm, SurveyForm, VoteFrom } from '../shared/utils/types';
 import { Vote } from '../interfaces/vote-interface';
 import { VoteModel } from '../models/vote-model';
 import { VoterTokenService } from './voter-token-service';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 
 /**
  * Service for managing surveys, questions, answers, and votes using Supabase as the backend.
@@ -184,11 +184,14 @@ export class SurveyService implements OnDestroy {
    * @param surveyForm The form group containing the survey data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created survey, or 0 if the creation failed.
    */
-  async handleAddSurvey(surveyForm: FormGroup): Promise<number> {
+  async handleAddSurvey(surveyForm: FormGroup<SurveyForm>): Promise<number> {
     const survey = new SurveyModel(surveyForm.value);
+
     const responseSurveyId = await this.createSurvey(survey);
+    console.log(survey, responseSurveyId);
+    
     if (responseSurveyId === 0) { return 0; }
-    return await this.handleQuestions(surveyForm.value['questions'], responseSurveyId) == true ? responseSurveyId : 0;
+    return await this.handleQuestions(surveyForm.controls.questions, responseSurveyId) == true ? responseSurveyId : 0; 
   }
 
   /**
@@ -209,14 +212,14 @@ export class SurveyService implements OnDestroy {
    * @param surveyId The ID of the survey to add questions to.
    * @returns {Promise<boolean>} A promise that resolves to true if all questions were added successfully, false otherwise.
    */
-  private async handleQuestions(questionsDataRaw: [], surveyId: number): Promise<boolean> {
+  private async handleQuestions(questionsDataRaw: FormArray<FormGroup<QuestionForm>>, surveyId: number): Promise<boolean> {
     for (let questionIndex = 0; questionIndex < questionsDataRaw.length; questionIndex++) {
-      const question = new QuestionModel(questionsDataRaw[questionIndex], surveyId);
+      const question = new QuestionModel(questionsDataRaw.at(questionIndex).value, surveyId);
       question.sort_order = questionIndex;
       const questionIdRespons: number = await this.createQuestion(question);
       if (questionIdRespons === 0) { return false; }
       const answerResult: boolean =
-        await this.handleAnswers(questionsDataRaw[questionIndex]['answers'], questionIdRespons);
+        await this.handleAnswers(questionsDataRaw.at(questionIndex).controls.answers, questionIdRespons);
       if (!answerResult) { return false; }
     }
     return true;
@@ -240,9 +243,9 @@ export class SurveyService implements OnDestroy {
    * @param questionId The ID of the question to add answers to.
    * @returns {Promise<boolean>} A promise that resolves to true if all answers were added successfully, false otherwise.
    */
-  private async handleAnswers(answersDataRaw: [], questionId: number): Promise<boolean> {
+  private async handleAnswers(answersDataRaw: FormArray<FormGroup<AnswerForm>>, questionId: number): Promise<boolean> {
     for (let answerIndex = 0; answerIndex < answersDataRaw.length; answerIndex++) {
-      const answer = new AnswerModel(answersDataRaw[answerIndex], questionId);
+      const answer = new AnswerModel(answersDataRaw.at(answerIndex).value, questionId);
       answer.sort_order = answerIndex;
       const answerIdResponse: number = await this.createAnswer(answer);
       if (answerIdResponse === 0) { return false; }
@@ -257,6 +260,7 @@ export class SurveyService implements OnDestroy {
    */
   private async createAnswer(answer: AnswerModel): Promise<number> {
     const answerJson = answer.getCleanAddSurveyJson();
+    console.log('Creating answer:', answerJson);
     const response = await this.supabaseClient
       .from('answers').insert([answerJson,]).select();
     return response.data?.[0]?.id ?? 0;
@@ -303,7 +307,7 @@ export class SurveyService implements OnDestroy {
     const questionId = question.controls.id.value;
     question.controls.answers.controls.forEach((answer) => {
       if (!answer.controls.select.value) { return; }
-      votes.push(new VoteModel(answer.controls.answerId.value, questionId, voterToken));
+      votes.push(new VoteModel(answer.controls.id.value, questionId, voterToken));
     });
   }
 

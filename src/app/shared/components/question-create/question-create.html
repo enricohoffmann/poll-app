@@ -22,7 +22,7 @@
     </div>
 
     <aside>
-        @for(answer of questionFormGroup().controls.answers.controls; track $index; let last = $last){
+        @for(answer of questionFormGroup().controls.answers.controls; track answer.controls.id.value; let last = $last){
         <app-answer-create 
             [answerFormGroup]="answer" 
             [answerIndex]="$index" 

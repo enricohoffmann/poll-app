@@ -31,7 +31,7 @@ export class AnswerCreate {
    * @returns {FormControl<string>} The FormControl for the answer text.
    */
   getAnswer():FormControl<string> {
-    return this.answerFormGroup().controls.answerText;
+    return this.answerFormGroup().controls.text;
   } 
 
   /**

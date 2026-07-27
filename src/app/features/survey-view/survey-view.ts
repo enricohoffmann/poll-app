@@ -50,6 +50,7 @@ export class SurveyView implements OnDestroy, OnInit {
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
+  isDisabled = signal<boolean>(false);
   hasSubmitted = signal<boolean>(false);
   openResultMobile = signal<boolean>(false);
   readonly votes = this.surveyService.voteList;
@@ -131,8 +132,27 @@ export class SurveyView implements OnDestroy, OnInit {
       this.questionsAndAnswers.set(questions);
       this.createQuestionFormArray(questions);
       await this.initializeVotes(questions);
+      this.isDisabled.set(this.checkIfSurveyIsPastDue(survey));
 
     } finally { this.isLoading.set(false); }
+  }
+
+  /**
+   * @description Checks if the survey has expired based on its expiration date.
+   * If the survey has no expiration date, it is considered not past due.
+   * The method compares the current date with the survey's expiration date to determine if the survey is past due.
+   * @private
+   * @memberof SurveyView
+   * @param survey 
+   * @returns {boolean} - True if the survey is past due, false otherwise.
+   */
+  private checkIfSurveyIsPastDue(survey: SurveyWithCategory): boolean {
+    if (!survey.expires_at) {
+      return false;
+    }
+    const currentDate = new Date();
+    const expirationDate = new Date(survey.expires_at);
+    return currentDate > expirationDate;
   }
 
   /**
@@ -185,7 +205,7 @@ export class SurveyView implements OnDestroy, OnInit {
       id: new FormControl(question.id, { nonNullable: true }),
       text: new FormControl(question.text, { nonNullable: true }),
       allow_multiple_answers: new FormControl(question.allow_multiple_answers, { nonNullable: true }),
-      sort: new FormControl(question.sort_order, { nonNullable: true }),
+      sort_order: new FormControl(question.sort_order, { nonNullable: true }),
       answers: this.fillAnswers(question.answers)
     }, { validators: questionAnsweredValidator() });
   }
@@ -216,9 +236,9 @@ export class SurveyView implements OnDestroy, OnInit {
    */
   private createAnswerFormGroup(answer: Answer): FormGroup<AnswerForm> {
     return new FormGroup<AnswerForm>({
-      answerId: new FormControl(answer.id, { nonNullable: true }),
-      sort: new FormControl(answer.sort_order, { nonNullable: true }),
-      answerText: new FormControl(answer.text, { nonNullable: true }),
+      id: new FormControl(answer.id, { nonNullable: true }),
+      sort_order: new FormControl(answer.sort_order, { nonNullable: true }),
+      text: new FormControl(answer.text, { nonNullable: true }),
       select: new FormControl(false, { nonNullable: true })
     });
 
@@ -293,13 +313,14 @@ export class SurveyView implements OnDestroy, OnInit {
    * @returns {Promise<void>} - A promise that resolves when the submission is complete.
    */
   async onSubmit(): Promise<void> {
-    if (this.hasSubmitted()) { return; }
+    if (this.hasSubmitted() || this.isDisabled()) { return; }
 
     this.voteForm.markAllAsTouched();
 
     if (this.voteForm.valid) {
       const result = await this.surveyService.handleAddVotes(this.voteForm);
       this.hasSubmitted.set(true);
+      this.isDisabled.set(true);
     }
   }
 

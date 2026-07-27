@@ -33,21 +33,21 @@
 
                 <div class="survey-view-main__mobile">
                     @for(question of questions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"></app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index" [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
 
                 }@else {
                 <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"></app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2" [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
 
                 <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question"
-                        [questionIndex]="$index * 2 + 1"></app-question-view>
+                        [questionIndex]="$index * 2 + 1" [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
                 }
@@ -57,17 +57,22 @@
 
             <div class="survey-view-submit-btn-container">
 
-                <span class="vote-error-message"
-                    [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
+                @if(voteForm.invalid && voteForm.touched) {
+                    <span class="vote-error-message"
+                        [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
                     answer.</span>
+                }@else if (isDisabled()) {
+                    <span class="vote-error-message"
+                        [class.vote-error-message--visible]="isDisabled()">You have already submitted your answers or the survey is past due.</span>
+                }
 
                 @if(isMobile()) {
                 <app-button [buttonType]="'submit'" [buttonVariant]="'primaryBtn'" [isDarkFontColor]="true"
-                    [hasIcon]="true" class="vote-submit-btn" [isDisabled]="hasSubmitted()"
+                    [hasIcon]="true" class="vote-submit-btn" [isDisabled]="hasSubmitted() || isDisabled()"
                     [buttonIconVariant]="'check'">Complete</app-button>
                 }@else {
                 <app-button [buttonType]="'submit'" [buttonVariant]="'secondaryBtn'" [isDarkFontColor]="true"
-                    class="vote-submit-btn" [isDisabled]="hasSubmitted()">Complete survey</app-button>
+                    class="vote-submit-btn" [isDisabled]="hasSubmitted() || isDisabled()">Complete survey</app-button>
                 }
 
 

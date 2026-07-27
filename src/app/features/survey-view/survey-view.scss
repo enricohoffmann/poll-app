@@ -214,4 +214,16 @@
         line-height: 42px;
     }
 
+    .survey-view-submit-btn-container {
+        grid-template-columns: 1fr auto;
+        grid-template-areas: "error-message" "submit-button";
+        column-gap: 0;
+        row-gap: 12px;
+    }
+
+    .vote-submit-btn {
+        justify-self: end;
+    }
+    
+
 }

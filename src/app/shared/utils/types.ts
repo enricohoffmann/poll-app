@@ -14,15 +14,15 @@ export type QuestionForm = {
     id: FormControl<number>;
     text: FormControl<string>;
     allow_multiple_answers: FormControl<boolean>;
-    sort: FormControl<number>
+    sort_order: FormControl<number>
     answers: FormArray<FormGroup<AnswerForm>>;
 }
 
 export type AnswerForm = {
-    answerId: FormControl<number>;
-    answerText: FormControl<string>;
+    id: FormControl<number>;
+    text: FormControl<string>;
     select: FormControl<boolean>;
-    sort: FormControl<number>;
+    sort_order: FormControl<number>;
 };
 
 export type VoteFrom = {

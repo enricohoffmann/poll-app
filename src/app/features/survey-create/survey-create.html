@@ -66,7 +66,7 @@
 
             </div>
 
-            <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'"
+            <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'" [isDisabled]="isSubmitted()"
                 [hasIcon]="true" [buttonIconVariant]="'check'">Publish</app-button>
 
         </form>

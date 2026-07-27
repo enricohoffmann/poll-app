@@ -10,12 +10,13 @@
 
     <main class="question-section__answers">
 
-        @for (answer of questionFormGroup().controls.answers.controls; track answer.controls.answerId) {
+        @for (answer of questionFormGroup().controls.answers.controls; track answer.controls.id) {
             <app-answer-view 
                 [answerControl]="answer" 
                 [answerIndex]="$index" 
                 class="question-section__answer"
                 (toggleAnswerEvent)="toggleAnswer($event)"
+                [isReadOnly]="isReadOnly()"
                 ></app-answer-view>
         }
 

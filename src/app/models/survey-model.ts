@@ -25,15 +25,13 @@ export class SurveyModel implements Survey {
     constructor(surveyData: Partial<Survey> = {}) {
         this.id = surveyData.id ?? 0;
         this.title = surveyData.title ?? '';
-        this.description = surveyData.description ?? null;
-        this.expires_at = surveyData.expires_at ?? null;
+        this.description = surveyData.description?.trim() || null;
+        this.expires_at = surveyData.expires_at?.trim() || null;
         this.category_id = surveyData.category_id ?? 0;
         this.is_published = surveyData.is_published ?? false;
         this.created_at = surveyData.created_at ?? '';
 
-        if(this.expires_at) {
-            this.expires_at = getIsoDateFromGermanDate(this.expires_at);
-        }
+        this.fillExpiresAtDate();
 
     }
 
@@ -50,6 +48,22 @@ export class SurveyModel implements Survey {
             category_id: this.category_id,
             is_published: this.is_published
         };
+    }
+
+    /**
+     * @description Fills the expires_at property with an ISO date format if it is provided in German date format.
+     * This method ensures that the expires_at property is in a consistent format for further processing.
+     * @private
+     * @returns {void}
+     */
+    private fillExpiresAtDate(): void {
+
+        if(!this.expires_at) {
+            return;
+        }
+
+        this.expires_at = getIsoDateFromGermanDate(this.expires_at);
+
     }
 
 }

@@ -7,11 +7,11 @@
 
     <main class="question-vote-section__answers">
 
-        @for(answer of getAnswers(); track answer.controls.answerId){
+        @for(answer of getAnswers(); track answer.controls.id){
             <app-answer-vote 
                 class="question-vote-section__result"
                 [answerIndex]="$index" 
-                [answerId]="answer.controls.answerId.value"
+                [answerId]="answer.controls.id.value"
                 [questionVotes]=" questionVotes()"
                 >
             </app-answer-vote>
