@@ -12,6 +12,8 @@ The application provides three main areas:
 
 The frontend is built with Angular 21 and uses modern standalone components and routing.
 
+The application uses Supabase as its backend and persists surveys, questions, answers, and votes there.
+
 ## Key Rules
 
 The behavior of the application is based on the decisions documented in the project notes:
@@ -60,6 +62,8 @@ The database schema is centered around five tables:
 - `answers`: stores the answer options for each question.
 - `votes`: stores the submitted answers and voter token information.
 
+Vote results are loaded from Supabase and updated in real time when new votes are inserted, so the survey results view stays current without a manual refresh.
+
 Relationships:
 
 - `surveys.category_id -> categories.id`
@@ -75,6 +79,8 @@ Relationships:
 - RxJS
 - Angular CDK
 - Supabase client
+
+The app connects to a Supabase backend, and vote result updates are handled in real time through Supabase Realtime.
 
 ## Getting Started
 
