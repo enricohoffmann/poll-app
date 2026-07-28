@@ -63,6 +63,7 @@ export class SurveyCreate {
   showOverlay = signal<boolean>(false);
   validationService = inject(ValidationService);
   isSubmitted = signal<boolean>(false);
+  isMenuOpen = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);

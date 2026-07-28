@@ -1,4 +1,4 @@
-<div class="create-wrapper">
+<div class="create-wrapper" (click)="isMenuOpen.set(false)">
 
     <app-header [isPurple]="true" class="create-header"></app-header>
 
@@ -31,7 +31,7 @@
                             class="set-date-field"></app-date-field>
 
                         <app-drop-down-menu class="choose-category-field"
-                            (sendCategorySelection)="onChooseCategory($event)">Choose category</app-drop-down-menu>
+                            (sendCategorySelection)="onChooseCategory($event)" [isMenuOpen]="isMenuOpen()" (isOpenChange)="isMenuOpen.set($event)">Choose category</app-drop-down-menu>
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 

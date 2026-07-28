@@ -1,4 +1,4 @@
-import { Component, inject, signal, output, OnInit } from '@angular/core';
+import { Component, inject, signal, output, OnInit, input, computed } from '@angular/core';
 import { SurveyService } from '../../../services/survey-service';
 import { Category } from '../../../interfaces/category-interface';
 
@@ -15,9 +15,10 @@ import { Category } from '../../../interfaces/category-interface';
 })
 export class DropDownMenu implements OnInit {
   surveyService = inject(SurveyService);
-  isMenuOpen = signal(false);
+  isMenuOpen = input.required<boolean>();
   sendCategorySelection = output<Category>();
   isCategorySelected = signal(false);
+  isOpenChange = output<boolean>();
 
   /**
    * @description Lifecycle hook that is called after the component's view has been fully initialized. It triggers the retrieval of categories from the SurveyService.
@@ -34,17 +35,20 @@ export class DropDownMenu implements OnInit {
    * @memberof DropDownMenu
    */
   onButtonClick(): void {
-    this.isMenuOpen.set(!this.isMenuOpen());
+    this.isOpenChange.emit(!this.isMenuOpen());
   }
 
-  /**
+   /**
    * @description Handles the event when a category is clicked in the drop-down menu. It closes the menu, retrieves the selected category from the SurveyService, and emits the selected category to the parent component.
    * @returns void
    * @memberof DropDownMenu
-   * @param categoryIndex 
+   * @param categoryIndex The index of the selected category in the categories list.
+   * @emits sendCategorySelection Emits the selected category to the parent component.
+   * @emits isOpenChange Emits the new state of the drop-down menu (closed) to the parent component.
+   * @emits isCategorySelected Sets the state indicating that a category has been selected.
    */
   onCategoryClick(categoryIndex: number): void {
-    this.isMenuOpen.set(false);
+    this.isOpenChange.emit(false);
     const currentCategory = this.surveyService.getCategoryByIndex(categoryIndex);
     if(currentCategory){
       this.sendCategorySelection.emit(currentCategory);

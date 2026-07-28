@@ -2,7 +2,7 @@
     <button type="button" class="drop-down" 
         [class.drop-down--active]="isMenuOpen()" 
         [class.drop-down--is-category-selected]="isCategorySelected()"
-        (click)="onButtonClick()">
+        (click)="onButtonClick(); $event.stopPropagation()" >
         <span class="drop-down__content"><ng-content></ng-content></span>
         <div class="drop-down__icons">
             <div class="drop-down__icon drop-down__icon--up"></div>

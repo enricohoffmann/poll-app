@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, effect, computed } from '@angular/core';
+import { Component, inject, OnInit, signal, effect, computed, output } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { Button } from '../../shared/components/button/button';
 import { SurveyService } from '../../services/survey-service';
@@ -25,6 +25,7 @@ export class Home implements OnInit {
   showActiveSurveys = signal(true);
   showPastSurveys = signal(false);
   currentCategory = signal<Category | null>(null);
+  isMenuOpen = signal(false);
 
   /**
    * @description A computed signal that filters the list of surveys based on the current filter settings (active or past surveys). 

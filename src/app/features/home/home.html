@@ -1,4 +1,4 @@
-<div class="home-wrapper">
+<div class="home-wrapper" (click)="isMenuOpen.set(false)">
     <section class="home-section">
         <app-header></app-header>
 
@@ -45,7 +45,10 @@
                     <!-- Dropdown -->
                     <app-drop-down-menu 
                         (sendCategorySelection)="onSortByCategory($event)" 
-                        class="home-survey-category-drop-down">Sort by categories</app-drop-down-menu>
+                        class="home-survey-category-drop-down" 
+                        (click)="$event.stopPropagation()"
+                        [isMenuOpen]="isMenuOpen()"
+                        (isOpenChange)="isMenuOpen.set($event)">Sort by categories</app-drop-down-menu>
                     <!-- Empty Cell -->
                     <div class="home-survey-list-section__header__empty-cell"></div>
                     <!-- Selected Category -->
