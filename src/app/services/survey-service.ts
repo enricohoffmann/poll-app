@@ -69,6 +69,7 @@ export class SurveyService implements OnDestroy {
     await Promise.all([
       this.getSurveyHighlights(),
       this.getSurveyWithCategory(),
+      this.getCategories()
     ]);
 
   }
@@ -80,7 +81,7 @@ export class SurveyService implements OnDestroy {
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
    * @async
    */
-  async getCategories(): Promise<void> {
+  private async getCategories(): Promise<void> {
     const response = await this.supabaseClient.from('categories').select('*');
     this.categoriesList.set(response.data ?? [] as Category[]);
   }
@@ -271,9 +272,9 @@ export class SurveyService implements OnDestroy {
    * @param categoryIndex The index of the category to retrieve.
    * @returns {(Category | null)} The category at the specified index, or null if not found.
    */
-  getCategoryByIndex(categoryIndex: number): (Category | null) {
-    const category = this.categoriesList()[categoryIndex];
-    return category;
+  getCategoryByIndex(categoryId: number): (Category | null) {
+    const category = this.categoriesList().find(c => c.id === categoryId);
+    return category ?? null;
   }
 
   /**

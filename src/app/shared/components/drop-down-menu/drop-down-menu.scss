@@ -119,6 +119,7 @@
     pointer-events: none;
 
     &__item {
+        width: 95%;
         list-style-type: none;
         @include mixins.setup-font("Mulish", 14px, 400, var.$primary-purple);
         border-radius: 6px;

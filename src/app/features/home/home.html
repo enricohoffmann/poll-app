@@ -37,25 +37,27 @@
                 <header class="home-survey-list-section__header">
                     <!-- Buttons left -->
                     <div class="home-survey-filter-buttons">
-                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showActiveSurveys()"
+                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="surveyStatus() === 'active'"
                             (click)="onFilterActiveSurveys()">Active survey</app-button>
-                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="showPastSurveys()"
+                        <app-button [buttonVariant]="'filterBtn'" [toggleIsActive]="surveyStatus() === 'past'"
                             (click)="onFilterPastSurveys()">Past survey</app-button>
                     </div>
                     <!-- Dropdown -->
                     <app-drop-down-menu 
-                        (sendCategorySelection)="onSortByCategory($event)" 
+                        (sendCategorySelection)="onFilterByCategory($event)" 
                         class="home-survey-category-drop-down" 
                         (click)="$event.stopPropagation()"
                         [isMenuOpen]="isMenuOpen()"
-                        (isOpenChange)="isMenuOpen.set($event)">Sort by categories</app-drop-down-menu>
+                        [categoryList]="availableCategories()"
+                        [isCategorySelected]="currentCategory() !== null"
+                        (isOpenChange)="isMenuOpen.set($event)">Filter by categories</app-drop-down-menu>
                     <!-- Empty Cell -->
                     <div class="home-survey-list-section__header__empty-cell"></div>
                     <!-- Selected Category -->
                     <span class="home-survey-list-section__header__sorting-category">{{currentCategory()?.name}}</span>
                 </header>
-                <aside class="home-survey-list-section__list">
-                    @for (survey of surveySortedList(); track survey.id){
+                <aside #surveyList class="home-survey-list-section__list">
+                    @for (survey of visibleSurveys(); track survey.id){
                     <app-survey-card [cardVariant]="'listview'" [surveyWithCategory]="survey" (click)="onSurveyView(survey.id)"></app-survey-card>
                     } @empty {
                     <p class="empty-state-sm">{{showEmptyState()}}</p>

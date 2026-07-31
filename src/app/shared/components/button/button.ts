@@ -60,6 +60,7 @@ export class Button {
   isActivated = computed(() => {
     return this.toggleIsActive() && this.buttonVariant() === 'filterBtn';
   });
+  
   buttonType = input<string>('button');
   isDisabled = input<boolean>(false);
   hideTextOnMobile = input<boolean>(false);
