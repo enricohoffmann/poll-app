@@ -22,7 +22,7 @@ export class DateField {
    * @description Handles the click event on the calendar button, triggering the date picker to open.
    * @returns { void } No return value.
    */
-  onCalenderButtonClick(): void{
+  onCalenderButtonClick(): void {
     this.dateSelect.nativeElement.showPicker();
   }
 
@@ -30,7 +30,7 @@ export class DateField {
    * @description Handles the change event from the date picker, converting the selected date to German format and updating the form control.
    * @returns { void } No return value.
    */
-  onDatePickerChange():void {
+  onDatePickerChange(): void {
     const germanDate = this.getGermanDate(this.dateSelect.nativeElement.value);
     this.dateInputControl().setValue(germanDate);
     this.dateInputControl().markAsTouched();
@@ -70,5 +70,24 @@ export class DateField {
   onDateFieldLeave(): void {
     this.isWriting.set(false);
   }
+
+  /**
+   * @description Formats a Date object into a string in the format 'YYYY-MM-DD'.
+   * @param date The Date object to format.
+   * @returns {string} The formatted date string.
+   */
+  private formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * @description The minimum selectable date for the date picker, formatted as 'YYYY-MM-DD'.
+   * @returns {string} The minimum date string in the format 'YYYY-MM-DD'.
+   */
+  minDate = this.formatDate(new Date());
 
 }

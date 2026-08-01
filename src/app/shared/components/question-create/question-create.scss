@@ -9,7 +9,7 @@
     }
 
     &__answers {
-        margin-top: 24px;
+        margin-top: 8px;
         margin-bottom: 12px;
         @include mixins.setup-display-flex(row, space-between, center);
     }
@@ -27,7 +27,17 @@
     }
 
     &__error {
+        margin-top: 6px;
+        display: block;
+        min-height: 18px;
+        width: 100%;
         @include mixins.setup-font("Mulish", 12px, 400, var.$primary-orange);
+        opacity: 0;
+        transition: opacity 125ms ease-in;
+
+        &--visible {
+            opacity: 1;
+        }
     }
 
 }

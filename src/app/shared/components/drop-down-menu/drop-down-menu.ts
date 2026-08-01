@@ -19,6 +19,7 @@ export class DropDownMenu {
   isCategorySelected = input.required<boolean>();
   isOpenChange = output<boolean>();
   categoryList = input.required<Category[]>();
+  variant = input.required<'home' | 'create'>();
 
   /**
    * @description Toggles the state of the drop-down menu between open and closed when the button is clicked.

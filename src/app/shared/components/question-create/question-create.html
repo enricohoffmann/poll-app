@@ -9,9 +9,10 @@
     <app-input-field class="question-field-section__question" [inputFieldVariant]="'noLabel'"
         [inputControl]="questionFormGroup().controls.text" [hasTrash]="false"></app-input-field>
 
-    @if(validationService.getErrorMessage(questionFormGroup().controls.text)) {
-        <span class="question-field-section__error">{{validationService.getErrorMessage(questionFormGroup().controls.text)}}</span>
-    }
+    <span class="question-field-section__error"
+        [class.question-field-section__error--visible]="validationService.getErrorMessage(questionFormGroup().controls.text) !== null"
+    >{{validationService.getErrorMessage(questionFormGroup().controls.text)}}</span>
+
 
     <div class="question-field-section__answers">
         <p class="question-field-section__text">Answers</p>
@@ -22,16 +23,16 @@
     </div>
 
     <aside>
-        @for(answer of questionFormGroup().controls.answers.controls; track answer.controls.id.value; let last = $last){
-        <app-answer-create 
-            [answerFormGroup]="answer" 
-            [answerIndex]="$index" 
-            [questionIndex]="questionIndex()"
-            (removeAnswer)="onRemoveAnswer($event)" 
-            [canInsertAnswer]="last && $index < 5"
-            (addAnswer)="onAddAnswer($event)"
-            [canRemoveAnswer]="answerCount() <= 2"
-            ></app-answer-create>
+        @for(answer of questionFormGroup().controls.answers.controls; track $index; let last = $last){
+            <app-answer-create 
+                [answerFormGroup]="answer" 
+                [answerIndex]="$index" 
+                [questionIndex]="questionIndex()"
+                (removeAnswer)="onRemoveAnswer($event)" 
+                [canInsertAnswer]="last && $index < 5"
+                (addAnswer)="onAddAnswer($event)"
+                [canRemoveAnswer]="answerCount() <= 2"
+                ></app-answer-create>
         }
     </aside>
 

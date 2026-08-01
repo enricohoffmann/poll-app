@@ -80,7 +80,6 @@
 }
 
 .date-category-fields {
-    margin-top: 8px;
     grid-area: date-category;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -149,8 +148,11 @@
 }
 
 .error {
-
+    min-height: 20px;
+    min-width: 0;
     @include mixins.setup-font("Mulish", 12px, 400, var.$primary-orange);
+    opacity: 0;
+    transition: opacity 125ms ease-in-out;
 
     &__date {
         grid-area: date-error;
@@ -163,6 +165,10 @@
     &__category {
         grid-area: current-category;
         padding-left: 20px;
+    }
+
+    &--visible {
+        opacity: 1;
     }
 }
 

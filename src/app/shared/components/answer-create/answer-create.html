@@ -9,9 +9,11 @@
         [hasTrashIcon]="true" (click)="onRemoveAnswer()" [isDisabled]="canRemoveAnswer()">
     </app-button>
 
-    @if(validationService.getErrorMessage(getAnswer())) {
-        <span class="answer-container__error">{{validationService.getErrorMessage(getAnswer())}}</span>
-    }
+
+    <span class="answer-container__error"
+        [class.answer-container__error--visible]="validationService.getErrorMessage(getAnswer())"
+    >{{validationService.getErrorMessage(getAnswer())}}</span>
+
 
     @if(canInsertAnswer()){
     <div class="answer-container__add-section">

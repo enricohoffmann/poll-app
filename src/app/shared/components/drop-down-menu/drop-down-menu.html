@@ -11,7 +11,9 @@
         </div>
     </button>
     <ul class="drop-down-list" [class.list-open]="isMenuOpen()">
-        <li class="drop-down-list__item" (click)="onCategoryClick(null)">All Surveys</li>
+        @if(variant() === 'home') {
+            <li class="drop-down-list__item" (click)="onCategoryClick(null)">All Surveys</li>
+        }
         @for (category of categoryList(); track $index) {
         <li class="drop-down-list__item" (click)="onCategoryClick(category.id)">
             {{category.name}}

@@ -26,6 +26,7 @@
             type="date" 
             class="date-field__date-select"
             #dateSelectField
+            [min]="minDate"
             (change)="onDatePickerChange()"
             aria-label="Select end date"
             >

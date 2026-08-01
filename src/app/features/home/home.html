@@ -46,6 +46,7 @@
                     <app-drop-down-menu 
                         (sendCategorySelection)="onFilterByCategory($event)" 
                         class="home-survey-category-drop-down" 
+                        [variant]="'home'"
                         (click)="$event.stopPropagation()"
                         [isMenuOpen]="isMenuOpen()"
                         [categoryList]="availableCategories()"
