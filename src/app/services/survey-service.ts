@@ -91,7 +91,7 @@ export class SurveyService implements OnDestroy {
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
    * @async
    */
-  private async getCategories(): Promise<void> {
+  async getCategories(): Promise<void> {
     const response = await this.supabaseClient.from('categories').select('*');
     this.categoriesList.set(response.data ?? [] as Category[]);
   }

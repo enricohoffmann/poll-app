@@ -33,7 +33,7 @@ import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
     DateField,
     Dialog,
     Header
-],
+  ],
   templateUrl: './survey-create.html',
   styleUrls: ['./survey-create.scss'],
 })
@@ -50,12 +50,12 @@ export class SurveyCreate implements OnInit {
    * Each control is initialized with default values and validators to ensure proper input from the user.
    */
   surveyForm = new FormGroup<SurveyForm>({
-    id: new FormControl(0, {nonNullable: true}),
+    id: new FormControl(0, { nonNullable: true }),
     title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
     description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(300)] }),
     expires_at: new FormControl('', { nonNullable: true, validators: [expiresDatePatternValidator(), expiresDateValidator(), expiresDateNotPastValidator()] }),
     questions: new FormArray<FormGroup>([]),
-    is_published: new FormControl(false, {nonNullable: true}),
+    is_published: new FormControl(false, { nonNullable: true }),
     category_id: new FormControl(0, { nonNullable: true, validators: [Validators.required, categorySelectedValidator()] })
   });
 
@@ -66,18 +66,30 @@ export class SurveyCreate implements OnInit {
   isSubmitted = signal<boolean>(false);
   isMenuOpen = signal<boolean>(false);
   categoryList = signal<Category[]>([]);
+  showSubmitError = signal(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
-  private currentSurveyId:number = 0;
-  
+  private currentSurveyId: number = 0;
+
+  /**
+   *
+   */
+  constructor() {
+    this.surveyForm.statusChanges.subscribe(() => {
+      if(this.surveyForm.valid){
+        this.showSubmitError.set(false);
+      }
+    });
+  }
 
   /**
    * @description Initializes the component by adding an initial question to the survey form.
    * This method is called during the component's lifecycle hook (ngOnInit) to ensure that the survey form starts with at least one question.
    * It utilizes the addQuestion method to create and append a new question FormGroup to the questions FormArray within the surveyForm.
    */
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.surveyService.getCategories();
     this.categoryList.set(this.surveyService.categoriesList());
     this.addQuestion();
   }
@@ -92,15 +104,25 @@ export class SurveyCreate implements OnInit {
    */
   async onSubmit(): Promise<void> {
     this.setAllFieldTouched();
+    this.handleSubmitError();
     if (this.surveyForm.valid) {
       this.isSubmitted.set(true);
       this.surveyForm.get('is_published')?.setValue(true);
       const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
-      if(surveyAddResult > 0){
+      if (surveyAddResult > 0) {
         this.currentSurveyId = surveyAddResult;
         this.afterCreateSurvey();
       }
     }
+  }
+
+  handleSubmitError(): void {
+    if (!this.surveyForm.valid) {
+      this.showSubmitError.set(true);
+      return;
+    }
+
+    this.showSubmitError.set(false);
   }
 
   /**
@@ -121,10 +143,10 @@ export class SurveyCreate implements OnInit {
    */
   private createQuestionGroup(): FormGroup<QuestionForm> {
     const questionFormGroup: FormGroup<QuestionForm> = new FormGroup<QuestionForm>({
-      id: new FormControl(0, {nonNullable: true}),
+      id: new FormControl(0, { nonNullable: true }),
       text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)] }),
       allow_multiple_answers: new FormControl(false, { nonNullable: true }),
-      sort_order: new FormControl(0, {nonNullable: true}),
+      sort_order: new FormControl(0, { nonNullable: true }),
       answers: new FormArray<FormGroup<AnswerForm>>([])
     });
     return questionFormGroup;
@@ -136,10 +158,10 @@ export class SurveyCreate implements OnInit {
    */
   private createAnswerGroup(): FormGroup<AnswerForm> {
     const answerFormGroup: FormGroup<AnswerForm> = new FormGroup<AnswerForm>({
-      id: new FormControl(0, {nonNullable: true}),
+      id: new FormControl(0, { nonNullable: true }),
       text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
-      select: new FormControl(false, {nonNullable: true}),
-      sort_order: new FormControl(0, {nonNullable: true})
+      select: new FormControl(false, { nonNullable: true }),
+      sort_order: new FormControl(0, { nonNullable: true })
     });
     return answerFormGroup;
   }
@@ -220,7 +242,7 @@ export class SurveyCreate implements OnInit {
    */
   onChooseCategory(category: Category | null): void {
     this.currentCategory.set(category);
-    if(!category) {return;}
+    if (!category) { return; }
     this.surveyForm.get('category_id')?.setValue(category.id);
   }
 

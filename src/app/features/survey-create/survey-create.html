@@ -68,8 +68,13 @@
 
             </div>
 
-            <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'" [isDisabled]="isSubmitted()"
+            <section class="submit-section">
+                <span class="error error__submit" [class.error--visible]="showSubmitError()">Please fill in all required fields and select a category.</span>
+                <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'" [isDisabled]="isSubmitted()"
                 [hasIcon]="true" [buttonIconVariant]="'check'">Publish</app-button>
+            </section>
+
+            
 
         </form>
 

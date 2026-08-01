@@ -23,7 +23,6 @@
     box-sizing: border-box;
     background-color: var.$primary-purple;
     border-radius: 5px 100px 5px 5px;
-    /* padding: 32px 59px 32px 59px; */
     padding-block: 32px;
     padding-inline: clamp(10px, 4vw, 59px);
     margin-top: 24px;
@@ -124,8 +123,14 @@
     @include mixins.setup-font("Mulish", 14px, 400, var.$primary-orange);
 }
 
+.submit-section {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "submit-error submit-button";
+}
+
 .survey-forms-submit-button {
-    justify-self: flex-end;
+    grid-area: submit-button;
 }
 
 .survey-create-overlay {
@@ -167,6 +172,12 @@
         padding-left: 20px;
     }
 
+    &__submit {
+        grid-area: submit-error;
+        @include mixins.setup-display-flex(row, flex-start, center);
+        font-size: 14px;
+    }
+
     &--visible {
         opacity: 1;
     }
@@ -181,6 +192,10 @@
             "set-date"
             "date-error"
         ;
+    }
+
+    .error__category {
+        padding-left: 2px;
     }
 }
 
@@ -225,5 +240,19 @@
         line-height: 80%;
         margin-top: 12px;
         font-size: clamp(2.25rem, 1.0379rem + 6.0606vw, 3.5rem);
+    }
+
+    .submit-section {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
+        grid-template-areas: "submit-error" "submit-button";
+    }
+
+    .error__submit {
+        @include mixins.setup-display-flex(row, center, center);
+    }
+
+    .survey-forms-submit-button {
+        justify-self: flex-end;
     }
 }
