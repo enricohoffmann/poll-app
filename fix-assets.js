@@ -78,7 +78,7 @@ if (fs.existsSync(distPath)) {
     console.log('\n=== DEPLOYMENT FOR MULTI-PROJECT SERVER ===');
     console.log('✓ All files ready in: dist/poll-app/browser/');
     console.log('✓ Assets included in: dist/poll-app/browser/assets/');
-    console.log('✓ CSS paths updated to: /poll-app/assets/');
+    console.log('✓ Asset paths rewritten to relative: assets/...');
     console.log('\nDeploy Instructions:');
     console.log('1. Upload entire folder to server: /poll-app/');
     console.log('2. Structure on server will be:');

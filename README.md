@@ -103,8 +103,33 @@ The app will open automatically and run on `http://localhost:4200/`.
 
 - `npm start` - starts the dev server and opens the browser
 - `npm run build` - builds the application for production
+- `npm run build:prod` - builds for deployment under `/poll-app/` and runs the post-build asset fix script
 - `npm run watch` - builds in watch mode for local development
 - `npm test` - runs the unit test suite
+
+## Deployment (Developer Akademie Server)
+
+Use this command for every deploy build:
+
+```bash
+npm run build:prod
+```
+
+What this command does:
+
+- Runs Angular production build with `--base-href /poll-app/`
+- Copies `public/assets` to `dist/poll-app/browser/assets`
+- Rewrites compiled asset URLs from `/assets/...` to relative `assets/...`
+
+Upload target:
+
+- Upload the full content of `dist/poll-app/browser/` into the server folder `/poll-app/`
+- Replace old files, especially `main-*.js`, `styles-*.css`, and `index.html`
+
+Important for routing on this server:
+
+- The app uses hash routing, so links should look like `/poll-app/#/home`
+- This avoids server-side rewrite requirements for client routes
 
 ## Project Structure
 
