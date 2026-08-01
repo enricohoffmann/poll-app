@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -19,6 +19,7 @@ import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
  * @description This component represents the survey creation page of the application. 
  * It provides a form for users to create new surveys, including adding questions and answers, selecting categories, and setting expiration dates. 
  * The component handles form validation, submission, and navigation after successful survey creation.
+ * @implements OnInit
  */
 @Component({
   selector: 'app-survey-create',
@@ -36,7 +37,7 @@ import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
   templateUrl: './survey-create.html',
   styleUrls: ['./survey-create.scss'],
 })
-export class SurveyCreate {
+export class SurveyCreate implements OnInit {
 
   private readonly DIALOG_DELAY = 125;
   private readonly OVERLAY_CLOSE_DELAY = 1400;
@@ -64,11 +65,23 @@ export class SurveyCreate {
   validationService = inject(ValidationService);
   isSubmitted = signal<boolean>(false);
   isMenuOpen = signal<boolean>(false);
+  categoryList = signal<Category[]>([]);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
   private currentSurveyId:number = 0;
   
+
+  /**
+   * @description Initializes the component by adding an initial question to the survey form.
+   * This method is called during the component's lifecycle hook (ngOnInit) to ensure that the survey form starts with at least one question.
+   * It utilizes the addQuestion method to create and append a new question FormGroup to the questions FormArray within the surveyForm.
+   */
+  ngOnInit(): void {
+    this.categoryList.set(this.surveyService.categoriesList());
+    this.addQuestion();
+  }
+
   /**
    * @description Handles the submission of the survey creation form.
    * It first marks all form fields as touched to trigger validation messages.
@@ -88,15 +101,6 @@ export class SurveyCreate {
         this.afterCreateSurvey();
       }
     }
-  }
-
-  /**
-   * @description Initializes the component by adding an initial question to the survey form.
-   * This method is called during the component's lifecycle hook (ngOnInit) to ensure that the survey form starts with at least one question.
-   * It utilizes the addQuestion method to create and append a new question FormGroup to the questions FormArray within the surveyForm.
-   */
-  ngOnInit(): void {
-    this.addQuestion();
   }
 
   /**
@@ -214,8 +218,9 @@ export class SurveyCreate {
    * Updates the currentCategory signal and sets the category_id in the surveyForm.
    * @param category The selected category.
    */
-  onChooseCategory(category: Category): void {
+  onChooseCategory(category: Category | null): void {
     this.currentCategory.set(category);
+    if(!category) {return;}
     this.surveyForm.get('category_id')?.setValue(category.id);
   }
 

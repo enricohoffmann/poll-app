@@ -133,7 +133,7 @@
 .vote-error-message {
     align-self: center;
     grid-area: error-message;
-    @include mixins.setup-font("Mulish", 14px, 400, var.$fourth-orange);
+    @include mixins.setup-font("Mulish", 14px, 600, var.$fourth-orange);
     opacity: 0;
     transition: opacity 125ms ease-in;
 

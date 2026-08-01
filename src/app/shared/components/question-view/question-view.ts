@@ -24,8 +24,7 @@ export class QuestionView {
    * @remarks If multiple answers are not allowed, it will deselect all other answers before toggling the selected answer.
    */
   toggleAnswer(answerIndex: number): void {
-
-    if(!this.allowMultipleAnswer && !this.isReadOnly){
+    if(!this.allowMultipleAnswer && !this.isReadOnly()){
       this.deselectAllAnswers();
     }
 

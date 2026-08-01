@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit, computed } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -17,6 +17,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { ResultAccordeon } from '../../shared/components/result-accordeon/result-accordeon';
+import { VoterTokenService } from '../../services/voter-token-service';
 
 /**
  * @description The SurveyView component is responsible for displaying a survey along with its questions and answers.
@@ -47,6 +48,7 @@ export class SurveyView implements OnDestroy, OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private surveyId = 0;
   private readonly surveyService = inject(SurveyService);
+  private readonly voterTokenService = inject(VoterTokenService);
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
@@ -83,7 +85,7 @@ export class SurveyView implements OnDestroy, OnInit {
   readonly isMobile = toSignal(
     this.breakpointObserver.observe('(max-width: 900px)').pipe(
       map(result => result.matches)
-    ), {initialValue: false}
+    ), { initialValue: false }
   );
 
   /**
@@ -114,9 +116,9 @@ export class SurveyView implements OnDestroy, OnInit {
   /**
    * @description Initializes the survey view by fetching the survey data and questions from the SurveyService.
    * It uses Promise.all to perform both asynchronous operations concurrently, improving performance.
-   * Once the data is retrieved, it updates the component's signals for the survey and questions, creates the form structure,
-   * and initializes the votes for the questions. The method also manages the loading state of the component,
-   * ensuring that it reflects whether data is being fetched or has been loaded.
+   * Once the data is fetched, it updates the component's state with the survey and questions, creates the question form array,
+   * initializes the votes, and checks if the user can participate in the survey based on its expiration status and whether they have already submitted their responses.
+   * The method also manages the loading state of the component, ensuring that it is set to false once all operations are complete.
    * @private
    * @returns {Promise<void>}
    * @memberof SurveyView
@@ -132,9 +134,25 @@ export class SurveyView implements OnDestroy, OnInit {
       this.questionsAndAnswers.set(questions);
       this.createQuestionFormArray(questions);
       await this.initializeVotes(questions);
-      this.isDisabled.set(this.checkIfSurveyIsPastDue(survey));
+      this.canParticipateInSurvey(survey);
 
     } finally { this.isLoading.set(false); }
+  }
+
+
+  /**
+   * @description Determines if the user can participate in the survey based on its expiration status and whether they have already submitted their responses.
+   * It checks if the survey is past due and if the user has already filled it out using the SurveyService and VoterTokenService.
+   * If either condition is true, the survey is disabled for the user, preventing further interaction.
+   * @private
+   * @memberof SurveyView
+   * @param {SurveyWithCategory} survey - The survey to check participation eligibility for.
+   * @returns {void}
+   */
+  private canParticipateInSurvey(survey: SurveyWithCategory): void {
+    const isPastDue = this.checkIfSurveyIsPastDue(survey);
+    const isAlreadyFilled = this.surveyService.checkHasAlreadyFilled(this.voterTokenService.getToken());
+    this.isDisabled.set(isPastDue || isAlreadyFilled);
   }
 
   /**
@@ -150,9 +168,13 @@ export class SurveyView implements OnDestroy, OnInit {
     if (!survey.expires_at) {
       return false;
     }
-    const currentDate = new Date();
-    const expirationDate = new Date(survey.expires_at);
-    return currentDate > expirationDate;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const expires = new Date(survey.expires_at);
+    expires.setHours(0, 0, 0, 0);
+
+    return today > expires;
   }
 
   /**
@@ -292,9 +314,9 @@ export class SurveyView implements OnDestroy, OnInit {
    */
   hasDescription(): boolean {
     const description = this.survey()?.description;
-    if(!description){
+    if (!description) {
       return false;
-    }else {
+    } else {
       return description.length > 2;
     }
   }
@@ -303,7 +325,7 @@ export class SurveyView implements OnDestroy, OnInit {
    * @description Toggles the visibility of the survey results on mobile devices.
    * @param {boolean} see - True to show the results, false to hide them.
    */
-  toggleSeeResult(see: boolean):void {
+  toggleSeeResult(see: boolean): void {
     this.openResultMobile.set(see);
   }
 
@@ -318,7 +340,7 @@ export class SurveyView implements OnDestroy, OnInit {
     this.voteForm.markAllAsTouched();
 
     if (this.voteForm.valid) {
-      const result = await this.surveyService.handleAddVotes(this.voteForm);
+      await this.surveyService.handleAddVotes(this.voteForm);
       this.hasSubmitted.set(true);
       this.isDisabled.set(true);
     }

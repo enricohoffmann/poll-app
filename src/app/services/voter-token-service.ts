@@ -37,4 +37,6 @@ export class VoterTokenService {
         localStorage.setItem(this.STORAGE_KEY, token);
         return token;
     }
+
+
 }

@@ -15,9 +15,9 @@ import { VoterTokenService } from './voter-token-service';
 import { FormArray, FormGroup } from '@angular/forms';
 
 /**
- * Service for managing surveys, questions, answers, and votes using Supabase as the backend.
- * Provides methods to retrieve surveys, categories, questions with answers, and handle votes.
- * Also manages real-time updates for votes using Supabase's Realtime feature.
+ * @description Service to manage surveys, questions, answers, and votes using Supabase as the backend.
+ * It provides methods to retrieve surveys, categories, questions with answers, and handle the addition of surveys and votes.
+ * The service also subscribes to real-time updates for votes using Supabase's Realtime feature.
  * @implements {OnDestroy} to clean up the Realtime channel when the service is destroyed.
  */
 @Injectable({
@@ -72,6 +72,16 @@ export class SurveyService implements OnDestroy {
       this.getCategories()
     ]);
 
+  }
+
+  /**
+   * @description Checks if the current voter has already filled out the survey by looking for their voter token in the voteList. 
+   * @param currentVoter The voter token of the current user.
+   * @returns {boolean} True if the voter has already filled out the survey, false otherwise.
+   */
+  checkHasAlreadyFilled(currentVoter: string): boolean {
+    if(this.voteList().length == 0) {return false;}
+    return !!this.voteList().find(vote => vote.voter_token === currentVoter);
   }
 
   /**
@@ -284,7 +294,7 @@ export class SurveyService implements OnDestroy {
    */
   async handleAddVotes(voteForm: FormGroup<VoteFrom>): Promise<boolean> {
     const votes: VoteModel[] = [];
-    const voterToken = this.voterTokenService.getTokenForReview();
+    const voterToken = this.voterTokenService.getToken();
     voteForm.controls.questions.controls.forEach((question) => {
       this.collectSelectedAnswers(question, votes, voterToken);
     });

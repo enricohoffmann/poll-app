@@ -31,7 +31,11 @@
                             class="set-date-field"></app-date-field>
 
                         <app-drop-down-menu class="choose-category-field"
-                            (sendCategorySelection)="onChooseCategory($event)" [isMenuOpen]="isMenuOpen()" (isOpenChange)="isMenuOpen.set($event)">Choose category</app-drop-down-menu>
+                            [categoryList]="categoryList()"
+                            (sendCategorySelection)="onChooseCategory($event)" 
+                            [isMenuOpen]="isMenuOpen()" 
+                            [isCategorySelected]="currentCategory() !== null"
+                            (isOpenChange)="isMenuOpen.set($event)">Choose category</app-drop-down-menu>
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 

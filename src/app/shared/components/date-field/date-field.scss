@@ -64,7 +64,7 @@
         border-radius: 0 20px 5px 0;
         cursor: pointer;
         @include mixins.setup-display-flex(column, center, center);
-        background-color: var.$light-pruple;
+        background-color: var.$light-purple;
         transition: background-color 125ms ease-in;
 
         &__icon {
