@@ -42,8 +42,6 @@ export class SurveyCreate implements OnInit {
   private readonly DIALOG_DELAY = 125;
   private readonly OVERLAY_CLOSE_DELAY = 1400;
 
-  currentCategory = signal<Category | null>(null);
-
   /**
    * @description The surveyForm is a FormGroup that represents the structure of the survey creation form.
    * It includes controls for the survey's title, description, expiration date, questions, publication status, and category selection.
@@ -59,6 +57,7 @@ export class SurveyCreate implements OnInit {
     category_id: new FormControl(0, { nonNullable: true, validators: [Validators.required, categorySelectedValidator()] })
   });
 
+  currentCategory = signal<Category | null>(null);
   questionsCount = signal<number>(0);
   showDialog = signal<boolean>(false);
   showOverlay = signal<boolean>(false);
@@ -72,12 +71,15 @@ export class SurveyCreate implements OnInit {
   private router = inject(Router);
   private currentSurveyId: number = 0;
 
+
   /**
-   *
+   *@description The constructor initializes the SurveyCreate component. It sets up a subscription to the surveyForm's statusChanges observable to monitor changes in the form's validity. 
+   When the form becomes valid, it resets the showSubmitError signal to false, ensuring that any previous error messages are cleared when the user corrects their input. 
+   This helps provide immediate feedback to the user as they fill out the survey creation form.
    */
   constructor() {
     this.surveyForm.statusChanges.subscribe(() => {
-      if(this.surveyForm.valid){
+      if (this.surveyForm.valid) {
         this.showSubmitError.set(false);
       }
     });
@@ -95,11 +97,9 @@ export class SurveyCreate implements OnInit {
   }
 
   /**
-   * @description Handles the submission of the survey creation form.
-   * It first marks all form fields as touched to trigger validation messages.
-   * If the form is valid, it sets the survey's publication status to true and calls the SurveyService to handle adding the survey.
-   * Upon successful addition (indicated by a positive survey ID), it stores the current survey ID and triggers post-creation actions, such as showing a dialog and overlay.
-   * The method is asynchronous to accommodate the service call and ensure proper handling of the survey creation process.
+   * @description Handles the submission of the survey creation form. It first marks all fields as touched to trigger validation messages and checks for any validation errors. 
+   * If the form is valid, it sets the isSubmitted signal to true, updates the is_published control to true, and calls the surveyService's handleAddSurvey method to save the survey. 
+   * Upon successful submission, it stores the returned survey ID and calls afterCreateSurvey to display a success dialog and overlay.
    * @returns {Promise<void>} A promise that resolves when the submission process is complete.
    */
   async onSubmit(): Promise<void> {
@@ -116,6 +116,11 @@ export class SurveyCreate implements OnInit {
     }
   }
 
+  /**
+   * @description Checks the validity of the surveyForm and updates the showSubmitError signal accordingly.
+   * If the form is invalid, it sets showSubmitError to true, indicating that there are validation errors that need to be addressed before submission.
+   * @returns {void}
+   */
   handleSubmitError(): void {
     if (!this.surveyForm.valid) {
       this.showSubmitError.set(true);
@@ -207,7 +212,25 @@ export class SurveyCreate implements OnInit {
     const answers = this.getAnswers(questionIndex);
     if (answers.length > 2) {
       answers.removeAt(answerIndex);
+      return;
     }
+
+    this.clearAnswerContent(answers, answerIndex);
+
+  }
+
+  /**
+   * @description Clears the content of a specific answer FormGroup within the answers FormArray.
+   * It resets the text control to an empty string and marks the answer as untouched and pristine.
+   * @param answers The FormArray containing the answer FormGroups.
+   * @param answerIndex The index of the answer to be cleared.
+   * @returns {void}
+   */
+  clearAnswerContent(answers: FormArray<FormGroup<AnswerForm>>, answerIndex: number): void {
+    const answer = answers.at(answerIndex);
+    answer.controls.text.setValue('');
+    answer.markAsUntouched();
+    answer.markAsPristine();
   }
 
   /**
@@ -232,7 +255,58 @@ export class SurveyCreate implements OnInit {
     if (questions.length > 1) {
       questions.removeAt(questionIndex);
       this.questionsCount.set(questions.length);
+      return;
     }
+
+    this.clearQuestionContent(questionIndex);
+  }
+
+  /**
+   * @description Clears the content of a specific question FormGroup within the questions FormArray.
+   * It resets the text control and all associated answer controls to their default values, and marks the question as untouched and pristine.
+   * @param questionIndex The index of the question to be cleared.
+   * @returns {void}
+   */
+  private clearQuestionContent(questionIndex: number): void {
+    const question = this.questions.at(questionIndex);
+    question.controls.text.setValue('');
+    question.controls.allow_multiple_answers.setValue(false);
+    this.clearAnswerContentOfQuestion(question);
+    question.markAsPristine();
+    question.markAsUntouched();
+  }
+
+  /**
+   * @description Clears the content of all answer FormGroups within a specific question FormGroup.
+   * It resets the text control of each answer to an empty string and marks them as untouched and pristine.
+   * @param question The question FormGroup whose answers are to be cleared. 
+   * @returns {void}
+   */
+  private clearAnswerContentOfQuestion(question: FormGroup<QuestionForm>): void {
+    question.controls.answers.controls.forEach(answer => {
+      answer.controls.text.setValue('');
+      answer.markAsUntouched();
+      answer.markAsPristine();
+    });
+  }
+
+  /**
+   * @description Determines whether the trash icon for a specific question can be used to remove that question.
+   * A question can be removed if there is more than one question in the survey, or if the question has any text or answers filled in.
+   * @param questionIndex The index of the question to check.
+   * @returns {boolean} True if the trash icon can be used to remove the question, false otherwise.
+   */
+  canUseQuestionTrash(questionIndex: number): boolean {
+    const question = this.questions.at(questionIndex);
+    if (!question) { return false; }
+    if (this.questions.length > 1) { return true; }
+
+    const hasQuestionText = question.controls.text.value.trim().length > 0;
+    const hasAnswerText = question.controls.answers.controls.some(answer =>
+      answer.controls.text.value.trim().length > 0
+    );
+
+    return hasQuestionText || hasAnswerText;
   }
 
   /**

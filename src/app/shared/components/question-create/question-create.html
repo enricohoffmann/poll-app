@@ -31,7 +31,7 @@
                 (removeAnswer)="onRemoveAnswer($event)" 
                 [canInsertAnswer]="last && $index < 5"
                 (addAnswer)="onAddAnswer($event)"
-                [canRemoveAnswer]="answerCount() <= 2"
+                [canRemoveAnswer]="answerCount() <= 2 && !canClearAnswer(answer)"
                 ></app-answer-create>
         }
     </aside>

@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { AnswerCreate } from '../answer-create/answer-create';
 import { CheckField } from '../check-field/check-field';
 import { ValidationService } from '../../../services/validation-service';
-import { QuestionForm } from '../../utils/types';
+import { AnswerForm, QuestionForm } from '../../utils/types';
 
 /**
  * @description Component for creating a question with its answers in a poll application.
@@ -73,6 +73,15 @@ export class QuestionCreate implements OnInit {
    */
   onRemoveQuestion(): void {
     this.removeQuestionEvent.emit(this.questionIndex());
+  }
+
+  /**
+   * @description Determines if an answer can be cleared based on its content.
+   * @param answer - The answer form group to check.
+   * @returns {boolean} - True if the answer can be cleared, false otherwise.
+   */
+  canClearAnswer(answer: FormGroup<AnswerForm>): boolean {
+    return answer.controls.text.value.trim().length > 0;
   }
 
 }

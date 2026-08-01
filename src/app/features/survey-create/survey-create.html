@@ -55,7 +55,7 @@
                     <app-question-create [questionFormGroup]="question" (addAnswerEvent)="addAnswer($event)"
                         (removeAnswerEvent)="removeAnswer($event)" [questionIndex]="$index"
                         (removeQuestionEvent)="removeQuestion($event)"
-                        [canRemoveQuestion]="questions.length > 1"
+                        [canRemoveQuestion]="canUseQuestionTrash($index)"
                         ></app-question-create>
                     }
 
