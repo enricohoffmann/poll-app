@@ -6,7 +6,7 @@ Poll App is an Angular application for creating, publishing, and answering surve
 
 The application provides three main areas:
 
-- A home view for browsing surveys and filtering active and past entries.
+- A home view for browsing surveys and switching between active and past entries.
 - A survey creation flow for building drafts with questions and answer options.
 - A survey detail view for participating in published surveys and reviewing results.
 
@@ -39,8 +39,9 @@ Text fields use these constraints:
 
 The home view supports active and past survey filters with the following behavior:
 
-- Past and Active cannot both be disabled at the same time.
-- If both are turned off, Active is automatically enabled again.
+- Active and Past are now mutually exclusive filter modes.
+- Only one mode can be selected at a time.
+- Showing Active and Past surveys simultaneously is no longer supported.
 - Active is selected by default on initial load.
 
 ## Surveys Without an End Date
