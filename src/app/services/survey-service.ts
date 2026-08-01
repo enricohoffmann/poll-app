@@ -133,13 +133,13 @@ export class SurveyService implements OnDestroy {
 
   /**
    * Retrieves the list of survey highlights along with their associated categories from the Supabase database and updates the surveyHighlights signal.
-   * This method queries the 'expired_surveys' table and joins it with the 'categories' table to get the category information.
+   * This method queries the 'ending_soon_surveys' table and joins it with the 'categories' table to get the category information.
    * It sets the surveyHighlights signal with the retrieved data. If no data is found, it sets the surveyHighlights signal to an empty array.
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
    * @async
    */
   private async getSurveyHighlights(): Promise<void> {
-    const response = await this.supabaseClient.from('expired_surveys')
+    const response = await this.supabaseClient.from('ending_soon_surveys')
       .select('*,category:categories(id, name)');
     this.surveyHighlights.set(response.data ?? [] as SurveyWithCategory[]);
   }
