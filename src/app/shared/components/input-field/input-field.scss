@@ -39,6 +39,7 @@
 
     &__text-area,
     &__input {
+        height: 42px;
         width: 100%;
         min-width: 0;
         grid-area: input-input;

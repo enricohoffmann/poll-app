@@ -199,8 +199,6 @@ export class SurveyService implements OnDestroy {
     const survey = new SurveyModel(surveyForm.value);
 
     const responseSurveyId = await this.createSurvey(survey);
-    console.log(survey, responseSurveyId);
-    
     if (responseSurveyId === 0) { return 0; }
     return await this.handleQuestions(surveyForm.controls.questions, responseSurveyId) == true ? responseSurveyId : 0; 
   }
@@ -271,7 +269,6 @@ export class SurveyService implements OnDestroy {
    */
   private async createAnswer(answer: AnswerModel): Promise<number> {
     const answerJson = answer.getCleanAddSurveyJson();
-    console.log('Creating answer:', answerJson);
     const response = await this.supabaseClient
       .from('answers').insert([answerJson,]).select();
     return response.data?.[0]?.id ?? 0;

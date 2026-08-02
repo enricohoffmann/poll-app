@@ -168,7 +168,7 @@
 .error {
     min-height: 20px;
     min-width: 0;
-    @include mixins.setup-font("Mulish", 12px, 400, var.$primary-orange);
+    @include mixins.setup-font("Mulish", 14px, 400, var.$primary-orange);
     opacity: 0;
     transition: opacity 125ms ease-in-out;
 
@@ -188,7 +188,7 @@
     &__submit {
         grid-area: submit-error;
         @include mixins.setup-display-flex(row, flex-start, center);
-        font-size: 14px;
+        font-size: 16px;
     }
 
     &--visible {

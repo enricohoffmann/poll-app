@@ -10,7 +10,13 @@ import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
 import { Dialog } from '../../shared/components/dialog/dialog';
-import { categorySelectedValidator, expiresDateNotPastValidator, expiresDatePatternValidator, expiresDateValidator } from '../../shared/utils/validators';
+import {
+  categorySelectedValidator,
+  expiresDateNotPastValidator,
+  expiresDatePatternValidator,
+  expiresDateValidator,
+  noWhitespaceValidator
+} from '../../shared/utils/validators';
 import { ValidationService } from '../../services/validation-service';
 import { Header } from "../../layout/header/header";
 import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
@@ -49,8 +55,8 @@ export class SurveyCreate implements OnInit {
    */
   surveyForm = new FormGroup<SurveyForm>({
     id: new FormControl(0, { nonNullable: true }),
-    title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
-    description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(300)] }),
+    title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator()] }),
+    description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(300), noWhitespaceValidator()] }),
     expires_at: new FormControl('', { nonNullable: true, validators: [expiresDatePatternValidator(), expiresDateValidator(), expiresDateNotPastValidator()] }),
     questions: new FormArray<FormGroup>([]),
     is_published: new FormControl(false, { nonNullable: true }),
@@ -110,6 +116,7 @@ export class SurveyCreate implements OnInit {
     this.setAllFieldTouched();
     this.handleSubmitError();
     if (this.surveyForm.valid) {
+      this.trimFormValues();
       this.isSubmitted.set(true);
       this.surveyForm.get('is_published')?.setValue(true);
       const surveyAddResult = await this.surveyService.handleAddSurvey(this.surveyForm);
@@ -150,6 +157,32 @@ export class SurveyCreate implements OnInit {
     this.onCancel();
   }
 
+  private trimFormValues(): void {
+    this.surveyForm.controls.title.setValue(
+      this.surveyForm.controls.title.value.trim()
+    );
+
+    this.surveyForm.controls.description.setValue(
+      this.surveyForm.controls.description.value?.trim() || null
+    );
+
+    this.trimQuestionAndAnswers();
+  }
+
+  private trimQuestionAndAnswers(): void {
+    this.questions.controls.forEach(question => {
+      question.controls.text.setValue(
+        question.controls.text.value.trim()
+      );
+
+      question.controls.answers.controls.forEach(answer => {
+        answer.controls.text.setValue(
+          answer.controls.text.value.trim()
+        );
+      });
+    });
+  }
+
   /**
    * @description Checks the validity of the surveyForm and updates the showSubmitError signal accordingly.
    * If the form is invalid, it sets showSubmitError to true, indicating that there are validation errors that need to be addressed before submission.
@@ -183,7 +216,7 @@ export class SurveyCreate implements OnInit {
   private createQuestionGroup(): FormGroup<QuestionForm> {
     const questionFormGroup: FormGroup<QuestionForm> = new FormGroup<QuestionForm>({
       id: new FormControl(0, { nonNullable: true }),
-      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120)] }),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120), noWhitespaceValidator()] }),
       allow_multiple_answers: new FormControl(false, { nonNullable: true }),
       sort_order: new FormControl(0, { nonNullable: true }),
       answers: new FormArray<FormGroup<AnswerForm>>([])
@@ -198,7 +231,7 @@ export class SurveyCreate implements OnInit {
   private createAnswerGroup(): FormGroup<AnswerForm> {
     const answerFormGroup: FormGroup<AnswerForm> = new FormGroup<AnswerForm>({
       id: new FormControl(0, { nonNullable: true }),
-      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80)] }),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator()] }),
       select: new FormControl(false, { nonNullable: true }),
       sort_order: new FormControl(0, { nonNullable: true })
     });

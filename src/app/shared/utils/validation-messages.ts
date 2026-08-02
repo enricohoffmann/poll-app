@@ -9,5 +9,6 @@ export const VALIDATION_MESSAGES = {
     datePatternInvalid: () => 'The date must be in the format DD.MM.YYYY.',
     dateInvalid: () => 'The date must be valid',
     dateExpired: () => 'The date must be in the future.',
-    categoryNotSelected: () => 'Please select a category.'
+    categoryNotSelected: () => 'Please select a category.',
+    whitespace: () => 'This field must not contain only spaces.'
   };

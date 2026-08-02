@@ -49,6 +49,8 @@ export class InputField {
    */
   onDeleteContent(): void{
     this.inputControl().setValue('');
+    this.inputControl().markAsUntouched();
+    this.inputControl().markAsPristine();
     this.removeItem.emit();
   }
 
