@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QuestionForm } from '../../utils/types';
 import { AnswerView } from '../answer-view/answer-view';
@@ -16,6 +16,7 @@ export class QuestionView {
   questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionIndex = input.required<number>();
   isReadOnly = input.required<boolean>();
+  readonly selectionChanged = output<void>();
 
   /**
    * @description Toggles the selection of an answer for the question.
@@ -30,6 +31,7 @@ export class QuestionView {
 
     const selectControl = this.questionFormGroup().controls.answers.at(answerIndex).controls.select;
     selectControl.setValue(!selectControl.value);
+    this.selectionChanged.emit();
   }
 
   /**

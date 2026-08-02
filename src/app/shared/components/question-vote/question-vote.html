@@ -12,7 +12,7 @@
                 class="question-vote-section__result"
                 [answerIndex]="$index" 
                 [answerId]="answer.controls.id.value"
-                [questionVotes]=" questionVotes()"
+                [percentage]="getPercentage(answer.controls.id.value)"
                 >
             </app-answer-vote>
         }

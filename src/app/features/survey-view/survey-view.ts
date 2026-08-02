@@ -66,7 +66,7 @@ export class SurveyView implements OnDestroy, OnInit {
   showOverlay = signal(false);
   showDialog = signal(false);
   selectedAnswerIds = signal<number[]>([]);
-  readonly storedVotes  = this.surveyService.voteList;
+  readonly storedVotes = this.surveyService.voteList;
 
   canParticipate = computed(() =>
     !this.hasAlreadyVoted() &&
@@ -403,15 +403,16 @@ export class SurveyView implements OnDestroy, OnInit {
     }, 125);
   }
 
-  private updateSelectedAnswerIds(): void {
-  const ids = this.voteForm.controls.questions.controls.flatMap(question =>
-    question.controls.answers.controls
-      .filter(answer => answer.controls.select.value)
-      .map(answer => answer.controls.id.value)
-  );
+  updateSelectedAnswerIds(): void {
+    const selectedIds = this.voteForm.controls.questions.controls.flatMap(
+      question =>
+        question.controls.answers.controls
+          .filter(answer => answer.controls.select.value)
+          .map(answer => answer.controls.id.value)
+    );
 
-  this.selectedAnswerIds.set(ids);
-}
+    this.selectedAnswerIds.set(selectedIds);
+  }
 
 
 }

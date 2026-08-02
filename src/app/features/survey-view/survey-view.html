@@ -34,23 +34,26 @@
 
                 <div class="survey-view-main__mobile">
                     @for(question of questions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
-                        [isReadOnly]="!canParticipate()"></app-question-view>
+                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
+                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                        </app-question-view>
                     }
                 </div>
 
                 }@else {
                 <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
-                        [isReadOnly]="!canParticipate()"></app-question-view>
+                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
+                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                        </app-question-view>
                     }
                 </div>
 
                 <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
-                        [isReadOnly]="!canParticipate()"></app-question-view>
+                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
+                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                        </app-question-view>
                     }
                 </div>
                 }
@@ -96,21 +99,21 @@
 
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
-            @if(storedVotes().length == 0){
-            <p class="result-notice">Results will be shown here after participants complete the survey.</p>
-            <p class="result-empty">There are no answears yet.</p>
+            @if(storedVotes().length === 0 && selectedAnswerIds().length === 0){
+                <p class="result-notice">Select an answer to see a live preview of the results.</p>
+                <p class="result-empty">No votes have been submitted yet.</p>
             }@else {
-            <div class="result-votings">
-                @for(question of questions; track question.controls.id) {
-                    <app-question-vote 
-                        [questionId]="question.controls.id.value" 
-                        [questionFormGroup]="question"
-                        [questionIndex]="$index"
-                        [previewAnswerIds]="selectedAnswerIds()"
-                        [previewEnabled]="canParticipate()"
-                    ></app-question-vote>
-                }
-            </div>
+                <div class="result-votings">
+                    @for(question of questions; track question.controls.id.value) {
+                        <app-question-vote 
+                            [questionId]="question.controls.id.value" 
+                            [questionFormGroup]="question"
+                            [questionIndex]="$index"
+                            [previewAnswerIds]="selectedAnswerIds()"
+                            [previewEnabled]="canParticipate()"
+                        ></app-question-vote>
+                    }
+                </div>
             }
         </aside>
         }
