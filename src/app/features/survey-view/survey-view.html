@@ -1,6 +1,7 @@
 <div class="view-wrapper">
 
-    <app-header [isPurple]="true" [isButtonAvailable]="true" class="view-header" (requestOpenSurvey)="openCreateSurvey()"></app-header>
+    <app-header [isPurple]="true" [isButtonAvailable]="true" class="view-header"
+        (requestOpenSurvey)="openCreateSurvey()"></app-header>
 
     <section class="survey-view">
 
@@ -34,7 +35,7 @@
                 <div class="survey-view-main__mobile">
                     @for(question of questions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
-                        [isReadOnly]="isDisabled()"></app-question-view>
+                        [isReadOnly]="!canParticipate()"></app-question-view>
                     }
                 </div>
 
@@ -42,14 +43,14 @@
                 <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
-                        [isReadOnly]="isDisabled()"></app-question-view>
+                        [isReadOnly]="!canParticipate()"></app-question-view>
                     }
                 </div>
 
                 <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
                     <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
-                        [isReadOnly]="isDisabled()"></app-question-view>
+                        [isReadOnly]="!canParticipate()"></app-question-view>
                     }
                 </div>
                 }
@@ -63,18 +64,20 @@
                 <span class="vote-error-message"
                     [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
                     answer.</span>
-                }@else if (isDisabled()) {
-                <span class="vote-error-message" [class.vote-error-message--visible]="isDisabled()">You have already
-                    submitted your answers or the survey is past due.</span>
+                } @else if (hasAlreadyVoted()) {
+                <span class="vote-error-message" [class.vote-error-message--visible]="true">You have already completed
+                    this survey.</span>
+                } @else if (isPastDue()) {
+                <span class="vote-error-message" [class.vote-error-message--visible]="true">This survey has expired. Voting is no longer possible.</span>
                 }
 
                 @if(isMobile()) {
                 <app-button [buttonType]="'submit'" [buttonVariant]="'primaryBtn'" [isDarkFontColor]="true"
-                    [hasIcon]="true" class="vote-submit-btn" [isDisabled]="hasSubmitted() || isDisabled()"
+                    [hasIcon]="true" class="vote-submit-btn" [isDisabled]="!canParticipate()"
                     [buttonIconVariant]="'check'">Complete</app-button>
                 }@else {
                 <app-button [buttonType]="'submit'" [buttonVariant]="'secondaryBtn'" [isDarkFontColor]="true"
-                    class="vote-submit-btn" [isDisabled]="hasSubmitted() || isDisabled()">Complete survey</app-button>
+                    class="vote-submit-btn" [isDisabled]="!canParticipate()">Complete survey</app-button>
                 }
 
 
@@ -93,14 +96,19 @@
 
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
-            @if(votes().length == 0){
+            @if(storedVotes().length == 0){
             <p class="result-notice">Results will be shown here after participants complete the survey.</p>
             <p class="result-empty">There are no answears yet.</p>
             }@else {
             <div class="result-votings">
                 @for(question of questions; track question.controls.id) {
-                <app-question-vote [questionId]="question.controls.id.value" [questionFormGroup]="question"
-                    [questionIndex]="$index"></app-question-vote>
+                    <app-question-vote 
+                        [questionId]="question.controls.id.value" 
+                        [questionFormGroup]="question"
+                        [questionIndex]="$index"
+                        [previewAnswerIds]="selectedAnswerIds()"
+                        [previewEnabled]="canParticipate()"
+                    ></app-question-vote>
                 }
             </div>
             }
@@ -109,12 +117,23 @@
     </section>
 
     @if (showCreateSurvey()) {
-        <app-create-survey-modal (requestClose)="surveyCreate.onCancel()">
+    <app-create-survey-modal (requestClose)="surveyCreate.onCancel()">
 
-            <app-survey-create #surveyCreate [isModal]="true" (closeCreate)="closeCreateSurvey()">
-            </app-survey-create>
+        <app-survey-create #surveyCreate [isModal]="true" (closeCreate)="closeCreateSurvey()">
+        </app-survey-create>
 
-        </app-create-survey-modal>
+    </app-create-survey-modal>
+    }
+
+
+    @if(showOverlay()){
+        <div class="survey-view-overlay">
+
+            @if(hasJustSubmitted()) {
+                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'success'"
+                    message="Thank you for completing the survey." (closeEvent)="onMessageDialogClose()"></app-dialog>
+            }
+        </div>
     }
 
 </div>

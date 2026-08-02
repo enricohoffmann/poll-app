@@ -35,5 +35,7 @@
 
     &__question {
         grid-area: question;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 }

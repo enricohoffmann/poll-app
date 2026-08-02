@@ -84,6 +84,7 @@
     &__category {
         grid-area: category;
         justify-self: end;
+        padding-right: 16px;
         @include mixins.setup-font("Mulish", 14px, 400, var.$dark-purple);
     }
 
@@ -96,6 +97,8 @@
         grid-area: title;
         @include mixins.setup-font("Nerko-One", clamp(3rem, 2.8072rem + 0.9639vw, 3.5rem), 400, var.$fourth-orange);
         line-height: 50px;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 
     &__description {
@@ -133,7 +136,7 @@
 .vote-error-message {
     align-self: center;
     grid-area: error-message;
-    @include mixins.setup-font("Mulish", 14px, 600, var.$fourth-orange);
+    @include mixins.setup-font("Mulish", 16px, 600, var.$fourth-orange);
     opacity: 0;
     transition: opacity 125ms ease-in;
 
@@ -180,6 +183,26 @@
     max-height: 1500px;
 }
 
+.survey-view-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: rgba(53, 39, 58, 0.3);
+    @include mixins.setup-display-flex(row, center, flex-end);
+    padding-bottom: 12vh;
+    overflow-x: hidden;
+}
+
+.survey-dialog {
+    z-index: 101;
+    transform: translateX(150vw);
+    transition: transform 300ms ease-in;
+
+    &--show {
+        transform: translateX(0);
+    }
+}
+
 
 @media(max-width: 999px) {
 
@@ -224,6 +247,24 @@
     .vote-submit-btn {
         justify-self: end;
     }
-    
 
+
+}
+
+@media(max-width: 600px) {
+    .survey-view-header {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-areas:
+            "status status"
+            "expires expires" 
+            "category category"
+            "title title"
+            "description description"
+        ;
+    }
+
+    .survey-view-header__category {
+        justify-self: flex-start;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit, computed } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -20,6 +20,7 @@ import { ResultAccordeon } from '../../shared/components/result-accordeon/result
 import { VoterTokenService } from '../../services/voter-token-service';
 import { SurveyCreate } from '../survey-create/survey-create';
 import { CreateSurveyModal } from '../../shared/components/create-survey-modal/create-survey-modal';
+import { Dialog } from '../../shared/components/dialog/dialog';
 
 /**
  * @description The SurveyView component is responsible for displaying a survey along with its questions and answers.
@@ -43,7 +44,8 @@ import { CreateSurveyModal } from '../../shared/components/create-survey-modal/c
     QuestionVote,
     ResultAccordeon,
     SurveyCreate,
-    CreateSurveyModal
+    CreateSurveyModal,
+    Dialog
   ],
   templateUrl: './survey-view.html',
   styleUrls: ['./survey-view.scss'],
@@ -56,11 +58,21 @@ export class SurveyView implements OnDestroy, OnInit {
   survey = signal<SurveyWithCategory | null>(null);
   questionsAndAnswers = signal<QuestionWithAnswers[]>([]);
   isLoading = signal<boolean>(true);
-  isDisabled = signal<boolean>(false);
-  hasSubmitted = signal<boolean>(false);
   openResultMobile = signal<boolean>(false);
   showCreateSurvey = signal<boolean>(false);
-  readonly votes = this.surveyService.voteList;
+  hasAlreadyVoted = signal(false);
+  isPastDue = signal(false);
+  hasJustSubmitted = signal(false);
+  showOverlay = signal(false);
+  showDialog = signal(false);
+  selectedAnswerIds = signal<number[]>([]);
+  readonly storedVotes  = this.surveyService.voteList;
+
+  canParticipate = computed(() =>
+    !this.hasAlreadyVoted() &&
+    !this.isPastDue() &&
+    !this.hasJustSubmitted()
+  );
 
   /**
    * @description The voteForm is a FormGroup that contains a FormArray of questions.
@@ -180,9 +192,8 @@ export class SurveyView implements OnDestroy, OnInit {
    * @returns {void}
    */
   private canParticipateInSurvey(survey: SurveyWithCategory): void {
-    const isPastDue = this.checkIfSurveyIsPastDue(survey);
-    const isAlreadyFilled = this.surveyService.checkHasAlreadyFilled(this.voterTokenService.getToken());
-    this.isDisabled.set(isPastDue || isAlreadyFilled);
+    this.isPastDue.set(this.checkIfSurveyIsPastDue(survey));
+    this.hasAlreadyVoted.set(this.surveyService.checkHasAlreadyFilled(this.voterTokenService.getToken()));
   }
 
   /**
@@ -365,16 +376,42 @@ export class SurveyView implements OnDestroy, OnInit {
    * @returns {Promise<void>} - A promise that resolves when the submission is complete.
    */
   async onSubmit(): Promise<void> {
-    if (this.hasSubmitted() || this.isDisabled()) { return; }
+    if (!this.canParticipate()) { return; }
 
     this.voteForm.markAllAsTouched();
+    this.hasJustSubmitted.set(true);
+    this.showCompleteMessage();
 
     if (this.voteForm.valid) {
       await this.surveyService.handleAddVotes(this.voteForm);
-      this.hasSubmitted.set(true);
-      this.isDisabled.set(true);
     }
   }
+
+  private showCompleteMessage(): void {
+    this.showOverlay.set(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.showDialog.set(true);
+      });
+    });
+  }
+
+  onMessageDialogClose(): void {
+    this.showDialog.set(false);
+    setTimeout(() => {
+      this.showOverlay.set(false);
+    }, 125);
+  }
+
+  private updateSelectedAnswerIds(): void {
+  const ids = this.voteForm.controls.questions.controls.flatMap(question =>
+    question.controls.answers.controls
+      .filter(answer => answer.controls.select.value)
+      .map(answer => answer.controls.id.value)
+  );
+
+  this.selectedAnswerIds.set(ids);
+}
 
 
 }

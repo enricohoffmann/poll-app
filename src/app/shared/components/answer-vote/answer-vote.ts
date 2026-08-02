@@ -52,4 +52,5 @@ export class AnswerVote {
   getIdentifier(): string {
     return this.answerIdentifierService.getIdentifier(this.answerIndex());
   }
+
 }

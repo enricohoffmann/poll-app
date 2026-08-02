@@ -35,13 +35,14 @@
 
     &__question {
         grid-area: question;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 
 
     &__multiple-answer {
         grid-area: multiple-answer;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
     }
 }
-

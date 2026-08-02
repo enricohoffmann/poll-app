@@ -13,11 +13,13 @@ import { AnswerVote } from '../answer-vote/answer-vote';
   templateUrl: './question-vote.html',
   styleUrls: ['./question-vote.scss'],
 })
-export class QuestionVote  {
+export class QuestionVote {
   surveyService = inject(SurveyService);
   questionFormGroup = input.required<FormGroup<QuestionForm>>();
   questionId = input.required<number>();
   questionIndex = input.required<number>();
+  previewAnswerIds = input<number[]>([]);
+  previewEnabled = input<boolean>(false);
   readonly voteList = this.surveyService.voteList;
 
   /**
