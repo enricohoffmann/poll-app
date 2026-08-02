@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed, ViewChild, ElementRef, output } from '@angular/core';
+import { Component, inject, OnInit, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { Button } from '../../shared/components/button/button';
 import { SurveyService } from '../../services/survey-service';
@@ -91,7 +91,6 @@ export class Home implements OnInit {
     this.scrollToSurveyList();
   }
 
-
   /**
    * @description Filters the list of surveys to show only past surveys. It sets the surveyStatus signal to 'past', resets the current category if it is no longer available, and scrolls the view to the survey list.
    * This method is typically called when the user selects the option to view past surveys, ensuring that only relevant surveys are displayed.
@@ -178,10 +177,18 @@ export class Home implements OnInit {
     }
   }
 
+  /**
+   * @description Opens the create survey modal by setting the showCreateSurvey signal to true. This method is typically called when the user clicks on a button to create a new survey, allowing them to access the survey creation interface.
+   * @returns {void}
+   */
   openCreateSurvey(): void {
     this.showCreateSurvey.set(true);
   }
 
+  /**
+   * @description Closes the create survey modal by setting the showCreateSurvey signal to false. This method is typically called when the user cancels the survey creation process or after successfully creating a survey, returning them to the main home view.
+   * @returns {void}
+   */
   closeCreateSurvey(): void {
     this.showCreateSurvey.set(false);
   }

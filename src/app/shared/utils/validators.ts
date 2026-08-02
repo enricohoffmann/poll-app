@@ -82,7 +82,13 @@ export function questionAnsweredValidator(): ValidatorFn {
     };
 }
 
-
+/**
+ * @description Validator to check if the input value contains only whitespace.
+ * This validator is used to ensure that form controls do not accept values that consist solely of whitespace characters.
+ * It trims the input value and checks if the resulting length is zero, indicating that the input was only whitespace.
+ * If the input is only whitespace, it returns a validation error; otherwise, it returns null, indicating that the input is valid.
+ * @returns {ValidatorFn} A validator function that returns a validation error if the input contains only whitespace.
+ */
 export function noWhitespaceValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
         const value = control.value;
@@ -95,6 +101,6 @@ export function noWhitespaceValidator(): ValidatorFn {
         }
 
         return value.trim().length === 0 ? { whitespace: true } : null;
-    }
+    };
 }
 

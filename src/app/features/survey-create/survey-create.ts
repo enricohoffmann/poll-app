@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit, output, input } from '@angular/core';
+import { Component, inject, signal, OnInit, output, input } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -127,6 +127,12 @@ export class SurveyCreate implements OnInit {
     }
   }
 
+  /**
+   * @description Handles the cancellation of the survey creation process. If the survey form has not been modified (i.e., it is not dirty), it emits the closeCreate event to close the survey creation view.
+   * If the form has been modified, it displays a confirmation dialog asking the user whether they want to discard their changes or continue editing. 
+   * The method sets the showOverlay signal to true and the activeDialog signal to 'discard', then uses requestAnimationFrame to ensure that the dialog is displayed after the overlay is rendered.
+   * @returns {void}
+   */
   onCancel(): void {
     if (!this.surveyForm.dirty) {
       this.closeCreate.emit();
@@ -136,13 +142,17 @@ export class SurveyCreate implements OnInit {
     this.showOverlay.set(true);
     this.activeDialog.set('discard')
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        this.showDialog.set(true);
-      });
+      requestAnimationFrame(() => { this.showDialog.set(true); });
     });
 
   }
 
+  /**
+   * @description Continues editing the survey after the user has been prompted with a discard confirmation dialog.
+   * This method is called when the user chooses to continue editing instead of discarding their changes. 
+   * It sets the showDialog signal to false to hide the confirmation dialog and, after a short delay defined by OVERLAY_CLOSE_DELAY, sets the showOverlay signal to false to hide the overlay.
+   * @returns {void}
+   */
   continueEditing(): void {
     this.showDialog.set(false);
 
@@ -151,12 +161,25 @@ export class SurveyCreate implements OnInit {
     }, this.OVERLAY_CLOSE_DELAY);
   }
 
+  /**
+   * @description Discards the current survey creation process and resets the survey form to its initial state.
+   * This method is called when the user confirms that they want to discard their changes in the survey creation form. 
+   * It marks the surveyForm as untouched and pristine, effectively resetting any modifications made by the user. 
+   * After resetting the form, it calls onCancel to handle any additional cleanup or navigation logic associated with discarding the survey.
+   * @returns {void}
+   */
   discardSurvey(): void {
     this.surveyForm.markAsUntouched();
     this.surveyForm.markAsPristine();
     this.onCancel();
   }
 
+  /**
+   * @description Trims whitespace from the title, description, questions, and answers in the survey form before submission.
+   * This method ensures that any leading or trailing whitespace is removed from the input values, which helps maintain data integrity and prevents validation errors related to whitespace.
+   * It calls trimQuestionAndAnswers to handle trimming for each question and its associated answers.
+   * @returns {void}
+   */
   private trimFormValues(): void {
     this.surveyForm.controls.title.setValue(
       this.surveyForm.controls.title.value.trim()
@@ -169,6 +192,12 @@ export class SurveyCreate implements OnInit {
     this.trimQuestionAndAnswers();
   }
 
+  /**
+   * @description Trims whitespace from the text of each question and its associated answers in the survey form.
+   * This method iterates through each question in the questions FormArray and trims the text of the question itself, as well as the text of each answer within that question. 
+   * It ensures that all input values are free from leading or trailing whitespace before the survey form is submitted.
+   * @returns {void}
+   */
   private trimQuestionAndAnswers(): void {
     this.questions.controls.forEach(question => {
       question.controls.text.setValue(

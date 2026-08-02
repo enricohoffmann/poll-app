@@ -44,7 +44,12 @@ export class Header {
     ), {initialValue: false}
   );
 
-  
+  /**
+   * @description Emits an event to request the opening of a new survey.
+   * This method is called when the user interacts with the "New Survey" button in the header.
+   * It triggers the `requestOpenSurvey` output event, which can be handled by a parent component to open a new survey.
+   * @returns {void}
+   */
   onNewSurvey(): void {
     this.requestOpenSurvey.emit();
   }

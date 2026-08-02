@@ -34,12 +34,25 @@ export class InputField {
   }
 
   /**
-   * @description Sets the isWriting signal to false when the user stops typing in the input field.
+   * @description Sets the isWriting signal to false and trims the input field's value when the user stops typing.
+   * Trims the whitespace from the input field's value when the user stops typing.
    * @returns void
    * @memberof InputField
    */
   onInputLeave(): void{
     this.isWriting.set(false);
+    this.trimFormValues();
+  }
+
+  /**
+   * @description Trims the whitespace from the input field's value when the user stops typing.
+   * @returns {void}
+   * @memberof InputField 
+   */
+  private trimFormValues(): void {
+    if(this.inputControl().value){
+      this.inputControl().setValue(this.inputControl().value!.trim())
+    }
   }
 
   /**

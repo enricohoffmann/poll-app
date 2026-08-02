@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit, input } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -119,11 +119,25 @@ export class SurveyView implements OnDestroy, OnInit {
     document.body.style.overflow = '';
   }
 
+  /**
+   * @description Opens the create survey modal by setting the showCreateSurvey signal to true and preventing body scrolling.
+   * This method is typically called when the user wants to create a new survey, allowing them to input survey details in a modal dialog.
+   * It modifies the document's body style to prevent scrolling while the modal is open, enhancing the user experience.
+   * @memberof SurveyView
+   * @returns {void}
+   */
   openCreateSurvey(): void {
     this.showCreateSurvey.set(true);
     document.body.style.overflow = 'hidden';
   }
 
+  /**
+   * @description Closes the create survey modal by setting the showCreateSurvey signal to false and restoring body scrolling.
+   * This method is typically called when the user has finished creating a survey or decides to cancel the operation.
+   * It modifies the document's body style to allow scrolling again, ensuring that the user can interact with the rest of the page.
+   * @memberof SurveyView
+   * @returns {void}
+   */
   closeCreateSurvey(): void {
     this.showCreateSurvey.set(false);
     document.body.style.overflow = '';
