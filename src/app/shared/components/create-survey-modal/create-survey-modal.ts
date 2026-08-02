@@ -7,10 +7,10 @@ import { Component, output } from '@angular/core';
   styleUrl: './create-survey-modal.scss',
 })
 export class CreateSurveyModal {
-  closeModal = output<void>();
+  requestClose = output<void>();
 
   onOverlayClick(): void {
-    this.closeModal.emit();
+    this.requestClose.emit();
   }
 
   onContentClick(event: MouseEvent): void {

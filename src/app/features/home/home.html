@@ -70,8 +70,8 @@
     </section>
 
     @if(showCreateSurvey()){
-        <app-create-survey-modal (closeModal)="closeCreateSurvey()">
-            <app-survey-create [isModal]="true" (closeCreate)="closeCreateSurvey()"></app-survey-create>
+        <app-create-survey-modal (requestClose)="surveyCreate.onCancel()">
+            <app-survey-create #surveyCreate [isModal]="true"  (closeCreate)="closeCreateSurvey()"></app-survey-create>
         </app-create-survey-modal>
     }
 
