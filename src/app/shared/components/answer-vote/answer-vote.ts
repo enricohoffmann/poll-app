@@ -1,6 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { AnswerIdentifierService } from '../../../services/answer-identifier-service';
-import { Vote } from '../../../interfaces/vote-interface';
 import { ResultRounding } from '../../../pips/custom-pips';
 
 

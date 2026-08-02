@@ -466,16 +466,23 @@ export class SurveyCreate implements OnInit {
    * @returns {void}
    */
   private callPublishedSurvey(): void {
-    this.router.navigate(['/view', this.currentSurveyId]);
+    this.closeCreate.emit();
+    setTimeout(() => {
+      this.router.navigate(['/view', this.currentSurveyId]);
+    });
   }
 
+  /**
+   * @description Prevents the default form submission behavior when the Enter key is pressed, except when the focus is on a textarea element.
+   * This method is typically used to avoid accidental form submissions when the user is filling out input fields.
+   * @param event 
+   * @returns {void}
+   */
   preventEnterSubmit(event: Event): void {
     const keyboardEvent = event as KeyboardEvent;
     const target = keyboardEvent.target;
 
-    if (target instanceof HTMLTextAreaElement) {
-      return;
-    }
+    if (target instanceof HTMLTextAreaElement) { return; }
 
     if (target instanceof HTMLInputElement) {
       keyboardEvent.preventDefault();

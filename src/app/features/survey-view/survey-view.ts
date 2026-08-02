@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit, computed } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit, computed, DestroyRef } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -14,7 +14,7 @@ import { AnswerForm, QuestionForm, VoteFrom } from '../../shared/utils/types';
 import { QuestionVote } from '../../shared/components/question-vote/question-vote';
 import { questionAnsweredValidator } from '../../shared/utils/validators';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { ResultAccordeon } from '../../shared/components/result-accordeon/result-accordeon';
 import { VoterTokenService } from '../../services/voter-token-service';
@@ -52,6 +52,7 @@ import { Dialog } from '../../shared/components/dialog/dialog';
 })
 export class SurveyView implements OnDestroy, OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
   private surveyId = 0;
   private readonly surveyService = inject(SurveyService);
   private readonly voterTokenService = inject(VoterTokenService);
@@ -68,6 +69,16 @@ export class SurveyView implements OnDestroy, OnInit {
   selectedAnswerIds = signal<number[]>([]);
   readonly storedVotes = this.surveyService.voteList;
 
+  /**
+   * @description A computed signal that determines if the user can participate in the survey.
+   * It checks if the user has already voted, if the survey is past due, and if the user has just submitted their responses.
+   * If any of these conditions are true, the user cannot participate in the survey.
+   * This computed signal is used to enable or disable the survey form and submission button based on the user's eligibility to participate.
+   * @readonly
+   * @type {Signal<boolean>}
+   * @memberof SurveyView
+   * @returns {boolean} - True if the user can participate in the survey, false otherwise.
+   */
   canParticipate = computed(() =>
     !this.hasAlreadyVoted() &&
     !this.isPastDue() &&
@@ -114,9 +125,17 @@ export class SurveyView implements OnDestroy, OnInit {
    * @memberof SurveyView
    */
   async ngOnInit(): Promise<void> {
-    const surveyIdParam = this.activatedRoute.snapshot.paramMap.get('surveyId');
-    this.surveyId = Number(surveyIdParam);
-    this.initializeSurveyView();
+    this.activatedRoute.paramMap
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(async params => {
+        const surveyId = Number(params.get('surveyId'));
+
+        if (!surveyId) { return; }
+
+        this.surveyId = surveyId;
+        this.resetSurveyView();
+        await this.initializeSurveyView();
+      })
   }
 
   /**
@@ -129,6 +148,25 @@ export class SurveyView implements OnDestroy, OnInit {
   ngOnDestroy(): void {
     this.surveyService.clearCurrentQuestionIds();
     document.body.style.overflow = '';
+  }
+
+  /**
+   * @description Resets the survey view by clearing the survey, questions, votes, selected answers, and form controls.
+   * It also resets the state flags for whether the user has already voted, has just submitted, or if the survey is past due.
+   * This method is typically called when a new survey is loaded or when the component is initialized to ensure a clean state.
+   * @private
+   * @memberof SurveyView
+   * @returns {void}
+   */
+  private resetSurveyView(): void {
+    this.survey.set(null);
+    this.questionsAndAnswers.set([]);
+    this.surveyService.voteList.set([]);
+    this.selectedAnswerIds.set([]);
+    this.voteForm.controls.questions.clear();
+    this.hasAlreadyVoted.set(false);
+    this.hasJustSubmitted.set(false);
+    this.isPastDue.set(false);
   }
 
   /**
@@ -387,6 +425,16 @@ export class SurveyView implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * @description Displays a completion message to the user after they have submitted their votes.
+   * It sets the showOverlay signal to true, which likely triggers a visual overlay on the UI.
+   * Then, it uses requestAnimationFrame to ensure that the overlay is rendered before showing the dialog.
+   * After two animation frames, it sets the showDialog signal to true, which likely displays a dialog box with a completion message.
+   * This method enhances the user experience by providing immediate feedback after form submission.
+   * @private
+   * @memberof SurveyView
+   * @returns {void}
+   */
   private showCompleteMessage(): void {
     this.showOverlay.set(true);
     requestAnimationFrame(() => {
@@ -396,6 +444,14 @@ export class SurveyView implements OnDestroy, OnInit {
     });
   }
 
+  /**
+   * @description Closes the message dialog and hides the overlay after a short delay.
+   * It sets the showDialog signal to false, which likely hides the dialog box.
+   * Then, it uses setTimeout to delay the hiding of the overlay by 125 milliseconds, allowing for any closing animations to complete.
+   * This method is typically called when the user acknowledges the completion message and is ready to return to the main survey view.
+   * @memberof SurveyView
+   * @returns {void}
+   */
   onMessageDialogClose(): void {
     this.showDialog.set(false);
     setTimeout(() => {
@@ -403,6 +459,14 @@ export class SurveyView implements OnDestroy, OnInit {
     }, 125);
   }
 
+  /**
+   * @description Updates the selected answer IDs based on the current state of the voteForm.
+   * It iterates through the questions and their respective answers in the voteForm, collecting the IDs of answers that have been selected.
+   * The collected IDs are then set to the selectedAnswerIds signal, which can be used for further processing or submission.
+   * This method ensures that the selected answer IDs are always in sync with the user's selections in the form.
+   * @memberof SurveyView
+   * @returns {void}
+   */
   updateSelectedAnswerIds(): void {
     const selectedIds = this.voteForm.controls.questions.controls.flatMap(
       question =>
