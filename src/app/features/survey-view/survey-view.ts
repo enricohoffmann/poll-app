@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, signal, OnDestroy, OnInit, input } from '@angular/core';
 import { Header } from '../../layout/header/header';
 import { ActivatedRoute } from '@angular/router';
 import { SurveyService } from '../../services/survey-service';
@@ -18,6 +18,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { ResultAccordeon } from '../../shared/components/result-accordeon/result-accordeon';
 import { VoterTokenService } from '../../services/voter-token-service';
+import { SurveyCreate } from '../survey-create/survey-create';
+import { CreateSurveyModal } from '../../shared/components/create-survey-modal/create-survey-modal';
 
 /**
  * @description The SurveyView component is responsible for displaying a survey along with its questions and answers.
@@ -39,7 +41,9 @@ import { VoterTokenService } from '../../services/voter-token-service';
     QuestionView,
     ReactiveFormsModule,
     QuestionVote,
-    ResultAccordeon
+    ResultAccordeon,
+    SurveyCreate,
+    CreateSurveyModal
   ],
   templateUrl: './survey-view.html',
   styleUrls: ['./survey-view.scss'],
@@ -55,6 +59,7 @@ export class SurveyView implements OnDestroy, OnInit {
   isDisabled = signal<boolean>(false);
   hasSubmitted = signal<boolean>(false);
   openResultMobile = signal<boolean>(false);
+  showCreateSurvey = signal<boolean>(false);
   readonly votes = this.surveyService.voteList;
 
   /**
@@ -111,6 +116,17 @@ export class SurveyView implements OnDestroy, OnInit {
    */
   ngOnDestroy(): void {
     this.surveyService.clearCurrentQuestionIds();
+    document.body.style.overflow = '';
+  }
+
+  openCreateSurvey(): void {
+    this.showCreateSurvey.set(true);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeCreateSurvey(): void {
+    this.showCreateSurvey.set(false);
+    document.body.style.overflow = '';
   }
 
   /**

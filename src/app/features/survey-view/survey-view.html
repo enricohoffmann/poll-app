@@ -1,6 +1,6 @@
 <div class="view-wrapper">
 
-    <app-header [isPurple]="true" [isButtonAvailable]="true" class="view-header"></app-header>
+    <app-header [isPurple]="true" [isButtonAvailable]="true" class="view-header" (requestOpenSurvey)="openCreateSurvey()"></app-header>
 
     <section class="survey-view">
 
@@ -33,21 +33,23 @@
 
                 <div class="survey-view-main__mobile">
                     @for(question of questions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index" [isReadOnly]="isDisabled()"></app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
+                        [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
 
                 }@else {
                 <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2" [isReadOnly]="isDisabled()"></app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
+                        [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
 
                 <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
-                    <app-question-view [questionFormGroup]="question"
-                        [questionIndex]="$index * 2 + 1" [isReadOnly]="isDisabled()"></app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
+                        [isReadOnly]="isDisabled()"></app-question-view>
                     }
                 </div>
                 }
@@ -58,12 +60,12 @@
             <div class="survey-view-submit-btn-container">
 
                 @if(voteForm.invalid && voteForm.touched) {
-                    <span class="vote-error-message"
-                        [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
+                <span class="vote-error-message"
+                    [class.vote-error-message--visible]="voteForm.invalid && voteForm.touched">All questions require an
                     answer.</span>
                 }@else if (isDisabled()) {
-                    <span class="vote-error-message"
-                        [class.vote-error-message--visible]="isDisabled()">You have already submitted your answers or the survey is past due.</span>
+                <span class="vote-error-message" [class.vote-error-message--visible]="isDisabled()">You have already
+                    submitted your answers or the survey is past due.</span>
                 }
 
                 @if(isMobile()) {
@@ -81,15 +83,13 @@
         </form>
 
         @if(isMobile()) {
-            <div class="survey-view__accordeon-results">
-                <app-result-accordeon (seeResultEvent)="toggleSeeResult($event)"></app-result-accordeon>
-            </div>
+        <div class="survey-view__accordeon-results">
+            <app-result-accordeon (seeResultEvent)="toggleSeeResult($event)"></app-result-accordeon>
+        </div>
         }
 
-        <aside class="survey-view__results" 
-            [class.survey-view__results--mobile]="isMobile()"
-            [class.survey-view__results--mobile--open]="openResultMobile()"
-            >
+        <aside class="survey-view__results" [class.survey-view__results--mobile]="isMobile()"
+            [class.survey-view__results--mobile--open]="openResultMobile()">
 
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
@@ -106,8 +106,15 @@
             }
         </aside>
         }
-
-
-
     </section>
+
+    @if (showCreateSurvey()) {
+        <app-create-survey-modal (requestClose)="surveyCreate.onCancel()">
+
+            <app-survey-create #surveyCreate [isModal]="true" (closeCreate)="closeCreateSurvey()">
+            </app-survey-create>
+
+        </app-create-survey-modal>
+    }
+
 </div>

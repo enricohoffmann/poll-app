@@ -1,4 +1,4 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, output } from '@angular/core';
 import { Button } from '../../shared/components/button/button';
 import { Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -26,6 +26,7 @@ import { map } from 'rxjs';
 export class Header {
   isPurple = input(false);
   isButtonAvailable = input(false);
+  requestOpenSurvey = output<void>();
   private readonly router = inject(Router);
 
   private breakpointObserver = inject(BreakpointObserver);
@@ -43,16 +44,9 @@ export class Header {
     ), {initialValue: false}
   );
 
-  /**
-   * Navigates to the 'create' route when the "New Survey" button is clicked.
-   * This method is called when the user interacts with the button in the header.
-   * It uses the Angular Router to navigate to the specified route.
-   *
-   * @method
-   * @returns {void}
-   */
+  
   onNewSurvey(): void {
-    this.router.navigate(['create']);
+    this.requestOpenSurvey.emit();
   }
 
   /**

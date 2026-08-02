@@ -65,10 +65,16 @@
 
 .highlight-cards {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
     gap: 28px;
+    overflow-x: auto;
+    overflow-y: hidden;
     padding-bottom: 8px;
+}
+
+app-survey-card {
+    flex: 0 0 320px;
 }
 
 .empty-state {
@@ -189,4 +195,10 @@
         }
     }
 
+}
+
+@media (max-width: 500px) {
+    .highlight-cards app-survey-card {
+        flex-basis: 220px;
+    }
 }
