@@ -55,6 +55,16 @@
 
     }
 
+    &--purple {
+        padding: 8px 12px;
+        background-color: var.$primary-purple;
+        @include mixins.setup-font("Nokora", 18px, 700, var.$light-purple);
+
+        &:hover {
+            background-color: var.$btn-purple-bg-hover;
+        }
+    }
+
     &--tertiary {
         height: 40px;
         background-color: transparent;

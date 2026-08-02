@@ -2,7 +2,7 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 
 export type HeaderVariant = 'whiteHeader' | 'prupleHeader';
 
-export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn' | 'trashBtn' | 'homeMobile';
+export type ButtonVariant = 'primaryBtn' | 'secondaryBtn' | 'tertiaryBtn' | 'filterBtn' | 'trashBtn' | 'homeMobile' | 'purpleBtn';
 
 export type SurveyCardVariant = 'highlights' | 'listview';
 

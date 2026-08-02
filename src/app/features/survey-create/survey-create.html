@@ -1,8 +1,10 @@
-<div class="create-wrapper" (click)="isMenuOpen.set(false)">
+<div class="create-wrapper" [class.create-wrapper--modal]="isModal()" (click)="isMenuOpen.set(false)">
 
+    @if(!isModal()){
     <app-header [isPurple]="true" class="create-header"></app-header>
+    }
 
-    <section class="create-section">
+    <section class="create-section" [class.create-section--modal]="isModal()">
 
         <app-status [canHover]="false">Draft</app-status>
         <header class="create-section-header">
@@ -15,35 +17,33 @@
 
             <div class="create-form__fields">
                 <fieldset class="survey-info-fields">
-                    <app-input-field class="title-field" [inputFieldVariant]="'labelTop'" [inputControl]="surveyForm.controls.title"
-                        [label]="'Survey name'" [fieldId]="'survey-title'" [placeHolder]="''"
-                        [hasTrash]="true"></app-input-field>
+                    <app-input-field class="title-field" [inputFieldVariant]="'labelTop'"
+                        [inputControl]="surveyForm.controls.title" [label]="'Survey name'" [fieldId]="'survey-title'"
+                        [placeHolder]="''" [hasTrash]="true"></app-input-field>
 
-                    <span 
-                        class="error error__title"
-                        [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.title) !== null"
-                    >{{validationService.getErrorMessage(surveyForm.controls.title)}}</span>
+                    <span class="error error__title"
+                        [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.title) !== null">{{validationService.getErrorMessage(surveyForm.controls.title)}}</span>
 
-                    <app-input-field class="description-field" [inputFieldVariant]="'textArea'" [inputControl]="surveyForm.controls.description"
-                        [label]="'Describing text'" [isOptional]="true" [fieldId]="'survey-description'"></app-input-field>
+                    <app-input-field class="description-field" [inputFieldVariant]="'textArea'"
+                        [inputControl]="surveyForm.controls.description" [label]="'Describing text'" [isOptional]="true"
+                        [fieldId]="'survey-description'"></app-input-field>
 
                     <div class="date-category-fields">
                         <app-date-field [dateInputControl]="surveyForm.controls.expires_at"
                             class="set-date-field"></app-date-field>
 
-                        <app-drop-down-menu class="choose-category-field"
-                            [categoryList]="categoryList()"
-                            (sendCategorySelection)="onChooseCategory($event)" 
-                            [isMenuOpen]="isMenuOpen()" 
-                            [isCategorySelected]="currentCategory() !== null"
-                            [variant]="'create'"
+                        <app-drop-down-menu class="choose-category-field" [categoryList]="categoryList()"
+                            (sendCategorySelection)="onChooseCategory($event)" [isMenuOpen]="isMenuOpen()"
+                            [isCategorySelected]="currentCategory() !== null" [variant]="'create'"
                             (isOpenChange)="isMenuOpen.set($event)">Choose category</app-drop-down-menu>
 
                         <span class="current-category-field">{{currentCategory()?.name}}</span>
 
-                        <span class="error error__date" [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.expires_at) !== null">{{validationService.getErrorMessage(surveyForm.controls.expires_at)}}</span>
+                        <span class="error error__date"
+                            [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.expires_at) !== null">{{validationService.getErrorMessage(surveyForm.controls.expires_at)}}</span>
 
-                        <span class="error error__category" [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.category_id) !== null">{{validationService.getErrorMessage(surveyForm.controls.category_id)}}</span>
+                        <span class="error error__category"
+                            [class.error--visible]="validationService.getErrorMessage(surveyForm.controls.category_id) !== null">{{validationService.getErrorMessage(surveyForm.controls.category_id)}}</span>
 
                     </div>
 
@@ -55,12 +55,12 @@
                     <app-question-create [questionFormGroup]="question" (addAnswerEvent)="addAnswer($event)"
                         (removeAnswerEvent)="removeAnswer($event)" [questionIndex]="$index"
                         (removeQuestionEvent)="removeQuestion($event)"
-                        [canRemoveQuestion]="canUseQuestionTrash($index)"
-                        ></app-question-create>
+                        [canRemoveQuestion]="canUseQuestionTrash($index)"></app-question-create>
                     }
 
-                    @if(questionsCount() < 6){ <app-button class="survey-add-question" (click)="addQuestion()" [buttonVariant]="'secondaryBtn'"
-                        [hasIcon]="true" [buttonIconVariant]="'addWhite'">Add next question</app-button>
+                    @if(questionsCount() < 6){ <app-button class="survey-add-question" (click)="addQuestion()"
+                        [buttonVariant]="'secondaryBtn'" [hasIcon]="true" [buttonIconVariant]="'addWhite'">Add next
+                        question</app-button>
                         }
 
 
@@ -69,22 +69,35 @@
             </div>
 
             <section class="submit-section">
-                <span class="error error__submit" [class.error--visible]="showSubmitError()">Please fill in all required fields and select a category.</span>
-                <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'" [isDisabled]="isSubmitted()"
-                [hasIcon]="true" [buttonIconVariant]="'check'">Publish</app-button>
+                <span class="error error__submit" [class.error--visible]="showSubmitError()">Please fill in all required
+                    fields and select a category.</span>
+                <app-button class="survey-forms-submit-button" [buttonVariant]="'primaryBtn'" [buttonType]="'submit'"
+                    [isDisabled]="isSubmitted()" [hasIcon]="true" [buttonIconVariant]="'check'">Publish</app-button>
             </section>
 
-            
+
 
         </form>
 
     </section>
 
     @if(showOverlay()){
-    <div class="survey-create-overlay">
-        <app-dialog class="survey-publish-dialog" [class.survey-publish-dialog--show]="showDialog()"
-            (dialogCloseEvent)="onSuccessDialogClose()"></app-dialog>
-    </div>
+        <div class="survey-create-overlay">
+
+            @if(activeDialog() === 'success') {
+                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'success'"
+                    title="Your survey is now published!" (closeEvent)="onSuccessDialogClose()"></app-dialog>
+            }
+
+            @if(activeDialog() === 'discard') {
+                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'confirm'"
+                    title="Discard survey?" message="Your entered survey data will be lost." (closeEvent)="continueEditing()"
+                    (cancelEvent)="continueEditing()" (confirmEvent)="discardSurvey()">
+                </app-dialog>
+            }
+
+
+        </div>
     }
 
 </div>

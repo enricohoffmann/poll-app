@@ -11,7 +11,7 @@
                 and turn feedback into action.
             </p>
             <app-button [buttonVariant]="'primaryBtn'" [hasIcon]="true" [buttonIconVariant]="'add'"
-                class="home-top-grid__button" (click)="onNewSurvey()">New survey</app-button>
+                class="home-top-grid__button" (click)="openCreateSurvey(); $event.stopPropagation()">New survey</app-button>
 
             <aside class="home-top-grid__illustration">
                 <app-hero-illustration></app-hero-illustration>
@@ -67,8 +67,12 @@
 
             </section>
         </main>
-
-
-
     </section>
+
+    @if(showCreateSurvey()){
+        <app-create-survey-modal (closeModal)="closeCreateSurvey()">
+            <app-survey-create [isModal]="true" (closeCreate)="closeCreateSurvey()"></app-survey-create>
+        </app-create-survey-modal>
+    }
+
 </div>

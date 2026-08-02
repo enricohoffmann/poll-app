@@ -19,10 +19,12 @@ export class Button {
   private readonly BUTTON_CLASSES: Record<ButtonVariant, string> = {
     primaryBtn: 'btn--primary',
     secondaryBtn: 'btn--secondary',
+    purpleBtn: 'btn--purple',
     tertiaryBtn: 'btn--tertiary',
     filterBtn: 'btn--filter',
     trashBtn: 'btn--trash',
-    homeMobile: 'btn--home-mobile'
+    homeMobile: 'btn--home-mobile',
+
   };
 
   /**
@@ -72,6 +74,7 @@ export class Button {
   hideText = computed(() => {
     return (this.buttonVariant() === 'secondaryBtn' && this.hideTextOnMobile()) || this.buttonVariant() === 'homeMobile';
   });
+
   isDarkFontColor = input<boolean>(false);
 
 }

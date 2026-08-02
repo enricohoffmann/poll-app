@@ -3,19 +3,28 @@
 
 .dialog {
     box-sizing: border-box;
-    padding: 12px 20px;
+    padding: 20px 20px;
     background-color: var.$third-orange;
     border-radius: 5px 50px 5px 5px;
     display: grid;
     grid-template-columns: 1fr auto;
+    grid-template-areas: "title close-btn" "message message" "actions actions";
     column-gap: 16px;
+    row-gap: 20px;
+
+    &__title {
+        grid-area: title;
+        @include mixins.setup-font("Nerko-One", 28px, 400, var.$primary-purple);
+    }
 
     &__message {
+        grid-area: message;
         max-width: 268px;
         @include mixins.setup-font("Nerko-One", 24px, 400, var.$primary-purple);
     }
 
     &__button {
+        grid-area: close-btn;
         border: none;
         outline: none;
         height: 24px;
@@ -25,6 +34,11 @@
         @include mixins.setup-display-flex(row, center, center);
         cursor: pointer;
         padding-right: 12px;
+    }
+
+    &__actions {
+        grid-area: actions;
+        @include mixins.setup-display-flex(row, center, center, 16px);
     }
 
 }

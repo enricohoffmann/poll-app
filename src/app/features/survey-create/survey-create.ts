@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
+import { Component, inject, signal, computed, OnInit, output, input } from '@angular/core';
 import { Status } from "../../shared/components/status/status";
 import { Button } from "../../shared/components/button/button";
 import { InputField } from '../../shared/components/input-field/input-field';
@@ -40,7 +40,7 @@ import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
 export class SurveyCreate implements OnInit {
 
   private readonly DIALOG_DELAY = 125;
-  private readonly OVERLAY_CLOSE_DELAY = 1400;
+  private readonly OVERLAY_CLOSE_DELAY = 200;
 
   /**
    * @description The surveyForm is a FormGroup that represents the structure of the survey creation form.
@@ -59,13 +59,16 @@ export class SurveyCreate implements OnInit {
 
   currentCategory = signal<Category | null>(null);
   questionsCount = signal<number>(0);
-  showDialog = signal<boolean>(false);
   showOverlay = signal<boolean>(false);
   validationService = inject(ValidationService);
   isSubmitted = signal<boolean>(false);
   isMenuOpen = signal<boolean>(false);
   categoryList = signal<Category[]>([]);
   showSubmitError = signal(false);
+  closeCreate = output<void>();
+  isModal = input.required<boolean>();
+  activeDialog = signal<'success' | 'discard' | null>(null);
+  showDialog = signal<boolean>(false);
 
   private surveyService = inject(SurveyService);
   private router = inject(Router);
@@ -114,6 +117,36 @@ export class SurveyCreate implements OnInit {
         this.afterCreateSurvey();
       }
     }
+  }
+
+  onCancel(): void {
+    if (!this.surveyForm.dirty) {
+      this.closeCreate.emit();
+      return;
+    }
+
+    this.showOverlay.set(true);
+    this.activeDialog.set('discard')
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.showDialog.set(true);
+      });
+    });
+
+  }
+
+  continueEditing(): void {
+    this.showDialog.set(false);
+
+    setTimeout(() => {
+      this.showOverlay.set(false);
+    }, this.OVERLAY_CLOSE_DELAY);
+  }
+
+  discardSurvey(): void {
+    this.surveyForm.markAsUntouched();
+    this.surveyForm.markAsPristine();
+    this.onCancel();
   }
 
   /**
@@ -321,16 +354,6 @@ export class SurveyCreate implements OnInit {
   }
 
   /**
-   * @description Handles the cancellation of the survey creation process.
-   * Navigates the user back to the home page without saving any changes.
-   * This method is typically called when the user decides not to proceed with creating a new survey.
-   * @returns {void}
-   */
-  onCancel(): void {
-    this.router.navigate(['']);
-  }
-
-  /**
    * @description This private method is called after a survey has been successfully created.
    * It sets the showOverlay signal to true, which likely triggers a visual overlay in the UI.
    * After a short delay (defined by DIALOG_DELAY), it sets the showDialog signal to true, which likely displays a dialog to inform the user of the successful creation.
@@ -338,9 +361,12 @@ export class SurveyCreate implements OnInit {
    */
   private afterCreateSurvey(): void {
     this.showOverlay.set(true);
-    setTimeout(() => {
-      this.showDialog.set(true);
-    }, this.DIALOG_DELAY);
+    this.activeDialog.set('success');
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        this.showDialog.set(true);
+      });
+    });
   }
 
   /**
@@ -353,6 +379,7 @@ export class SurveyCreate implements OnInit {
   onSuccessDialogClose(): void {
     this.showDialog.set(false);
     setTimeout(() => {
+      this.activeDialog.set(null);
       this.showOverlay.set(false);
       this.callPublishedSurvey();
     }, this.OVERLAY_CLOSE_DELAY);

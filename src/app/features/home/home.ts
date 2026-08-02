@@ -8,6 +8,8 @@ import { SurveyWithCategory } from '../../interfaces/survey-with-category-interf
 import { DropDownMenu } from '../../shared/components/drop-down-menu/drop-down-menu';
 import { Category } from '../../interfaces/category-interface';
 import { HeroIllustration } from '../../shared/components/hero-illustration/hero-illustration';
+import { CreateSurveyModal } from '../../shared/components/create-survey-modal/create-survey-modal';
+import { SurveyCreate } from '../survey-create/survey-create';
 
 /**
  * @description The Home component serves as the main landing page for the poll application. It displays a list of surveys, allows users to filter surveys by status (active or past) and category, and provides navigation to create new surveys or view existing ones. The component interacts with the SurveyService to retrieve survey data and manage the state of the survey list and filters.
@@ -15,7 +17,7 @@ import { HeroIllustration } from '../../shared/components/hero-illustration/hero
  */
 @Component({
   selector: 'app-home',
-  imports: [Header, Button, SurveyCard, DropDownMenu, HeroIllustration],
+  imports: [Header, Button, SurveyCard, DropDownMenu, HeroIllustration, CreateSurveyModal, SurveyCreate],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
@@ -27,6 +29,7 @@ export class Home implements OnInit {
   surveyStatus = signal<'active' | 'past'>('active');
   currentCategory = signal<Category | null>(null);
   isMenuOpen = signal(false);
+  showCreateSurvey = signal(false);
 
   /**
    * @description A computed signal that filters the list of surveys based on the current filter settings (active or past surveys). 
@@ -74,16 +77,6 @@ export class Home implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     await this.surveyService.startRetrieval();
-  }
-
-  /**
-   * @description Navigates the user to the survey creation page. This method is triggered when the user clicks the "New Survey" button, allowing them to create a new survey.
-   * It uses the Angular Router to change the route to the 'create' path, which corresponds to the survey creation component.
-   * This method does not return any value and is primarily used for navigation purposes.
-   * @returns {void}
-   */
-  onNewSurvey(): void {
-    this.router.navigate(['create']);
   }
 
   /**
@@ -182,6 +175,14 @@ export class Home implements OnInit {
     if (!isAvailable) {
       this.currentCategory.set(null);
     }
+  }
+
+  openCreateSurvey(): void {
+    this.showCreateSurvey.set(true);
+  }
+
+  closeCreateSurvey(): void {
+    this.showCreateSurvey.set(false);
   }
 
 }

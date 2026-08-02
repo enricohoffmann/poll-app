@@ -1,10 +1,10 @@
 @use 'abstracts/variables' as var;
 @use 'abstracts/mixins' as mixins;
 
+
 .create-wrapper {
     min-height: 100vh;
     min-height: 100dvh;
-    background-color: var.$background-color-bright;
     @include mixins.setup-display-flex(column, center, center);
     overflow-x: auto;
 
@@ -27,6 +27,18 @@
     padding-inline: clamp(10px, 4vw, 59px);
     margin-top: 24px;
     margin-bottom: 36px;
+}
+
+.create-wrapper.create-wrapper--modal {
+    min-height: auto;
+    background: transparent;
+    display: block;
+    overflow: visible;
+}
+
+.create-section.create-section--modal {
+    width: 100%;
+    margin: 0;
 }
 
 .create-section-header {
@@ -140,12 +152,13 @@
     background-color: rgba(53, 39, 58, 0.3);
     @include mixins.setup-display-flex(row, center, flex-end);
     padding-bottom: 12vh;
+    overflow-x: hidden;
 }
 
-.survey-publish-dialog {
+.survey-dialog {
     z-index: 101;
     transform: translateX(150vw);
-    transition: transform 1500ms ease-in;
+    transition: transform 300ms ease-in;
 
     &--show {
         transform: translateX(0);

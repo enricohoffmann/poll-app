@@ -1,8 +1,28 @@
-<section class="dialog">
+<section class="dialog" [class.dialog--confirm]="dialogVariant() === 'confirm'">
 
-    <p class="dialog__message">Your survey is now published</p>
     <button class="dialog__button" type="button" (click)="onDialogClose()">
         <div class="dialog-close-icon"></div>
     </button>
 
+    <h2 class="dialog__title">
+        {{ title() }}
+    </h2>
+
+    @if (message()) {
+    <p class="dialog__message">
+        {{ message() }}
+    </p>
+    }
+
+    @if (dialogVariant() === 'confirm') {
+    <div class="dialog__actions">
+        <app-button [buttonVariant]="'purpleBtn'" [hasIcon]="false"  (click)="cancelEvent.emit()">
+            Continue editing
+        </app-button>
+
+        <app-button [buttonVariant]="'primaryBtn'" (click)="confirmEvent.emit()">
+            Discard survey
+        </app-button>
+    </div>
+    }
 </section>
