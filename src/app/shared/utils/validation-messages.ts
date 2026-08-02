@@ -10,5 +10,6 @@ export const VALIDATION_MESSAGES = {
     dateInvalid: () => 'The date must be valid',
     dateExpired: () => 'The date must be in the future.',
     categoryNotSelected: () => 'Please select a category.',
-    whitespace: () => 'This field must not contain only spaces.'
+    whitespace: () => 'This field must not contain only spaces.',
+    maxWordLength: (error: { maxLength: number }) => `Words may not contain more than ${error.maxLength} characters.`
   };

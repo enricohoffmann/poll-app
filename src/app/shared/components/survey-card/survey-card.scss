@@ -27,8 +27,7 @@
             min-width: 0;
             @include mixins.setup-font("Mulish", 26px, 700, var.$primary-purple);
             align-self: start;
-            min-width: 0;
-            line-height: 1.10;
+            line-height: 110%;
             max-height: calc(3 * 1.12em);
 
             display: -webkit-box;
@@ -37,6 +36,8 @@
             line-clamp: 3;
 
             overflow: hidden;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         &:hover {
@@ -46,8 +47,9 @@
     }
 
     &--listview {
+        min-width: 0;
         width: 98%;
-        height: 147px;
+        height: 154px;
         background-color: var.$background-color-card-secondary-default;
         border-radius: 5px 50px 5px 5px;
         padding: 12px 20px;
@@ -61,11 +63,16 @@
         }
 
         .card-title {
+            min-width: 0;
             @include mixins.setup-font("Mulish", 24px, 700, rgba(255, 255, 255, 1));
+            line-height: 120%;
             display: -webkit-box;
+            line-clamp: 2;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            overflow-wrap: anywhere;
+            word-break: break-word;
         }
 
         &:hover {
@@ -74,10 +81,5 @@
         }
 
     }
-
-
-
-
-
 
 }

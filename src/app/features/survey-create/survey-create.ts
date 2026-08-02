@@ -15,7 +15,8 @@ import {
   expiresDateNotPastValidator,
   expiresDatePatternValidator,
   expiresDateValidator,
-  noWhitespaceValidator
+  noWhitespaceValidator,
+  maxWordLengthValidator
 } from '../../shared/utils/validators';
 import { ValidationService } from '../../services/validation-service';
 import { Header } from "../../layout/header/header";
@@ -55,8 +56,8 @@ export class SurveyCreate implements OnInit {
    */
   surveyForm = new FormGroup<SurveyForm>({
     id: new FormControl(0, { nonNullable: true }),
-    title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator()] }),
-    description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(300), noWhitespaceValidator()] }),
+    title: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator(), maxWordLengthValidator(20)] }),
+    description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(300), noWhitespaceValidator(), maxWordLengthValidator(50)] }),
     expires_at: new FormControl('', { nonNullable: true, validators: [expiresDatePatternValidator(), expiresDateValidator(), expiresDateNotPastValidator()] }),
     questions: new FormArray<FormGroup>([]),
     is_published: new FormControl(false, { nonNullable: true }),
@@ -245,7 +246,7 @@ export class SurveyCreate implements OnInit {
   private createQuestionGroup(): FormGroup<QuestionForm> {
     const questionFormGroup: FormGroup<QuestionForm> = new FormGroup<QuestionForm>({
       id: new FormControl(0, { nonNullable: true }),
-      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120), noWhitespaceValidator()] }),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(120), noWhitespaceValidator(), maxWordLengthValidator(20)] }),
       allow_multiple_answers: new FormControl(false, { nonNullable: true }),
       sort_order: new FormControl(0, { nonNullable: true }),
       answers: new FormArray<FormGroup<AnswerForm>>([])
@@ -260,7 +261,7 @@ export class SurveyCreate implements OnInit {
   private createAnswerGroup(): FormGroup<AnswerForm> {
     const answerFormGroup: FormGroup<AnswerForm> = new FormGroup<AnswerForm>({
       id: new FormControl(0, { nonNullable: true }),
-      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator()] }),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator(), maxWordLengthValidator(20)] }),
       select: new FormControl(false, { nonNullable: true }),
       sort_order: new FormControl(0, { nonNullable: true })
     });
@@ -466,6 +467,19 @@ export class SurveyCreate implements OnInit {
    */
   private callPublishedSurvey(): void {
     this.router.navigate(['/view', this.currentSurveyId]);
+  }
+
+  preventEnterSubmit(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    const target = keyboardEvent.target;
+
+    if (target instanceof HTMLTextAreaElement) {
+      return;
+    }
+
+    if (target instanceof HTMLInputElement) {
+      keyboardEvent.preventDefault();
+    }
   }
 
 }

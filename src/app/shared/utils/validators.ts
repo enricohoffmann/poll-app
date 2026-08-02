@@ -104,3 +104,29 @@ export function noWhitespaceValidator(): ValidatorFn {
     };
 }
 
+/**
+ * @description Validator to check if any word in the input value exceeds the specified maximum length.
+ * This validator splits the input string into words and checks the length of each word against the provided maximum length.
+ * If any word exceeds the maximum length, it returns a validation error; otherwise, it returns null, indicating that the input is valid.
+ * @param maxLength The maximum allowed length for any word in the input value.
+ * @returns {ValidatorFn} A validator function that returns a validation error if any word exceeds the maximum length.
+ */
+export function maxWordLengthValidator(maxLength: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const value = control.value;
+
+    if (typeof value !== 'string' || value.trim() === '') {
+      return null;
+    }
+
+    const hasTooLongWord = value
+      .trim()
+      .split(/\s+/)
+      .some(word => word.length > maxLength);
+
+    return hasTooLongWord
+      ? { maxWordLength: { maxLength } }
+      : null;
+  };
+}
+

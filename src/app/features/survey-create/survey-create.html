@@ -13,7 +13,7 @@
                 (click)="onCancel()" [hideTextOnMobile]="true">Cancel</app-button>
         </header>
 
-        <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+        <form class="create-form" [formGroup]="surveyForm" (ngSubmit)="onSubmit()" (keydown.enter)="preventEnterSubmit($event)">
 
             <div class="create-form__fields">
                 <fieldset class="survey-info-fields">
@@ -58,7 +58,7 @@
                         [canRemoveQuestion]="canUseQuestionTrash($index)"></app-question-create>
                     }
 
-                    @if(questionsCount() < 6){ <app-button class="survey-add-question" (click)="addQuestion()"
+                    @if(questionsCount() < 6){ <app-button class="survey-add-question" (click)="addQuestion(); $event.stopPropagation()"
                         [buttonVariant]="'secondaryBtn'" [hasIcon]="true" [buttonIconVariant]="'addWhite'">Add next
                         question</app-button>
                         }
