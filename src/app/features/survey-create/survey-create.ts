@@ -21,6 +21,8 @@ import {
 import { ValidationService } from '../../services/validation-service';
 import { Header } from "../../layout/header/header";
 import { AnswerForm, QuestionForm, SurveyForm } from '../../shared/utils/types';
+import { DialogOverlayService } from '../../services/dialog-overlay-service';
+import { DialogResult } from '../../shared/utils/types';
 
 /**
  * @description This component represents the survey creation page of the application. 
@@ -66,7 +68,6 @@ export class SurveyCreate implements OnInit {
 
   currentCategory = signal<Category | null>(null);
   questionsCount = signal<number>(0);
-  showOverlay = signal<boolean>(false);
   validationService = inject(ValidationService);
   isSubmitted = signal<boolean>(false);
   isMenuOpen = signal<boolean>(false);
@@ -74,11 +75,10 @@ export class SurveyCreate implements OnInit {
   showSubmitError = signal(false);
   closeCreate = output<void>();
   isModal = input.required<boolean>();
-  activeDialog = signal<'success' | 'discard' | null>(null);
-  showDialog = signal<boolean>(false);
 
 
-  private surveyService = inject(SurveyService);
+  private readonly surveyService = inject(SurveyService);
+  private readonly dialogOverlayService = inject(DialogOverlayService);
   private router = inject(Router);
   private currentSurveyId: number = 0;
 
@@ -140,26 +140,23 @@ export class SurveyCreate implements OnInit {
       return;
     }
 
-    this.showOverlay.set(true);
-    this.activeDialog.set('discard')
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => { this.showDialog.set(true); });
-    });
+    this.openDiscardDialog();
 
   }
 
-  /**
-   * @description Continues editing the survey after the user has been prompted with a discard confirmation dialog.
-   * This method is called when the user chooses to continue editing instead of discarding their changes. 
-   * It sets the showDialog signal to false to hide the confirmation dialog and, after a short delay defined by OVERLAY_CLOSE_DELAY, sets the showOverlay signal to false to hide the overlay.
-   * @returns {void}
-   */
-  continueEditing(): void {
-    this.showDialog.set(false);
+  private openDiscardDialog(): void {
+    this.dialogOverlayService
+      .openConfirmDialog(
+        'Discard survey?',
+        'Your entered survey data will be lost.'
+      )
+      .subscribe(result => this.handleDiscardResult(result));
+  }
 
-    setTimeout(() => {
-      this.showOverlay.set(false);
-    }, this.OVERLAY_CLOSE_DELAY);
+  private handleDiscardResult(result: DialogResult): void {
+    if (result === 'confirm') {
+      this.discardSurvey();
+    }
   }
 
   /**
@@ -424,13 +421,7 @@ export class SurveyCreate implements OnInit {
    * @returns {void}
    */
   private afterCreateSurvey(): void {
-    this.showOverlay.set(true);
-    this.activeDialog.set('success');
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        this.showDialog.set(true);
-      });
-    });
+    this.dialogOverlayService.openSuccessDialog('Your survey is now published!').subscribe(() => this.onSuccessDialogClose());
   }
 
   /**
@@ -441,12 +432,7 @@ export class SurveyCreate implements OnInit {
    * @returns {void}
    */
   onSuccessDialogClose(): void {
-    this.showDialog.set(false);
-    setTimeout(() => {
-      this.activeDialog.set(null);
-      this.showOverlay.set(false);
-      this.callPublishedSurvey();
-    }, this.OVERLAY_CLOSE_DELAY);
+    this.callPublishedSurvey();
   }
 
   /**

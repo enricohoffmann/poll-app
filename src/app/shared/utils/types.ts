@@ -10,6 +10,8 @@ export type InputFieldVariant = 'labelTop' | 'labelLeft' | 'textArea' | 'noLabel
 
 export type ButtonIconVariant = 'add' | 'check' | 'addWhite' | 'closeWhite' | 'closePurple';
 
+export type DialogResult = 'confirm' | 'cancel';
+
 export type QuestionForm = {
     id: FormControl<number>;
     text: FormControl<string>;

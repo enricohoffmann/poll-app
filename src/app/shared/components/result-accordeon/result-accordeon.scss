@@ -3,6 +3,8 @@
 
 .accordeon-btn {
     box-sizing: border-box;
+    min-width: 0;
+    width: 160px;
     @include mixins.setup-display-flex(row, center, center, 12px);
     padding: 4px 10px;
     border-radius: 8px;

@@ -48,3 +48,14 @@
     aspect-ratio: 1 / 1;
     @include mixins.setup-image('/assets/icons/close-purple.svg');
 }
+
+@media(max-width: 600px) {
+    .dialog {
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
+    .dialog__actions {
+        flex-wrap: wrap;
+    }
+}

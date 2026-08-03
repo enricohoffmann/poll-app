@@ -2,5 +2,13 @@
 @use 'base/spacing';
 @use 'base/fonts';
 
+.dialog-backdrop {
+  background: rgba(53, 39, 58, 0.45);
+}
+
+.dialog-panel {
+  width: min(360px, calc(100vw - 32px));
+}
+
 
 

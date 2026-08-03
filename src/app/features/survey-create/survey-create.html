@@ -80,24 +80,4 @@
         </form>
 
     </section>
-
-    @if(showOverlay()){
-        <div class="survey-create-overlay">
-
-            @if(activeDialog() === 'success') {
-                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'success'"
-                    title="Your survey is now published!" (closeEvent)="onSuccessDialogClose()"></app-dialog>
-            }
-
-            @if(activeDialog() === 'discard') {
-                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'confirm'"
-                    title="Discard survey?" message="Your entered survey data will be lost." (closeEvent)="continueEditing()"
-                    (cancelEvent)="continueEditing()" (confirmEvent)="discardSurvey()">
-                </app-dialog>
-            }
-
-
-        </div>
-    }
-
 </div>

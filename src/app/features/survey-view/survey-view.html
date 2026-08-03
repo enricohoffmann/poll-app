@@ -34,26 +34,26 @@
 
                 <div class="survey-view-main__mobile">
                     @for(question of questions; track question.controls.id.value){
-                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
-                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
-                        </app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index"
+                        [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                    </app-question-view>
                     }
                 </div>
 
                 }@else {
                 <div class="survey-view-main__column">
                     @for(question of leftQuestions; track question.controls.id.value){
-                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
-                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
-                        </app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2"
+                        [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                    </app-question-view>
                     }
                 </div>
 
                 <div class="survey-view-main__column">
                     @for(question of rightQuestions; track question.controls.id.value){
-                        <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
-                            [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
-                        </app-question-view>
+                    <app-question-view [questionFormGroup]="question" [questionIndex]="$index * 2 + 1"
+                        [isReadOnly]="!canParticipate()" (selectionChanged)="updateSelectedAnswerIds()">
+                    </app-question-view>
                     }
                 </div>
                 }
@@ -71,7 +71,8 @@
                 <span class="vote-error-message" [class.vote-error-message--visible]="true">You have already completed
                     this survey.</span>
                 } @else if (isPastDue()) {
-                <span class="vote-error-message" [class.vote-error-message--visible]="true">This survey has expired. Voting is no longer possible.</span>
+                <span class="vote-error-message" [class.vote-error-message--visible]="true">This survey has expired.
+                    Voting is no longer possible.</span>
                 }
 
                 @if(isMobile()) {
@@ -99,21 +100,27 @@
 
             <h5 class="result-headline">Survey results <span class="result-headline__orange">LIVE</span></h5>
 
-            @if(storedVotes().length === 0 && selectedAnswerIds().length === 0){
-                <p class="result-notice">Select an answer to see a live preview of the results.</p>
-                <p class="result-empty">No votes have been submitted yet.</p>
-            }@else {
-                <div class="result-votings">
-                    @for(question of questions; track question.controls.id.value) {
-                        <app-question-vote 
-                            [questionId]="question.controls.id.value" 
-                            [questionFormGroup]="question"
-                            [questionIndex]="$index"
-                            [previewAnswerIds]="selectedAnswerIds()"
-                            [previewEnabled]="canParticipate()"
-                        ></app-question-vote>
-                    }
-                </div>
+            @if (storedVotes().length === 0 && selectedAnswerIds().length === 0) {
+            <p class="result-notice">
+                Select an answer to see a live preview of the results.
+            </p>
+
+            <p class="result-empty">
+                No votes have been submitted yet.
+            </p>
+            } @else if (isResultUpdating()) {
+            <p class="result-empty">
+                The results are updating.
+            </p>
+            } @else {
+            <div class="result-votings">
+                @for (question of questions; track question.controls.id.value) {
+                <app-question-vote [questionId]="question.controls.id.value" [questionFormGroup]="question"
+                    [questionIndex]="$index" [previewAnswerIds]="selectedAnswerIds()"
+                    [previewEnabled]="canParticipate()">
+                </app-question-vote>
+                }
+            </div>
             }
         </aside>
         }
@@ -130,13 +137,13 @@
 
 
     @if(showOverlay()){
-        <div class="survey-view-overlay">
+    <div class="survey-view-overlay">
 
-            @if(hasJustSubmitted()) {
-                <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'success'"
-                    message="Thank you for completing the survey." (closeEvent)="onMessageDialogClose()"></app-dialog>
-            }
-        </div>
+        @if(hasJustSubmitted()) {
+        <app-dialog class="survey-dialog" [class.survey-dialog--show]="showDialog()" [dialogVariant]="'success'"
+            message="Thank you for completing the survey." (closeEvent)="onMessageDialogClose()"></app-dialog>
+        }
+    </div>
     }
 
 </div>

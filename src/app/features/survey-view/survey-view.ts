@@ -67,6 +67,8 @@ export class SurveyView implements OnDestroy, OnInit {
   showOverlay = signal(false);
   showDialog = signal(false);
   selectedAnswerIds = signal<number[]>([]);
+  previewEnabled = signal(true);
+  isResultUpdating = signal(false);
   readonly storedVotes = this.surveyService.voteList;
 
   /**
@@ -414,15 +416,19 @@ export class SurveyView implements OnDestroy, OnInit {
    * @returns {Promise<void>} - A promise that resolves when the submission is complete.
    */
   async onSubmit(): Promise<void> {
-    if (!this.canParticipate()) { return; }
-
     this.voteForm.markAllAsTouched();
-    this.hasJustSubmitted.set(true);
-    this.showCompleteMessage();
+    if (this.voteForm.invalid || !this.canParticipate()) { return; }
+    this.isResultUpdating.set(true);
+    try {
+      const success = await this.surveyService.handleAddVotes(this.voteForm);
+      if (!success) { return; }
+      await this.surveyService.loadVotesByQuestionIds();
 
-    if (this.voteForm.valid) {
-      await this.surveyService.handleAddVotes(this.voteForm);
-    }
+      this.selectedAnswerIds.set([]);
+      this.hasJustSubmitted.set(true);
+      this.voteForm.disable();
+      this.showCompleteMessage();
+    } finally { this.isResultUpdating.set(false); }
   }
 
   /**
@@ -437,6 +443,7 @@ export class SurveyView implements OnDestroy, OnInit {
    */
   private showCompleteMessage(): void {
     this.showOverlay.set(true);
+    document.body.style.overflow = "hidden";
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         this.showDialog.set(true);
@@ -456,6 +463,7 @@ export class SurveyView implements OnDestroy, OnInit {
     this.showDialog.set(false);
     setTimeout(() => {
       this.showOverlay.set(false);
+      document.body.style.overflow = "";
     }, 125);
   }
 

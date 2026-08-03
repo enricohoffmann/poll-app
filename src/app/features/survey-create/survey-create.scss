@@ -1,7 +1,6 @@
 @use 'abstracts/variables' as var;
 @use 'abstracts/mixins' as mixins;
 
-
 .create-wrapper {
     min-height: 100vh;
     min-height: 100dvh;
@@ -145,26 +144,6 @@
     grid-area: submit-button;
 }
 
-.survey-create-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    background-color: rgba(53, 39, 58, 0.3);
-    @include mixins.setup-display-flex(row, center, flex-end);
-    padding-bottom: 12vh;
-    overflow-x: hidden;
-}
-
-.survey-dialog {
-    z-index: 101;
-    transform: translateX(150vw);
-    transition: transform 300ms ease-in;
-
-    &--show {
-        transform: translateX(0);
-    }
-}
-
 .survey-add-question {
     justify-self: start;
     align-self: start;
@@ -275,4 +254,6 @@
     .survey-forms-submit-button {
         justify-self: flex-end;
     }
+
+
 }
