@@ -30,7 +30,7 @@ export class Home implements OnInit {
   currentCategory = signal<Category | null>(null);
   isMenuOpen = signal(false);
   showCreateSurvey = signal(false);
-  
+
 
   /**
    * @description A computed signal that filters the list of surveys based on the current filter settings (active or past surveys). 
@@ -49,10 +49,27 @@ export class Home implements OnInit {
    */
   visibleSurveys = computed(() => {
     const category = this.currentCategory();
-    const surveys = this.surveyFilteredList();
-    if (!category) { return surveys; }
-    return surveys.filter(survey => survey.category_id === category.id);
+    const surveys = this.surveyFilteredList()
+      .filter(survey => !category || survey.category_id === category.id);
+
+    return this.sortSurveysByEndDate(surveys);
   });
+
+  private sortSurveysByEndDate(surveys: SurveyWithCategory[]): SurveyWithCategory[] {
+
+    if(this.surveyStatus() === 'active'){
+      return [...surveys].sort((a, b) => this.getEndDateValue(a) - this.getEndDateValue(b));
+    } else {
+      return [...surveys].sort((a, b) => this.getEndDateValue(b) - this.getEndDateValue(a));
+    }
+   
+  }
+
+  private getEndDateValue(survey: SurveyWithCategory): number {
+    return survey.expires_at
+      ? new Date(survey.expires_at).getTime()
+      : Number.POSITIVE_INFINITY;
+  }
 
   /**
    * @description A computed signal that generates a list of available categories based on the currently filtered surveys.

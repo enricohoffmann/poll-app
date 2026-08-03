@@ -126,6 +126,7 @@
         padding: 4px;
         transition: background-color 125ms ease-in;
         cursor: pointer;
+        z-index: 20;
 
         &:hover {
             background-color: var.$light-purple;

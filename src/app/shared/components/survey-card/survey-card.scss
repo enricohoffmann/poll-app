@@ -83,3 +83,9 @@
     }
 
 }
+
+@media(max-width: 500px) {
+    .card--highlights {
+        border-radius: 0 56px 0 0;
+    }
+}
