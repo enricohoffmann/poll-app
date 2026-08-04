@@ -92,7 +92,7 @@ export class SurveyService implements OnDestroy {
    * @async
    */
   async getCategories(): Promise<void> {
-    const response = await this.supabaseClient.from('categories').select('*');
+    const response = await this.supabaseClient.from('categories').select('*').order('name', { ascending: true });
     this.categoriesList.set(response.data ?? [] as Category[]);
   }
 

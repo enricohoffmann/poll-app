@@ -51,20 +51,30 @@ export class Home implements OnInit {
     const category = this.currentCategory();
     const surveys = this.surveyFilteredList()
       .filter(survey => !category || survey.category_id === category.id);
-
     return this.sortSurveysByEndDate(surveys);
   });
 
-  private sortSurveysByEndDate(surveys: SurveyWithCategory[]): SurveyWithCategory[] {
 
+  /**
+   * @description Sorts the provided list of surveys based on their end date (expires_at). The sorting order depends on the current survey status filter (active or past). Active surveys are sorted in ascending order of their end date, while past surveys are sorted in descending order.
+   * This method ensures that the surveys are presented to the user in a logical order based on their relevance and status.
+   * @param surveys 
+   * @returns {SurveyWithCategory[]} The sorted list of surveys based on their end date and the current survey status filter.
+   */
+  private sortSurveysByEndDate(surveys: SurveyWithCategory[]): SurveyWithCategory[] {
     if(this.surveyStatus() === 'active'){
       return [...surveys].sort((a, b) => this.getEndDateValue(a) - this.getEndDateValue(b));
     } else {
       return [...surveys].sort((a, b) => this.getEndDateValue(b) - this.getEndDateValue(a));
     }
-   
   }
 
+  /**
+   * @description Retrieves the end date value of a survey for sorting purposes. If the survey has an expiration date (expires_at), it converts that date to a timestamp. 
+   * If the survey does not have an expiration date, it returns a value representing positive infinity, ensuring that surveys without an expiration date are treated as having the latest possible end date.
+   * @param survey 
+   * @returns {number} The end date value of the survey, or positive infinity if the survey has no expiration date.
+   */
   private getEndDateValue(survey: SurveyWithCategory): number {
     return survey.expires_at
       ? new Date(survey.expires_at).getTime()
@@ -82,9 +92,9 @@ export class Home implements OnInit {
     const categories = surveys.map(survey => survey.category);
 
     return categories.filter(
-      (category, index, array) =>
-        array.findIndex(item => item.id === category.id) === index
-    );
+      (category, index, array) => array
+        .findIndex(item => item.id === category.id) === index)
+        .sort((a, b) => a.name.localeCompare(b.name));
   });
 
   /**
@@ -203,7 +213,7 @@ export class Home implements OnInit {
   }
 
   /**
-   * @description Closes the create survey modal by setting the showCreateSurvey signal to false. This method is typically called when the user cancels the survey creation process or after successfully creating a survey, returning them to the main home view.
+   * @description Closes the create survey modal by setting the showCreateSurvey signal to false. This method is typically called when the user cancels the survey creation process or after successfully creating a survey, allowing them to return to the main survey list view.
    * @returns {void}
    */
   closeCreateSurvey(): void {

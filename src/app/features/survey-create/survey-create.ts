@@ -40,7 +40,6 @@ import { DialogResult } from '../../shared/utils/types';
     QuestionCreate,
     DropDownMenu,
     DateField,
-    Dialog,
     Header
   ],
   templateUrl: './survey-create.html',
@@ -129,9 +128,9 @@ export class SurveyCreate implements OnInit {
   }
 
   /**
-   * @description Handles the cancellation of the survey creation process. If the survey form has not been modified (i.e., it is not dirty), it emits the closeCreate event to close the survey creation view.
-   * If the form has been modified, it displays a confirmation dialog asking the user whether they want to discard their changes or continue editing. 
-   * The method sets the showOverlay signal to true and the activeDialog signal to 'discard', then uses requestAnimationFrame to ensure that the dialog is displayed after the overlay is rendered.
+   * @description Handles the cancellation of the survey creation process. If the survey form is not dirty (i.e., no changes have been made), it emits the closeCreate event to close the survey creation view.
+   * If the form is dirty, it opens a confirmation dialog to ask the user if they want to discard their changes. 
+   * Depending on the user's response in the confirmation dialog, it either discards the survey or keeps the user on the survey creation page.
    * @returns {void}
    */
   onCancel(): void {
@@ -144,6 +143,12 @@ export class SurveyCreate implements OnInit {
 
   }
 
+  /**
+   * @description Opens a confirmation dialog to ask the user if they want to discard their changes in the survey creation form.
+   * It uses the DialogOverlayService to display a dialog with a title and message. 
+   * The user's response (confirm or cancel) is handled by the handleDiscardResult method, which either discards the survey or keeps the user on the survey creation page based on their choice.
+   * @returns {void}
+   */
   private openDiscardDialog(): void {
     this.dialogOverlayService
       .openConfirmDialog(
@@ -153,6 +158,12 @@ export class SurveyCreate implements OnInit {
       .subscribe(result => this.handleDiscardResult(result));
   }
 
+  /**
+   * @description Handles the result of the discard confirmation dialog. If the user confirms that they want to discard their changes, it calls the discardSurvey method to reset the survey form and emit the closeCreate event.
+   * If the user cancels, it does nothing, allowing them to continue editing the survey.
+   * @param result The result of the confirmation dialog ('confirm' or 'cancel').
+   * @returns {void}
+   */
   private handleDiscardResult(result: DialogResult): void {
     if (result === 'confirm') {
       this.discardSurvey();
