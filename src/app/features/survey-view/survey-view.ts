@@ -422,8 +422,6 @@ export class SurveyView implements OnDestroy, OnInit {
     try {
       const success = await this.surveyService.handleAddVotes(this.voteForm);
       if (!success) { return; }
-      await this.surveyService.loadVotesByQuestionIds();
-
       this.selectedAnswerIds.set([]);
       this.hasJustSubmitted.set(true);
       this.voteForm.disable();
