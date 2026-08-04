@@ -48,6 +48,7 @@ export class Button {
   hasIcon = input(false);
   hasTrashIcon = input(false);
   buttonIconVariant = input<ButtonIconVariant>('add');
+  
   /**
    * @description Computed property that returns the CSS class for the button icon based on its variant.
    * @returns {string} The CSS class for the button icon.

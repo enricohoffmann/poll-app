@@ -9,7 +9,6 @@ import { DropDownMenu } from "../../shared/components/drop-down-menu/drop-down-m
 import { Category } from '../../interfaces/category-interface';
 import { DateField } from '../../shared/components/date-field/date-field';
 import { Router } from '@angular/router';
-import { Dialog } from '../../shared/components/dialog/dialog';
 import {
   categorySelectedValidator,
   expiresDateNotPastValidator,
@@ -99,6 +98,7 @@ export class SurveyCreate implements OnInit {
    * @description Initializes the component by adding an initial question to the survey form.
    * This method is called during the component's lifecycle hook (ngOnInit) to ensure that the survey form starts with at least one question.
    * It utilizes the addQuestion method to create and append a new question FormGroup to the questions FormArray within the surveyForm.
+   * @returns {Promise<void>} A promise that resolves when the initialization process is complete.
    */
   async ngOnInit(): Promise<void> {
     await this.surveyService.getCategories();
@@ -269,7 +269,7 @@ export class SurveyCreate implements OnInit {
   private createAnswerGroup(): FormGroup<AnswerForm> {
     const answerFormGroup: FormGroup<AnswerForm> = new FormGroup<AnswerForm>({
       id: new FormControl(0, { nonNullable: true }),
-      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(4), Validators.maxLength(80), noWhitespaceValidator(), maxWordLengthValidator(20)] }),
+      text: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(2), Validators.maxLength(80), noWhitespaceValidator(), maxWordLengthValidator(20)] }),
       select: new FormControl(false, { nonNullable: true }),
       sort_order: new FormControl(0, { nonNullable: true })
     });
@@ -418,6 +418,7 @@ export class SurveyCreate implements OnInit {
    * @description Handles the selection of a category for the survey.
    * Updates the currentCategory signal and sets the category_id in the surveyForm.
    * @param category The selected category.
+   * @returns {void}
    */
   onChooseCategory(category: Category | null): void {
     this.currentCategory.set(category);

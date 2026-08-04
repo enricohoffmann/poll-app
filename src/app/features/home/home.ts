@@ -58,7 +58,7 @@ export class Home implements OnInit {
   /**
    * @description Sorts the provided list of surveys based on their end date (expires_at). The sorting order depends on the current survey status filter (active or past). Active surveys are sorted in ascending order of their end date, while past surveys are sorted in descending order.
    * This method ensures that the surveys are presented to the user in a logical order based on their relevance and status.
-   * @param surveys 
+   * @param surveys Surveys to be sorted based on their end date.
    * @returns {SurveyWithCategory[]} The sorted list of surveys based on their end date and the current survey status filter.
    */
   private sortSurveysByEndDate(surveys: SurveyWithCategory[]): SurveyWithCategory[] {
@@ -72,7 +72,7 @@ export class Home implements OnInit {
   /**
    * @description Retrieves the end date value of a survey for sorting purposes. If the survey has an expiration date (expires_at), it converts that date to a timestamp. 
    * If the survey does not have an expiration date, it returns a value representing positive infinity, ensuring that surveys without an expiration date are treated as having the latest possible end date.
-   * @param survey 
+   * @param survey The survey for which to retrieve the end date value.
    * @returns {number} The end date value of the survey, or positive infinity if the survey has no expiration date.
    */
   private getEndDateValue(survey: SurveyWithCategory): number {

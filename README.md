@@ -34,7 +34,7 @@ Text fields use these constraints:
 - A word must not exceed 20 characters in length
 - Description: optional, up to 300 characters
 - Question text: 4-120 characters
-- Answer text: 1-80 characters
+- Answer text: 2-80 characters
 
 ## Survey Filtering
 

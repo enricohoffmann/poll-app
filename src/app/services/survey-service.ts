@@ -36,7 +36,7 @@ export class SurveyService implements OnDestroy {
   voteList = signal<Vote[]>([]);
 
   /**
-   * Initializes the SurveyService by creating a Supabase client and subscribing to real-time vote insert events.
+   * @description Initializes the SurveyService by creating a Supabase client and subscribing to real-time vote insert events.
    * The Supabase client is created using the URL and key from the environment configuration.
    * The service subscribes to the 'votes' table for INSERT events to handle real-time updates.
    * @constructor
@@ -47,7 +47,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Cleans up the Realtime channel subscription when the service is destroyed.
+   * @description Cleans up the Realtime channel subscription when the service is destroyed.
    * This method is called automatically by Angular when the service is destroyed.
    * It removes the Realtime channel for vote insert events to prevent memory leaks.
    * @returns {void}
@@ -59,7 +59,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Starts the retrieval of survey highlights and surveys with categories.
+   * @description Starts the retrieval of survey highlights and surveys with categories.
    * This method retrieves survey highlights and surveys with categories in parallel using Promise.all.
    * It updates the surveyHighlights and surveyList signals with the retrieved data.
    * @returns {Promise<void>} A promise that resolves when both retrievals are complete.
@@ -85,7 +85,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves the list of categories from the Supabase database and updates the categoriesList signal.
+   * @description Retrieves the list of categories from the Supabase database and updates the categoriesList signal.
    * This method queries the 'categories' table and sets the categoriesList signal with the retrieved data.
    * If no data is found, it sets the categoriesList signal to an empty array.
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
@@ -97,7 +97,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves the list of surveys from the Supabase database.
+   * @description Retrieves the list of surveys from the Supabase database.
    * @returns {Promise<Survey[]>} A promise that resolves to an array of surveys.
    */
   async getSurveys(): Promise<Survey[]> {
@@ -106,7 +106,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves the list of surveys along with their associated categories from the Supabase database and updates the surveyList signal.
+   * @description Retrieves the list of surveys along with their associated categories from the Supabase database and updates the surveyList signal.
    * This method queries the 'unfiltered_surveys' table and joins it with the 'categories' table to get the category information.
    * It sets the surveyList signal with the retrieved data. If no data is found, it sets the surveyList signal to an empty array.
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
@@ -119,7 +119,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves a survey along with its associated category by survey ID from the Supabase database.
+   * @description Retrieves a survey along with its associated category by survey ID from the Supabase database.
    * @param surveyId The ID of the survey to retrieve.
    * @returns {Promise<SurveyWithCategory>} A promise that resolves to the survey with its category.
    */
@@ -132,7 +132,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves the list of survey highlights along with their associated categories from the Supabase database and updates the surveyHighlights signal.
+   * @description Retrieves the list of survey highlights along with their associated categories from the Supabase database and updates the surveyHighlights signal.
    * This method queries the 'ending_soon_surveys' table and joins it with the 'categories' table to get the category information.
    * It sets the surveyHighlights signal with the retrieved data. If no data is found, it sets the surveyHighlights signal to an empty array.
    * @returns {Promise<void>} A promise that resolves when the retrieval is complete.
@@ -145,7 +145,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves the list of questions along with their associated answers for a given survey ID from the Supabase database.
+   * @description Retrieves the list of questions along with their associated answers for a given survey ID from the Supabase database.
    * @param surveyId The ID of the survey to retrieve questions and answers for.
    * @returns {Promise<QuestionWithAnswers[]>} A promise that resolves to an array of questions with their answers.
    */
@@ -160,7 +160,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Loads the votes for the current set of question IDs from the Supabase database and updates the voteList signal.
+   * @description Loads the votes for the current set of question IDs from the Supabase database and updates the voteList signal.
    * @returns {Promise<void>} A promise that resolves when the votes are loaded.
    */
   async loadVotesByQuestionIds(): Promise<void> {
@@ -191,7 +191,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Handles the addition of a new survey along with its questions and answers.
+   * @description Handles the addition of a new survey along with its questions and answers.
    * @param surveyForm The form group containing the survey data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created survey, or 0 if the creation failed.
    */
@@ -204,7 +204,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Creates a new survey in the Supabase database.
+   * @description Creates a new survey in the Supabase database.
    * @param survey The survey model containing the survey data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created survey, or 0 if the creation failed.
    */
@@ -216,7 +216,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Handles the addition of questions for a given survey.
+   * @description Handles the addition of questions for a given survey.
    * @param questionsDataRaw An array of raw question data.
    * @param surveyId The ID of the survey to add questions to.
    * @returns {Promise<boolean>} A promise that resolves to true if all questions were added successfully, false otherwise.
@@ -235,7 +235,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Creates a new question in the Supabase database.
+   * @description Creates a new question in the Supabase database.
    * @param question The question model containing the question data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created question, or 0 if the creation failed.
    */
@@ -247,7 +247,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Handles the addition of answers for a given question.
+   * @description Handles the addition of answers for a given question.
    * @param answersDataRaw An array of raw answer data.
    * @param questionId The ID of the question to add answers to.
    * @returns {Promise<boolean>} A promise that resolves to true if all answers were added successfully, false otherwise.
@@ -263,7 +263,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Creates a new answer in the Supabase database.
+   * @description Creates a new answer in the Supabase database.
    * @param answer The answer model containing the answer data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created answer, or 0 if the creation failed.
    */
@@ -275,7 +275,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Retrieves a category by its index in the categories list.
+   * @description Retrieves a category by its index in the categories list.
    * @param categoryIndex The index of the category to retrieve.
    * @returns {(Category | null)} The category at the specified index, or null if not found.
    */
@@ -285,7 +285,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Handles the addition of votes based on the provided vote form.
+   * @description Handles the addition of votes based on the provided vote form.
    * @param voteForm The form group containing the vote data.
    * @returns {Promise<boolean>} A promise that resolves to true if all votes were added successfully, false otherwise.
    */
@@ -305,7 +305,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Collects the selected answers for a given question and adds them to the votes array.
+   * @description Collects the selected answers for a given question and adds them to the votes array.
    * @param question The form group containing the question data.
    * @param votes The array of votes to add the selected answers to.
    * @param voterToken The token of the voter.
@@ -320,7 +320,7 @@ export class SurveyService implements OnDestroy {
   }
 
   /**
-   * Creates a new vote in the Supabase database.
+   * @description Creates a new vote in the Supabase database.
    * @param vote The vote model containing the vote data.
    * @returns {Promise<number>} A promise that resolves to the ID of the newly created vote, or 0 if the creation failed.
    */

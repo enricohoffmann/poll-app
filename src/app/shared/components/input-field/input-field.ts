@@ -26,7 +26,7 @@ export class InputField {
 
   /**
    * @description Sets the isWriting signal to true when the user starts typing in the input field.
-   * @returns void
+   * @returns {void}
    * @memberof InputField
    */
   onInputEnter(): void{
@@ -35,8 +35,7 @@ export class InputField {
 
   /**
    * @description Sets the isWriting signal to false and trims the input field's value when the user stops typing.
-   * Trims the whitespace from the input field's value when the user stops typing.
-   * @returns void
+   * @returns {void}
    * @memberof InputField
    */
   onInputLeave(): void{
@@ -57,7 +56,7 @@ export class InputField {
 
   /**
    * @description Clears the input field and emits the removeItem event.
-   * @returns void
+   * @returns {void}
    * @memberof InputField
    */
   onDeleteContent(): void{

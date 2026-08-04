@@ -146,6 +146,7 @@ export class SurveyView implements OnDestroy, OnInit {
    * This is important for maintaining the integrity of the application, especially when navigating away from the survey view.
    * The method does not return any value and is primarily used for cleanup purposes.
    * @memberof SurveyView
+   * @returns {void}
    */
   ngOnDestroy(): void {
     this.surveyService.clearCurrentQuestionIds();
@@ -405,6 +406,7 @@ export class SurveyView implements OnDestroy, OnInit {
   /**
    * @description Toggles the visibility of the survey results on mobile devices.
    * @param {boolean} see - True to show the results, false to hide them.
+   * @returns {void}
    */
   toggleSeeResult(see: boolean): void {
     this.openResultMobile.set(see);

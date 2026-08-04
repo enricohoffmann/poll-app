@@ -11,7 +11,7 @@ export class AnswerModel implements Answer {
     sort_order: number;
 
     /**
-     * Creates an instance of AnswerModel.
+     * @description Creates an instance of AnswerModel.
      *
      * @param answerData - Partial data for the answer.
      * @param questionId - The ID of the question this answer belongs to.
@@ -24,8 +24,7 @@ export class AnswerModel implements Answer {
     }
 
     /**
-     * Returns a JSON representation of the answer suitable for adding a survey.
-     *
+     * @description Returns a JSON representation of the answer suitable for adding a survey.
      * @returns {object} The JSON representation of the answer.
      */
     getCleanAddSurveyJson(): {} {

@@ -10,7 +10,7 @@ export class VoteModel implements Vote {
     voter_token: string;
 
     /**
-     * Creates a new instance of the VoteModel class.   
+     * @description Creates a new instance of the VoteModel class.
      * @param answerId - The ID of the answer being voted for.
      * @param questionId - The ID of the question being voted on.
      * @param voterToken - The token identifying the voter.
@@ -23,7 +23,7 @@ export class VoteModel implements Vote {
     }
 
     /**
-     * Returns a clean JSON representation of the vote data, excluding the ID. This is useful for sending the vote data to an API or storing it in a database without including the ID field.
+     * @description Returns a clean JSON representation of the vote data, excluding the ID. This is useful for sending the vote data to an API or storing it in a database without including the ID field.
      * @returns {object} The clean JSON representation of the vote data.
      */
     getCleanAddVoteJson(): {} {

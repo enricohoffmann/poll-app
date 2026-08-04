@@ -19,7 +19,7 @@ export class DialogOverlayService {
   private readonly confirmResult = new Subject<DialogResult>();
 
   /**
-   * Opens a success dialog with the given title.
+   * @description Opens a success dialog with the given title.
    * @param title The title of the success dialog.
    * @returns An observable that emits when the dialog is closed.
    */
@@ -34,7 +34,7 @@ export class DialogOverlayService {
   }
 
   /**
-   * Opens a confirmation dialog with the given title and message.
+   * @description Opens a confirmation dialog with the given title and message.
    * @param title The title of the confirmation dialog.
    * @param message The message of the confirmation dialog.
    * @returns An observable that emits the user's choice (confirm or cancel).
@@ -80,7 +80,7 @@ export class DialogOverlayService {
    * @description Initializes a success dialog by setting its variant to 'success', assigning the provided title, and subscribing to the close event to handle dialog closure.
    * @param dialog The component reference of the dialog to initialize.
    * @param title The title of the success dialog.
-   * @returns void
+   * @returns {void}
    */
   private initializeSuccessDialog(dialog: ComponentRef<Dialog>, title: string): void {
     dialog.setInput('dialogVariant', 'success');
@@ -94,7 +94,7 @@ export class DialogOverlayService {
    * @param dialog The component reference of the dialog to initialize.
    * @param title The title of the confirmation dialog.
    * @param message The message of the confirmation dialog.
-   * @returns void
+   * @returns {void}
    */
   private initializeConfirmDialog(dialog: ComponentRef<Dialog>, title: string, message: string): void {
     this.setConfirmInputs(dialog, title, message);
@@ -107,7 +107,7 @@ export class DialogOverlayService {
    * @param dialog The component reference of the dialog to set inputs for.
    * @param title The title of the confirmation dialog.
    * @param message The message of the confirmation dialog.
-   * @returns void
+   * @returns {void}
    */
   private setConfirmInputs(dialog: ComponentRef<Dialog>, title: string, message: string): void {
     dialog.setInput('dialogVariant', 'confirm');
@@ -118,7 +118,7 @@ export class DialogOverlayService {
   /**
    * @description Binds the close, cancel, and confirm events of a confirmation dialog to handle user actions and emit the appropriate result.
    * @param dialog The component reference of the dialog to bind events for.
-   * @returns void
+   * @returns {void}
    */
   private bindConfirmEvents(dialog: ComponentRef<Dialog>): void {
     dialog.instance.closeEvent.subscribe(() => this.handleConfirmResult('cancel'));
@@ -131,7 +131,7 @@ export class DialogOverlayService {
   /**
    * @description Handles the result of a confirmation dialog by emitting the result through the confirmResult subject and closing the dialog.
    * @param result The result of the confirmation dialog ('confirm' or 'cancel').
-   * @returns void
+   * @returns {void}
    */
   private handleConfirmResult(result: DialogResult): void {
     this.confirmResult.next(result);
@@ -140,7 +140,7 @@ export class DialogOverlayService {
 
   /**
    * @description Closes the currently open dialog overlay, if any, and disposes of the overlay reference.
-   * @returns void
+   * @returns {void}
    */
   close(): void {
     this.overlayRef?.dispose();
@@ -149,7 +149,7 @@ export class DialogOverlayService {
 
   /**
    * @description Handles the closure of a dialog by emitting a closed event and closing the overlay.
-   * @returns void
+   * @returns {void}
    */
   private handleDialogClose(): void {
     this.closed.next();

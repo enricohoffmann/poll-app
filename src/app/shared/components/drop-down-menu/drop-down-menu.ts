@@ -58,7 +58,7 @@ export class DropDownMenu {
   /**
    * @description Emits the selected category based on its index in the category list.
    * @param id The index of the selected category in the category list.
-   * @returns void
+   * @returns {void}
    * @memberof DropDownMenu
    */
   handleCategoryById(id: number): void {

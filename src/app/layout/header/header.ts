@@ -6,7 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 
 /**
- * Header component for the application.
+ * @description Header component for the application.
  * This component displays the header section of the application, including navigation buttons and responsive behavior.
  *
  * @component
@@ -32,9 +32,8 @@ export class Header {
   private breakpointObserver = inject(BreakpointObserver);
 
   /**
-   * A signal that indicates whether the application is being viewed on a mobile device (screen width <= 900px).
+   * @description A signal that indicates whether the application is being viewed on a mobile device (screen width <= 900px).
    * This signal is derived from the BreakpointObserver and updates automatically when the screen size changes.
-   *
    * @readonly
    * @type {Signal<boolean>}
    */
@@ -55,10 +54,9 @@ export class Header {
   }
 
   /**
-   * Navigates to the 'home' route when the "Back to Home" button is clicked.
+   * @description Navigates to the 'home' route when the "Back to Home" button is clicked.
    * This method is called when the user interacts with the button in the header.
    * It uses the Angular Router to navigate to the specified route.
-   *
    * @method
    * @returns {void}
    */

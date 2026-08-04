@@ -8,7 +8,7 @@ import { Button } from '../button/button';
   selector: 'app-dialog',
   imports: [Button],
   templateUrl: './dialog.html',
-  styleUrl: './dialog.scss',
+  styleUrls: ['./dialog.scss'],
 })
 export class Dialog {
   dialogVariant = input<'success' | 'confirm'>('success');
@@ -22,6 +22,7 @@ export class Dialog {
 
   /**
    * @description Emits an event when the dialog is closed.
+   * @returns {void}
    */
   onDialogClose(): void {
     this.closeEvent.emit();

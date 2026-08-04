@@ -21,7 +21,7 @@ export class QuestionView {
   /**
    * @description Toggles the selection of an answer for the question.
    * @param answerIndex 
-   * @returns void
+   * @returns {void}
    * @remarks If multiple answers are not allowed, it will deselect all other answers before toggling the selected answer.
    */
   toggleAnswer(answerIndex: number): void {
@@ -36,7 +36,7 @@ export class QuestionView {
 
   /**
    * @description Determines if multiple answers are allowed for the question.
-   * @returns boolean
+   * @returns {boolean} 
    * @remarks This is based on the 'allow_multiple_answers' control in the question form group.
    */
   get allowMultipleAnswer(): boolean {
@@ -45,7 +45,7 @@ export class QuestionView {
 
   /**
    * @description Deselects all answers for the question.
-   * @returns void
+   * @returns {void}
    * @remarks This method is called when toggling an answer if multiple answers are not allowed.
    */
   private deselectAllAnswers(): void {

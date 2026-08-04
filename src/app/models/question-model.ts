@@ -12,8 +12,7 @@ export class QuestionModel implements Question {
     sort_order: number;
 
     /**
-     * Creates an instance of QuestionModel.
-     *
+     * @description Creates an instance of QuestionModel.
      * @param questionData - Partial data for the question.
      * @param surveyId - The ID of the survey this question belongs to.
      */
@@ -26,8 +25,7 @@ export class QuestionModel implements Question {
     }
 
     /**
-     * Returns a JSON representation of the question suitable for adding a survey.
-     *
+     * @description Returns a JSON representation of the question suitable for adding a survey.
      * @returns {object} The JSON representation of the question.
      */
     getCleanAddSurveyJson(): {} {
