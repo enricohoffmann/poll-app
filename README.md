@@ -31,6 +31,7 @@ The behavior of the application is based on the decisions documented in the proj
 Text fields use these constraints:
 
 - Survey title: 4-80 characters
+- A word must not exceed 20 characters in length
 - Description: optional, up to 300 characters
 - Question text: 4-120 characters
 - Answer text: 1-80 characters
@@ -78,7 +79,7 @@ Relationships:
 - Angular 21
 - TypeScript
 - RxJS
-- Angular CDK
+- Angular CDK (including Overlay/OverlayRef for custom dialog overlays)
 - Supabase client
 
 The app connects to a Supabase backend, and vote result updates are handled in real time through Supabase Realtime.
